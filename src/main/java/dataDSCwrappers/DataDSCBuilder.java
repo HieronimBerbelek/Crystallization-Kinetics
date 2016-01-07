@@ -1,11 +1,11 @@
 package dataDSCwrappers;
 
 public class DataDSCBuilder {
-	double temperature;
-	double time;
-	double dsc;
-	double sensitivity;
-	double segment;
+	private double temperature;
+	private double time;
+	private double dsc;
+	private double sensitivity;
+	private double segment;
 	
 	public void setTemperature(double temperature) {
 		this.temperature = temperature;

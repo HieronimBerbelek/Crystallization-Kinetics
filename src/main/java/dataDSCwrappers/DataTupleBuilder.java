@@ -1,15 +1,16 @@
 //Class used to build DataTuple, which is immutable
 //implementing builderPattern
 //quite straight-forward
-//TO DO - builder can set variable at 0, when it is not initialized, how to avert this?
+
 package dataDSCwrappers;
 
 public class DataTupleBuilder {
-	private double temperature;
-	private double time;
-	private double dsc;
-	private double sensitivity;
-	private double segment;
+	//Double wrapper, to prevent setting DataTuple fields to 0
+	private Double temperature;
+	private Double time;
+	private Double dsc;
+	private Double sensitivity;
+	private Double segment;
 	//setters
 	public void setTemperature(double temperature) {
 		this.temperature = temperature;
@@ -36,10 +37,10 @@ public class DataTupleBuilder {
 				segment);
 	}
 	public void reset(){
-		temperature = 0;
-		time = 0;
-		dsc = 0;
-		sensitivity = 0;
-		segment = 0;
+		temperature = 0.0;
+		time = 0.0;
+		dsc = 0.0;
+		sensitivity = 0.0;
+		segment = 0.0;
 	}
 }

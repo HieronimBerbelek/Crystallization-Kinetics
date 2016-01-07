@@ -1,5 +1,11 @@
 package dataLoader;
 
-public class DataLoader {
+import java.util.Scanner;
 
+public class DataLoader {
+	Scanner fileScanner;
+	
+	public DataLoader(Scanner connection){
+		fileScanner = connection;
+	}
 }

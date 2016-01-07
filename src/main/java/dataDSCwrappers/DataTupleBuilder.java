@@ -1,6 +1,6 @@
 package dataDSCwrappers;
 
-public class DataDSCBuilder {
+public class DataTupleBuilder {
 	private double temperature;
 	private double time;
 	private double dsc;
@@ -23,8 +23,8 @@ public class DataDSCBuilder {
 		this.segment = segment;
 	}
 	
-	public DataDSC getData(){
-		return new DataDSC(
+	public DataTuple getData(){
+		return new DataTuple(
 				temperature,
 				time,
 				dsc,

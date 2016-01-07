@@ -1,13 +1,13 @@
 package dataDSCwrappers;
 
-public class DataDSC {
+public class DataTuple {
 	private double temperature;
 	private double time;
 	private double dsc;
 	private double sensitivity;
 	private double segment;
 	
-	public DataDSC(
+	public DataTuple(
 			double temperature,
 			double time,
 			double dsc,

@@ -27,6 +27,22 @@ public class DataTupleBuilder {
 	public void setSegment(double segment) {
 		this.segment = segment;
 	}
+	//getters
+	public double getTemperature() {
+		return temperature;
+	}
+	public double getTime() {
+		return time;
+	}
+	public double getDsc() {
+		return dsc;
+	}
+	public double getSensitivity() {
+		return sensitivity;
+	}
+	public double getSegment() {
+		return segment;
+	}
 	//implementation
 	public DataTuple getData(){	
 		return new DataTuple(

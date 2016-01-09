@@ -38,6 +38,12 @@ public class DataTuple {
 	public double getSegment() {
 		return segment;
 	}
-	
+	public String toString(){
+		return ("Temperature: "+temperature
+				+" Time: "+time
+				+" DSC: "+dsc
+				+" Sensitivity: "+sensitivity
+				+" Segment: "+segment);
+	}
 	
 }

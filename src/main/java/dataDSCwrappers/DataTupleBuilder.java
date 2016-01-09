@@ -44,7 +44,7 @@ public class DataTupleBuilder {
 		return segment;
 	}
 	//implementation
-	public DataTuple getData(){	
+	public DataTuple buildDataTuple(){	
 		return new DataTuple(
 				temperature,
 				time,

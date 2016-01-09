@@ -29,7 +29,7 @@ public class DataLoader {
 		metaDataLoaded = false;
 	}
 	public void loadMetaData(){
-		for(int i =0; i<4; i++){
+		for(int i =0; i<5; i++){
 			fileScanner.nextLine(); //go to identity line
 		}
 		identity = fileScanner.nextLine().substring(identityFlag.length());
@@ -56,7 +56,13 @@ public class DataLoader {
 	}
 	
 	private void aquireData(){
-		
+		while (fileScanner.hasNextLine()) {
+			builder.setTemperature(Double.parseDouble(fileScanner.next()));
+			builder.setTime(Double.parseDouble(fileScanner.next()));
+			builder.setDsc(Double.parseDouble(fileScanner.next()));
+			builder.setSensitivity(Double.parseDouble(fileScanner.next()));
+			builder.setSegment(Double.parseDouble(fileScanner.next()));
+		}
 	}
 	//getters
 	public String getIdentity(){

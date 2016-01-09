@@ -30,6 +30,7 @@ public class DataLoaderTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
 	public void testLoadNumericData(){
 		ProteusFileOpener testedOp;
 		try {
@@ -37,6 +38,7 @@ public class DataLoaderTest {
 			DataLoader tested = new DataLoader(testedOp);
 			tested.loadNumericData();
 			assertTrue(tested.isDataLoaded());
+			assertEquals(126.83636, tested.dataString(), 0.001);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

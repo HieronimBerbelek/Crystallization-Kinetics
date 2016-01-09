@@ -15,7 +15,7 @@ public class DataLoader {
 	private String identityFlag = "#IDENTITY:";
 	private String commaDecimalFlag = "#DECIMAL:COMMA";
 	private String numericDataFlag = "##Temp";
-	private String delimiters =";|;\\s+|\\n";
+	private String delimiters =";\\s*|\\s+|\\n+|\\t+";
 	
 	private ArrayList<DataTuple> data = new ArrayList<DataTuple>();
 	private DataTupleBuilder builder;
@@ -52,6 +52,7 @@ public class DataLoader {
 			while(fileScanner.hasNextLine()){
 				if(fileScanner.nextLine().startsWith(numericDataFlag)) break;
 			}
+			builder = new DataTupleBuilder();
 			fileScanner.useDelimiter(delimiters);
 			if(decimalSeparator == DecimalSeparator.COMMA)aquireCommaData();
 			else aquireDotData();
@@ -60,7 +61,7 @@ public class DataLoader {
 	}
 	
 	private void aquireDotData(){
-		while (fileScanner.hasNextLine()) {
+		while (fileScanner.hasNext()) {
 			builder.setTemperature(Double.parseDouble(fileScanner.next()));
 			builder.setTime(Double.parseDouble(fileScanner.next()));
 			builder.setDsc(Double.parseDouble(fileScanner.next()));
@@ -71,7 +72,7 @@ public class DataLoader {
 		}
 	}
 	private void aquireCommaData(){
-		while (fileScanner.hasNextLine()) {
+		while (fileScanner.hasNext()) {
 			builder.setTemperature(Double.parseDouble(commaNum(fileScanner.next())));
 			builder.setTime(Double.parseDouble(commaNum(fileScanner.next())));
 			builder.setDsc(Double.parseDouble(commaNum(fileScanner.next())));
@@ -93,7 +94,11 @@ public class DataLoader {
 		loadMetaData();
 		return decimalSeparator;
 	}
+	//flag
 	public boolean isDataLoaded(){
 		return !data.isEmpty();
+	}
+	public double dataString(){
+		return data.get(data.size()-1).getTemperature();
 	}
 }

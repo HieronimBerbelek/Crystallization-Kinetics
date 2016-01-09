@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class ProteusFileOpener {
+public class ProteusFileOpener implements DataProvider {
 	private Scanner connection;
 	
 	public ProteusFileOpener(String path) throws IOException{
@@ -13,7 +13,7 @@ public class ProteusFileOpener {
 		connection = new Scanner(dataFile);
 	}
 	
-	public Scanner getDataFile(){
+	public Scanner getData(){
 		return connection;
 	}
 }

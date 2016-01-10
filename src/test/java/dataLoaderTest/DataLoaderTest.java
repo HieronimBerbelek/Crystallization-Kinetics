@@ -43,4 +43,17 @@ public class DataLoaderTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	public void testGetDataObj(){
+		ProteusFileOpener testedOp;
+		try {
+			testedOp = new ProteusFileOpener("D:\\Paw³a\\studia\\dyplom nanokompozyty grafenowe\\POMIARY\\2% 5 peak.txt");
+			DataLoader tested = new DataLoader(testedOp);
+			tested.loadNumericData();
+			tested.getDataObj();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

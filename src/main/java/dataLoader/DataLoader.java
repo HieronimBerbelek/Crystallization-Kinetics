@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-import dataDSCwrappers.DataTuple;
-import dataDSCwrappers.DataTupleBuilder;
+import dataWrappers.DataCrystal;
+import dataWrappers.DataTuple;
+import dataWrappers.DataTupleBuilder;
 import inputProvider.DataProvider;
 /*is there need and way to divide loadMetaData and loadNumericData into shorter methods?
  */
@@ -23,13 +24,11 @@ public class DataLoader {
 	private DecimalSeparator decimalSeparator = DecimalSeparator.DOT; 
 	
 	private boolean metaDataLoaded;
-	private boolean numericDataLoaded;
 	// default decimal separator is dot
 	
 	public DataLoader(DataProvider data){
 		fileScanner = data.getData();
 		metaDataLoaded = false;
-		numericDataLoaded = false;
 	}
 	public void loadMetaData(){
 		if(!metaDataLoaded){
@@ -56,7 +55,6 @@ public class DataLoader {
 			fileScanner.useDelimiter(delimiters);
 			if(decimalSeparator == DecimalSeparator.COMMA)aquireCommaData();
 			else aquireDotData();
-			numericDataLoaded = true;
 		}
 	}
 	
@@ -98,7 +96,7 @@ public class DataLoader {
 	public boolean isDataLoaded(){
 		return !data.isEmpty();
 	}
-	public double dataString(){
-		return data.get(data.size()-1).getTemperature();
+	public DataCrystal getDataObj(){
+		return new DataCrystal(data, identity);
 	}
 }

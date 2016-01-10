@@ -2,7 +2,7 @@
 //implementing builderPattern
 //quite straight-forward
 
-package dataDSCwrappers;
+package dataWrappers;
 
 public class DataTupleBuilder {
 	//Double wrapper, to prevent setting DataTuple fields to 0

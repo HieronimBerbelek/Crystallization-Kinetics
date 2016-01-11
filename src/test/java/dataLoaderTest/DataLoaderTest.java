@@ -34,7 +34,7 @@ public class DataLoaderTest {
 	public void testLoadNumericData(){
 		ProteusFileOpener testedOp;
 		try {
-			testedOp = new ProteusFileOpener("D:\\Paw³a\\studia\\dyplom nanokompozyty grafenowe\\POMIARY\\2% 5 peak.txt");
+			testedOp = new ProteusFileOpener("D:\\Paw³a\\studia\\dyplom nanokompozyty grafenowe\\POMIARY\\ExpDat_AP52DE55 PURE 7,5K.txt");
 			DataLoader tested = new DataLoader(testedOp);
 			tested.loadNumericData();
 			assertTrue(tested.isDataLoaded());
@@ -47,10 +47,10 @@ public class DataLoaderTest {
 	public void testGetDataObj(){
 		ProteusFileOpener testedOp;
 		try {
-			testedOp = new ProteusFileOpener("D:\\Paw³a\\studia\\dyplom nanokompozyty grafenowe\\POMIARY\\2% 5 peak.txt");
+			testedOp = new ProteusFileOpener("D:\\Paw³a\\studia\\dyplom nanokompozyty grafenowe\\POMIARY\\ExpDat_AP52DE55 PURE 7,5K.txt");
 			DataLoader tested = new DataLoader(testedOp);
 			tested.loadNumericData();
-			tested.getDataObj();
+			System.out.println(tested.getDataObj().getCoolingRate());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

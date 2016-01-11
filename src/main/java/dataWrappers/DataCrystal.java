@@ -6,6 +6,7 @@ public class DataCrystal {
 	private ArrayList<Double> relativeX = new ArrayList<Double>();
 	private ArrayList<Double> relativeTime = new ArrayList<Double>();
 	private ArrayList<Double> temperature = new ArrayList<Double>();
+	private double coolingRate;
 	
 	private String identity;
 	private String userComments;
@@ -19,11 +20,14 @@ public class DataCrystal {
 		double finalTime = data.get(data.size()-1).getTime();
 		double startDsc = data.get(0).getDsc();
 		double finalDsc = data.get(data.size()-1).getDsc();
-		double sumCrystallizationH=0;
+		double sumCrystallizationH=0;		//crystallization heat t0->t=inf
 		
 		ArrayList<Double> crystallizationHeat = new ArrayList<Double>();
+		
 		double baselineSlope = 
-				(finalDsc-startDsc)/(finalTime-startTime);
+				(finalDsc-startDsc)/(finalTime-startTime); 
+		//baseline slope is used to calculate crystallization heat, 
+		//with exclusion of heat capacity of sample
 		
 		for(int i = 0; i < data.size(); i++){
 			relativeTime.add(data.get(i).getTime()-startTime);
@@ -41,9 +45,15 @@ public class DataCrystal {
 			}
 			relativeX.add(heatSum/sumCrystallizationH);
 		}
+		coolingRate = (temperature.get(temperature.size()-1)-temperature.get(0))
+				/-relativeTime.get(relativeTime.size()-1);
 	}
 	
 	public void putComment(String input){
 		userComments = input;
 	}
+	public double getCoolingRate(){
+		return coolingRate;
+	}
+			
 }

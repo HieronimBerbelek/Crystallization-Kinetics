@@ -69,7 +69,7 @@ public class DataLoader {
 			builder.reset();
 		}
 	}
-	private void aquireCommaData(){
+	private void aquireCommaData(){ //using commaNum, to replace commas to dots
 		while (fileScanner.hasNext()) {
 			builder.setTemperature(Double.parseDouble(commaNum(fileScanner.next())));
 			builder.setTime(Double.parseDouble(commaNum(fileScanner.next())));

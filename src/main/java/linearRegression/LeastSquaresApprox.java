@@ -3,14 +3,14 @@ package linearRegression;
 import java.util.ArrayList;
 
 //TO DO - make it generic maybe?
-public class LeastSquaresApprox {
+public class LeastSquaresApprox implements LinearApprox {
 	private double slope;
 	private double intercept;
 	private double slopeError;
 	private double interceptError;
 
 	
-	public LinearData calculate (ArrayList<Double> x, ArrayList<Double>y){
+	public void calculate (ArrayList<Double> x, ArrayList<Double>y){
 		int size = x.size();
 		double sumX=0.0;
 		double sumX2=0.0;
@@ -32,6 +32,25 @@ public class LeastSquaresApprox {
 		slopeError = Math.sqrt((size*(sumY2-(slope*sumXY)-(intercept*sumY))
 						/(size-2)*((size*sumX2)-squareSumX)));
 		interceptError = Math.sqrt((slopeError*sumX2)/size);
-		return new LinearData(slope, intercept, slopeError, interceptError);
+	}
+
+
+	public double getSlope() {
+		return slope;
+	}
+
+
+	public double getSlopeError() {
+		return slopeError;
+	}
+
+
+	public double getIntercept() {
+		return intercept;
+	}
+
+
+	public double getInterceptError() {
+		return interceptError;
 	}
 }

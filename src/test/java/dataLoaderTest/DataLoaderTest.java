@@ -14,11 +14,13 @@ import inputProvider.ProteusFileOpener;
 public class DataLoaderTest {
 	static ProteusFileOpener testedOp;
 	static DataLoader tested;
+	static String path = 
+			"D:\\Paw³a\\studia\\dyplom nanokompozyty grafenowe\\POMIARY\\2% 5 peak.txt";
 	
 	@BeforeClass
 	public static void setUpBeforeClass(){
 		try {
-			testedOp = new ProteusFileOpener("D:\\Paw³a\\studia\\dyplom nanokompozyty grafenowe\\POMIARY\\2% 5 peak.txt");
+			testedOp = new ProteusFileOpener(path);
 			tested = new DataLoader(testedOp);
 			tested.loadNumericData();
 		} catch (IOException e) {

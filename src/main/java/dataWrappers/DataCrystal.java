@@ -35,10 +35,11 @@ public class DataCrystal {
 			
 			crystallizationHeat
 			.add(data.get(i).getDsc()-(startDsc+(baselineSlope*relativeTime.get(i))));
+			
 			sumCrystallizationH += crystallizationHeat.get(i);
 		}
 		//relative crystallization is not calculated for first and last 2 points(edges)
-		for(int i = 1; i < data.size()-2;i++){
+		for(int i = 0; i < data.size();i++){
 			double heatSum=0;
 			for(int j=0; j< i; j++){
 				heatSum+=crystallizationHeat.get(j);

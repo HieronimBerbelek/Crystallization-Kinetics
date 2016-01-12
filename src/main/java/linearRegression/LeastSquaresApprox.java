@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 //TO DO - make it generic maybe?
 public class LeastSquaresApprox implements LinearApprox {
-	private double slope;
-	private double intercept;
-	private double slopeError;
-	private double interceptError;
+	private Double slope;
+	private Double intercept;
+	private Double slopeError;
+	private Double interceptError;
 
-	
+	public LeastSquaresApprox(){
+	}
+	public LeastSquaresApprox(ArrayList<Double> x, ArrayList<Double>y){
+		calculate(x,y);
+	}
 	public void calculate (ArrayList<Double> x, ArrayList<Double>y){
 		int size = x.size();
 		double sumX=0.0;
@@ -34,23 +38,25 @@ public class LeastSquaresApprox implements LinearApprox {
 		interceptError = Math.sqrt((slopeError*sumX2)/size);
 	}
 
-
 	public double getSlope() {
 		return slope;
 	}
-
 
 	public double getSlopeError() {
 		return slopeError;
 	}
 
-
 	public double getIntercept() {
 		return intercept;
 	}
 
-
 	public double getInterceptError() {
 		return interceptError;
+	}
+	public String toString(){
+		if(slope == null) return "Not calculated yet!";
+		else
+			return "Slope: "+slope+", Slope Error: "+slopeError
+					+", Intercept: "+intercept+", Intercept Error: "+interceptError;
 	}
 }

@@ -1,8 +1,10 @@
 package dataLoaderTest;
 
 import static org.junit.Assert.*;
-import org.junit.Before;
+
 import java.io.IOException;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import dataLoader.DataLoader;
@@ -10,14 +12,13 @@ import dataLoader.DecimalSeparator;
 import inputProvider.ProteusFileOpener;
 
 public class DataLoaderTest {
-	
 	static ProteusFileOpener testedOp;
 	static DataLoader tested;
 	
-	@Before 
-	public void setUp(){
+	@BeforeClass
+	public static void setUpBeforeClass(){
 		try {
-			testedOp = new ProteusFileOpener("//Crystallization-Kinetics//resource//test//ExpDat_AP52DE55 PURE 10K.txt");
+			testedOp = new ProteusFileOpener("D:\\Paw³a\\studia\\dyplom nanokompozyty grafenowe\\POMIARY\\2% 5 peak.txt");
 			tested = new DataLoader(testedOp);
 			tested.loadNumericData();
 		} catch (IOException e) {
@@ -25,16 +26,10 @@ public class DataLoaderTest {
 			e.printStackTrace();
 		}
 	}
-	
 	@Test
-	public void testDataLoader() {	
+	public void testDataLoader() {
 		assertEquals("52DE55_2%GNP", tested.getIdentity());
 		assertEquals(DecimalSeparator.COMMA, tested.getDecimalSeparator());
-	}
-
-	@Test
-	public void testLoadMetaData() {
-				
 	}
 	@Test
 	public void testLoadNumericData(){
@@ -42,5 +37,6 @@ public class DataLoaderTest {
 	}
 	@Test
 	public void testGetDataObj(){
+		
 	}
 }

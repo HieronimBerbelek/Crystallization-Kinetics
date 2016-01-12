@@ -7,16 +7,22 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import linearRegression.LeastSquaresApprox;
+import linearRegression.exceptions.DataSizeException;
 
 public class LeastSquaresApproxTest {
 LeastSquaresApprox tested = new LeastSquaresApprox();
 	@Test
 	public void testCalculate() {
 		ArrayList<Double> x = new ArrayList<Double>();
-		x.add(0.0);x.add(5.6);x.add(89.6);
+		x.add(0.0);x.add(2.0);x.add(76.0);
 		ArrayList<Double> y = new ArrayList<Double>();
-		y.add(0.0);y.add(2.0);y.add(5.0);
-		tested.calculate(x, y);
+		y.add(0.0);y.add(2.0);
+		try {
+			tested.calculate(x, y);
+		} catch (DataSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(tested);
 	}
 

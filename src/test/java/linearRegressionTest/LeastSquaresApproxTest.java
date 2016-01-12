@@ -16,7 +16,7 @@ LeastSquaresApprox tested = new LeastSquaresApprox();
 		ArrayList<Double> x = new ArrayList<Double>();
 		x.add(0.0);x.add(2.0);x.add(76.0);
 		ArrayList<Double> y = new ArrayList<Double>();
-		y.add(0.0);y.add(2.0);
+		y.add(0.0);y.add(2.0);y.add(0.0);
 		try {
 			tested.calculate(x, y);
 		} catch (DataSizeException e) {

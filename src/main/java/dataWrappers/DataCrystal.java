@@ -7,6 +7,7 @@ public class DataCrystal {
 	private ArrayList<Double> relativeTime = new ArrayList<Double>();
 	private ArrayList<Double> temperature = new ArrayList<Double>();
 	private double coolingRate;
+	private CrystallizationMode cryMode;
 	
 	private String identity;
 	private String userComments;
@@ -47,6 +48,8 @@ public class DataCrystal {
 		}
 		coolingRate = (temperature.get(temperature.size()-1)-temperature.get(0))
 				/-relativeTime.get(relativeTime.size()-1);
+		if(coolingRate>1) cryMode=CrystallizationMode.NONISOTHERMAL;
+		else cryMode=CrystallizationMode.ISOTHERMAL;
 	}
 	
 	public void putComment(String input){

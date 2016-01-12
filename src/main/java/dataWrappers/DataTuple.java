@@ -1,6 +1,6 @@
 //wrapper class for all 5 variables in Proteus DSC file
 //has builder: DataTupleBuilder
-package dataDSCwrappers;
+package dataWrappers;
 
 public class DataTuple {
 	private double temperature;
@@ -22,6 +22,13 @@ public class DataTuple {
 		this.sensitivity = sensitivity;
 		this.segment = segment;
 	}
+	public DataTuple(DataTuple other){
+		this.temperature = other.temperature;
+		this.time = other.time;
+		this.dsc = other.dsc;
+		this.sensitivity = other.sensitivity;
+		this.segment = other.segment;
+	}
 	
 	public double getTemperature() {
 		return temperature;
@@ -38,6 +45,12 @@ public class DataTuple {
 	public double getSegment() {
 		return segment;
 	}
-	
+	public String toString(){
+		return ("Temperature: "+temperature
+				+" Time: "+time
+				+" DSC: "+dsc
+				+" Sensitivity: "+sensitivity
+				+" Segment: "+segment);
+	}
 	
 }

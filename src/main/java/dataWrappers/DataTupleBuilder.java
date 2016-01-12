@@ -2,7 +2,7 @@
 //implementing builderPattern
 //quite straight-forward
 
-package dataDSCwrappers;
+package dataWrappers;
 
 public class DataTupleBuilder {
 	//Double wrapper, to prevent setting DataTuple fields to 0
@@ -44,7 +44,7 @@ public class DataTupleBuilder {
 		return segment;
 	}
 	//implementation
-	public DataTuple getData(){	
+	public DataTuple buildDataTuple(){	
 		return new DataTuple(
 				temperature,
 				time,

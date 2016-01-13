@@ -13,17 +13,24 @@ import exceptions.DscDataException;
 import inputProvider.ProteusFileOpener;
 
 public class DataLoaderTest {
-	static ProteusFileOpener testedOp;
+	static ProteusFileOpener testedOpener;
 	static DataLoader tested;
-	static String path = 
-			".//resource//test//ExpDat_AP52DE55 PURE 10K.txt";
+	static String path = ".//resource//test//input file.txt";
+	
+	static ProteusFileOpener testedCorruptedOpener;
+	static DataLoader testedCorrupted;
+	static String pathCorrupted = ".//resource//test//corrupted input file.txt";
 	
 	@BeforeClass
 	public static void setUpBeforeClass(){
 		try {
-			testedOp = new ProteusFileOpener(path);
-			tested = new DataLoader(testedOp);
+			testedOpener = new ProteusFileOpener(path);
+			tested = new DataLoader(testedOpener);
 			tested.loadNumericData();
+			
+			testedCorruptedOpener = new ProteusFileOpener(pathCorrupted);
+			testedCorrupted = new DataLoader(testedCorruptedOpener);
+			testedCorrupted.loadNumericData();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

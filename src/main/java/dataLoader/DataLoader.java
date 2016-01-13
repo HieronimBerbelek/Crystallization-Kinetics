@@ -1,7 +1,6 @@
 package dataLoader;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 import dataWrappers.DataCrystal;
@@ -10,14 +9,15 @@ import dataWrappers.DataTupleBuilder;
 import exceptions.DscDataException;
 import inputProvider.DataProvider;
 /*is there need and way to divide loadMetaData and loadNumericData into shorter methods?
+ * TO DO make it more robust, improve input check
  */
 public class DataLoader {
 	private Scanner fileScanner;
 	
-	private String identityFlag = "#IDENTITY:";
-	private String commaDecimalFlag = "#DECIMAL:COMMA";
-	private String numericDataFlag = "##Temp";
-	private String delimiters =";\\s*|\\s+|\\n+|\\t+";
+	private static String identityFlag = "#IDENTITY:";
+	private static String commaDecimalFlag = "#DECIMAL:COMMA";
+	private static String numericDataFlag = "##Temp";
+	private static String delimiters =";\\s*|\\s+|\\n+|\\t+";
 	
 	private ArrayList<DataTuple> data = new ArrayList<DataTuple>();
 	private DataTupleBuilder builder;

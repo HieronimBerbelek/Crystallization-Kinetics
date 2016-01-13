@@ -15,7 +15,7 @@ public class LeastSquaresApprox implements LinearApprox {
 		calculate(x,y);
 	}
 	public void calculate (ArrayList<Double> x, ArrayList<Double>y) throws DataSizeException{
-		if(x.size()!=y.size()) throw new DataSizeException();
+		if(x.size()==0||x.size()!=y.size()) throw new DataSizeException();
 		int size = x.size();
 		double sumX=0.0;
 		double sumX2=0.0;

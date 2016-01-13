@@ -3,7 +3,7 @@ package dataLoader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import dataWrappers.DataCrystal;
+import dataWrappers.CrystExpData;
 import dataWrappers.DataTuple;
 import dataWrappers.DataTupleBuilder;
 import exceptions.DscDataException;
@@ -97,7 +97,7 @@ public class DataLoader {
 	public boolean isDataLoaded(){
 		return !data.isEmpty();
 	}
-	public DataCrystal getDataObj(){
-		return new DataCrystal(data, identity);
+	public CrystExpData getDataObj(){
+		return new CrystExpData(data, identity);
 	}
 }

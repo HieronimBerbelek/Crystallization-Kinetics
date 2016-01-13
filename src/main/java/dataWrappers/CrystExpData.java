@@ -2,7 +2,7 @@ package dataWrappers;
 
 import java.util.ArrayList;
 
-public class DataCrystal {
+public class CrystExpData implements CrystallizationData {
 	//data lists
 	private ArrayList<Double> relativeX = new ArrayList<Double>();
 	private ArrayList<Double> relativeTime = new ArrayList<Double>();
@@ -12,15 +12,19 @@ public class DataCrystal {
 	private CrystallizationMode mode;
 	private String identity;
 	private String userComments;
-	double summaricHeat;
+	private double summaricHeat;
 	private double peakT; //temperature of crystallization peak
+	private int size;
 	
-	public DataCrystal(ArrayList<DataTuple> data, String id){
-		identity = id;
-		summaricHeat=0; //crystallization heat t0->t=inf
-		calculateCrystallizationData(data);
+	public CrystExpData(){
 	}
-	private void calculateCrystallizationData(ArrayList<DataTuple> data){
+	public CrystExpData(ArrayList<DataTuple> data, String id){
+		identity = id;
+		size = data.size();
+		summaricHeat=0; //crystallization heat t0->t=inf
+		putData(data);
+	}
+	public void putData(ArrayList<DataTuple> data){
 		//heat in crystallization peak, used later
 		double peakHeat = Double.NEGATIVE_INFINITY; 
 		//useful numbers for start
@@ -74,7 +78,9 @@ public class DataCrystal {
 	}
 	
 	
-	
+	public String getIdentity(){
+		return identity;
+	}
 	public void putComment(String input){
 		userComments = input;
 	}
@@ -90,10 +96,19 @@ public class DataCrystal {
 	public ArrayList<Double> getRelativeX(){
 		return relativeX;
 	}
+	public ArrayList<Double> getRelativeTime(){
+		return relativeTime;
+	}
+	public ArrayList<Double> getTemperature(){
+		return temperature;
+	}
 	public double getPeakTemperature(){
 		return peakT;
 	}
 	public CrystallizationMode getMode(){
 		return mode;
+	}
+	public int getSize(){
+		return size;
 	}
 }

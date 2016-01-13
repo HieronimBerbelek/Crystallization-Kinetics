@@ -9,14 +9,14 @@ import org.junit.Test;
 
 import dataLoader.DataLoader;
 import dataWrappers.CrystallizationMode;
-import dataWrappers.DataCrystal;
+import dataWrappers.CrystExpData;
 import exceptions.DscDataException;
 import inputProvider.ProteusFileOpener;
 
-public class DataCrystalTest {
+public class CrystExpDataTest {
 	static ProteusFileOpener opener;
 	static DataLoader loader;
-	static DataCrystal tested;
+	static CrystExpData tested;
 	static String path = ".//resource//test//input file.txt";
 	
 	@BeforeClass
@@ -48,11 +48,11 @@ public class DataCrystalTest {
 	@Test
 	public void testData(){
 		int numOfPoints =20;
-		assertEquals(numOfPoints, tested.getRelativeX().size());
+		assertEquals(numOfPoints, tested.getSize());
 		
 		double lowest = tested.getRelativeX().get(0);
 		double largest = tested.getRelativeX().get(numOfPoints-1);
-		for(int index=1; index<numOfPoints;index++){
+		for(int index=1; index<tested.getSize();index++){
 			if(tested.getRelativeX().get(index)>largest
 					||tested.getRelativeX().get(index)<lowest) fail("logic error");
 		}

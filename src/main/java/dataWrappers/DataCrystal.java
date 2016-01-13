@@ -9,7 +9,7 @@ public class DataCrystal {
 	private ArrayList<Double> temperature = new ArrayList<Double>();
 	//data for crystallization serie
 	private double coolingRate;
-	private CrystallizationMode cryMode;
+	private CrystallizationMode mode;
 	private String identity;
 	private String userComments;
 	double summaricHeat;
@@ -44,16 +44,18 @@ public class DataCrystal {
 		//calculating cooling rate and mode of crystallization
 		coolingRate = (temperature.get(temperature.size()-1)-temperature.get(0))
 				/-relativeTime.get(relativeTime.size()-1);
-		if(coolingRate>1) cryMode=CrystallizationMode.NONISOTHERMAL;
-		else cryMode=CrystallizationMode.ISOTHERMAL;
+		if(coolingRate>1) mode=CrystallizationMode.NONISOTHERMAL;
+		else mode=CrystallizationMode.ISOTHERMAL;
 		
 		//creating crystallization heat list, calculating sumaric heat, 
 		//finding crystallization peak if nonisothermal
 		for(int i = 0; i < data.size();i++){
 			crystallizationHeat
 			.add(data.get(i).getDsc()-(startDsc+(baselineSlope*relativeTime.get(i))));
+			
 			summaricHeat += crystallizationHeat.get(i);
-			if (cryMode == CrystallizationMode.NONISOTHERMAL) {
+			
+			if (mode == CrystallizationMode.NONISOTHERMAL) {
 				if (crystallizationHeat.get(i) > peakHeat){
 					peakHeat = crystallizationHeat.get(i);
 					peakT = temperature.get(i);
@@ -91,5 +93,7 @@ public class DataCrystal {
 	public double getPeakTemperature(){
 		return peakT;
 	}
-			
+	public CrystallizationMode getMode(){
+		return mode;
+	}
 }

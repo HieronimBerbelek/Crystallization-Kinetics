@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import dataLoader.DataLoader;
+import dataWrappers.CrystallizationMode;
 import dataWrappers.DataCrystal;
 import exceptions.DscDataException;
 import inputProvider.ProteusFileOpener;
@@ -34,11 +35,26 @@ public class DataCrystalTest {
 		tested = loader.getDataObj();
 	}
 	@Test
-	public void test(){
+	public void testCoolingRate(){
 		assertEquals(10.0, tested.getCoolingRate(), 0.001);
-		System.out.println(tested.getRelativeX());
-		System.out.println(tested.getSummaricHeat());
-		System.out.println(tested.getPeakTemperature());
+		assertEquals(CrystallizationMode.NONISOTHERMAL, tested.getMode());
 	}
-
+	@Test
+	public void testComments(){
+		String test = "asjd aisjd oa joaijd ";
+		tested.putComment(test);
+		assertEquals(test, tested.getComments());
+	}
+	@Test
+	public void testData(){
+		int numOfPoints =20;
+		assertEquals(numOfPoints, tested.getRelativeX().size());
+		
+		double lowest = tested.getRelativeX().get(0);
+		double largest = tested.getRelativeX().get(numOfPoints-1);
+		for(int index=1; index<numOfPoints;index++){
+			if(tested.getRelativeX().get(index)>largest
+					||tested.getRelativeX().get(index)<lowest) fail("logic error");
+		}
+	}
 }

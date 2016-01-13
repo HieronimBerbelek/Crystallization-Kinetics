@@ -2,7 +2,7 @@ package linearRegression;
 
 import java.util.ArrayList;
 
-import linearRegression.exceptions.DataSizeException;
+import exceptions.DataSizeException;
 
 public class LeastSquaresApprox implements LinearApprox {
 	private Double slope;

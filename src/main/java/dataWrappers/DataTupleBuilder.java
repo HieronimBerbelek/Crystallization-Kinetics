@@ -4,13 +4,14 @@
 
 package dataWrappers;
 
+import exceptions.DscDataException;
+
 public class DataTupleBuilder {
-	//Double wrapper, to prevent setting DataTuple fields to 0
-	private Double temperature;
-	private Double time;
-	private Double dsc;
-	private Double sensitivity;
-	private Double segment;
+	private double temperature;
+	private double time;
+	private double dsc;
+	private double sensitivity;
+	private double segment;
 	//setters
 	public void setTemperature(double temperature) {
 		this.temperature = temperature;
@@ -44,7 +45,8 @@ public class DataTupleBuilder {
 		return segment;
 	}
 	//implementation
-	public DataTuple buildDataTuple(){	
+	public DataTuple buildDataTuple() throws DscDataException{	
+		if(temperature==0||time==0||dsc==0||sensitivity==0||segment==0) throw new DscDataException();
 		return new DataTuple(
 				temperature,
 				time,

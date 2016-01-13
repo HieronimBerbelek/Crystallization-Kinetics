@@ -7,6 +7,7 @@ import java.util.Scanner;
 import dataWrappers.DataCrystal;
 import dataWrappers.DataTuple;
 import dataWrappers.DataTupleBuilder;
+import exceptions.DscDataException;
 import inputProvider.DataProvider;
 /*is there need and way to divide loadMetaData and loadNumericData into shorter methods?
  */
@@ -45,7 +46,7 @@ public class DataLoader {
 			metaDataLoaded = true;
 		}
 	}
-	public void loadNumericData(){
+	public void loadNumericData() throws DscDataException{
 		loadMetaData();
 		if(data.isEmpty()){
 			while(fileScanner.hasNextLine()){
@@ -58,7 +59,7 @@ public class DataLoader {
 		}
 	}
 	
-	private void aquireDotData(){
+	private void aquireDotData() throws DscDataException{
 		while (fileScanner.hasNext()) {
 			builder.setTemperature(Double.parseDouble(fileScanner.next()));
 			builder.setTime(Double.parseDouble(fileScanner.next()));
@@ -69,7 +70,7 @@ public class DataLoader {
 			builder.reset();
 		}
 	}
-	private void aquireCommaData(){ //using commaNum, to replace commas to dots
+	private void aquireCommaData() throws DscDataException{ //using commaNum, to replace commas to dots
 		while (fileScanner.hasNext()) {
 			builder.setTemperature(Double.parseDouble(commaNum(fileScanner.next())));
 			builder.setTime(Double.parseDouble(commaNum(fileScanner.next())));

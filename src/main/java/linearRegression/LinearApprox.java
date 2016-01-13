@@ -2,7 +2,7 @@ package linearRegression;
 
 import java.util.ArrayList;
 
-import linearRegression.exceptions.DataSizeException;
+import exceptions.DataSizeException;
 
 public interface LinearApprox {
 	public void calculate (ArrayList<Double> x, ArrayList<Double>y) 

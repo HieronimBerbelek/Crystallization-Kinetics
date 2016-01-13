@@ -1,4 +1,4 @@
-package linearRegression.exceptions;
+package exceptions;
 
 public class DataSizeException extends Exception {
 

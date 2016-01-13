@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import exceptions.DataSizeException;
 import linearRegression.LeastSquaresApprox;
-import linearRegression.exceptions.DataSizeException;
 
 public class LeastSquaresApproxTest {
 LeastSquaresApprox tested = new LeastSquaresApprox();

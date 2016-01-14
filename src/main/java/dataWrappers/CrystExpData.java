@@ -35,6 +35,7 @@ public class CrystExpData implements CrystallizationData {
 		summaricHeat=0; //crystallization heat t0->t=inf
 		injectData(data);
 	}
+	
 	public void injectData(ArrayList<DataTuple> data){
 		//useful numbers for start
 		double startTime = data.get(0).getTime();
@@ -65,6 +66,7 @@ public class CrystExpData implements CrystallizationData {
 			relativeX.add(heatSum/summaricHeat);
 		}
 	}
+	
 	private void calculateTimeAndTemp(double startTime, ArrayList<DataTuple> data){
 		for(int i = 0; i < data.size(); i++){
 			relativeTime.add(data.get(i).getTime()-startTime);
@@ -87,6 +89,7 @@ public class CrystExpData implements CrystallizationData {
 			}
 		}
 	}
+	
 	public String getIdentity(){
 		return identity;
 	}

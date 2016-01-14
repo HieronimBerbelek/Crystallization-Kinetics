@@ -54,7 +54,7 @@ public class CrystExpDataTest {
 		double largest = tested.getRelativeX().get(numOfPoints-1);
 		for(int index=1; index<tested.getSize();index++){
 			if(tested.getRelativeX().get(index)>largest
-					||tested.getRelativeX().get(index)<lowest) fail("logic error");
+					||tested.getRelativeX().get(index)<lowest) fail("DATA ERROR");
 		}
 		System.out.println(tested.getRelativeTime());
 		System.out.println(tested.getRelativeX());

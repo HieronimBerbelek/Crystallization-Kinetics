@@ -23,7 +23,7 @@ public class MockCrystData implements CrystallizationData {
 		userComments = "Mock Object";
 		summaricHeat = 5.7;
 		coolingRate = 10;
-		size =9;
+		size =8;
 		mode = CrystallizationMode.NONISOTHERMAL;
 		
 		relativeX.add(0.005);
@@ -35,13 +35,13 @@ public class MockCrystData implements CrystallizationData {
 		relativeX.add(1.0);
 		relativeX.add(1.0);
 		
-		for(double index=0.0; index<size;index++){
-			relativeTime.add(index);
+		for(int index=0; index<size;index++){
+			relativeTime.add((double)index);
 			temperature.add(180-(index*coolingRate));
 		}
 		peakT = 160;
 	}
-	public void putData(ArrayList<DataTuple> data) {
+	public void injectData(ArrayList<DataTuple> data) {
 		// DO NOTHING
 	}
 	public String getIdentity(){

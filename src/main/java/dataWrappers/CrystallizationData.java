@@ -4,7 +4,7 @@ import java.util.ArrayList;
 //using interface to simplify further testing of models etc.
 public interface CrystallizationData { 
 	
-	public void putData(ArrayList<DataTuple> data);
+	public void injectData(ArrayList<DataTuple> data);
 	public String getIdentity();
 	public void putComment(String input);
 	public String getComments();

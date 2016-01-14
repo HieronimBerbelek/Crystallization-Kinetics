@@ -1,6 +1,6 @@
 package exceptions;
 
-public class NoDataInputException extends Exception {
+public class NoDataException extends RuntimeException {
 
 	/**
 	 * 

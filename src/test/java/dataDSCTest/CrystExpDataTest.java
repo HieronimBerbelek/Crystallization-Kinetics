@@ -17,7 +17,7 @@ public class CrystExpDataTest {
 	static ProteusFileOpener opener;
 	static DataLoader loader;
 	static CrystExpData tested;
-	static String path = ".//resource//test//input file.txt";
+	static String path = ".//resource//test//7,5 test data.txt";
 	
 	@BeforeClass
 	public static void setUpBeforeClass(){
@@ -36,7 +36,7 @@ public class CrystExpDataTest {
 	}
 	@Test
 	public void testCoolingRate(){
-		assertEquals(10.0, tested.getCoolingRate(), 0.001);
+		assertEquals(7.5, tested.getCoolingRate(), 0.001);
 		assertEquals(CrystallizationMode.NONISOTHERMAL, tested.getMode());
 	}
 	@Test
@@ -47,7 +47,7 @@ public class CrystExpDataTest {
 	}
 	@Test
 	public void testData(){
-		int numOfPoints =20;
+		int numOfPoints =28;
 		assertEquals(numOfPoints, tested.getSize());
 		
 		double lowest = tested.getRelativeX().get(0);
@@ -56,5 +56,7 @@ public class CrystExpDataTest {
 			if(tested.getRelativeX().get(index)>largest
 					||tested.getRelativeX().get(index)<lowest) fail("logic error");
 		}
+		System.out.println(tested.getRelativeTime());
+		System.out.println(tested.getRelativeX());
 	}
 }

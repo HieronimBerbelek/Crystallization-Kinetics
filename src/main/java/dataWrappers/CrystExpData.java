@@ -22,16 +22,17 @@ public class CrystExpData implements CrystallizationData {
 		identity = id;
 		size = data.size();
 		summaricHeat=0; //crystallization heat t0->t=inf
-		putData(data);
+		injectData(data);
 	}
-	public void putData(ArrayList<DataTuple> data){
+	public void injectData(ArrayList<DataTuple> data){
 		//heat in crystallization peak, used later
 		double peakHeat = Double.NEGATIVE_INFINITY; 
 		//useful numbers for start
 		double startTime = data.get(0).getTime();
 		double finalTime = data.get(data.size()-1).getTime();
 		double startDsc = data.get(0).getDsc();
-		double finalDsc = data.get(data.size()-1).getDsc();		
+		double finalDsc = data.get(data.size()-1).getDsc();	
+		
 		ArrayList<Double> crystallizationHeat = new ArrayList<Double>();
 		
 		//baseline slope is used to calculate crystallization heat, 

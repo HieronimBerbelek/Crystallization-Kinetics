@@ -2,28 +2,30 @@ package crystallizationModel;
 
 import java.util.ArrayList;
 
-import dataWrappers.CrystExpData;
+import dataWrappers.CrystallizationData;
 import exceptions.DataSizeException;
-import exceptions.NoDataInputException;
+import exceptions.NoDataException;
 import linearRegression.LeastSquaresApprox;
 import linearRegression.LinearApprox;
 
 public class AvramiEquation {
-	private CrystExpData data;
+	private ArrayList<Double> lnTime = new ArrayList<Double>();
+	private ArrayList<Double> Ys = new ArrayList<Double>();
+	private CrystallizationData data;
 	private LinearApprox approximation;
 	private Double coefficient;
 	private Double exponent;
 	private Double certainity;
 
-	public AvramiEquation(CrystExpData input){
+	public AvramiEquation(CrystallizationData input){
 		putData(input);
 		setDefaultApprox();
 	}
-	public AvramiEquation(CrystExpData input, LinearApprox approx){
+	public AvramiEquation(CrystallizationData input, LinearApprox approx){
 		putData(input);
 		putLinearApprox(approx);
 	}
-	private void putData(CrystExpData input){
+	private void putData(CrystallizationData input){
 		data=input;
 	}
 	public void putLinearApprox(LinearApprox approx){
@@ -34,32 +36,49 @@ public class AvramiEquation {
 	}
 	
 	public void calculate() throws DataSizeException{
-
-		if(exponent == null) return; //returns method if model is already calculated
-			
-		ArrayList<Double> lnTime = new ArrayList<Double>();
-		ArrayList<Double> Ys = new ArrayList<Double>();
-		
+		if(exponent != null) return; //returns method if model is already calculated
+		double toLogTime;
+		double toYs;
+		//Avrami plot consist of all points without first(=-INF) and last 2 (=INF)
 		for(int index = 0; index<data.getSize();index++){
-			lnTime.add(Math.log(data.getRelativeTime().get(index)));
-			Ys.add(Math.log10(-Math.log(1-data.getRelativeX().get(index))));
+			toLogTime = (Math.log10(data.getRelativeTime().get(index)));
+			toYs = (Math.log10(-1*Math.log(1-data.getRelativeX().get(index))));
+			
+			if(Double.isInfinite(toLogTime)
+					||Double.isInfinite(toYs)
+					||Double.isNaN(toYs)
+					||Double.isNaN(toLogTime)) 
+				continue;
+			
+			lnTime.add(toLogTime);
+			Ys.add(toYs);
 		}
-		
 		approximation.calculate(lnTime, Ys);
 		exponent = approximation.getSlope();
 		coefficient = Math.pow(10, approximation.getIntercept());
 		certainity = approximation.getCertainity();
 	}
-	public double getExponent() throws NoDataInputException{
-		if(data == null) throw new NoDataInputException();
+	public double getExponent() throws NoDataException{
+		if(exponent == null) throw new NoDataException();
 		return exponent;
 	}
-	public double getCoefficient() throws NoDataInputException{
-		if(data == null) throw new NoDataInputException();
+	public double getCoefficient() throws NoDataException{
+		if(coefficient == null) throw new NoDataException();
 		return coefficient;
 	}
-	public double getCertainity() throws NoDataInputException{
-		if(data == null) throw new NoDataInputException();
+	public double getCertainity() throws NoDataException{
+		if(certainity == null) throw new NoDataException();
 		return certainity;
+	}
+	public ArrayList<Double> getLogTime(){
+		return lnTime;
+	}
+	public ArrayList<Double> getAvramiY(){
+		return Ys;
+	}
+	public String toString(){
+		if(exponent == null) return "Data not calculated yet!";
+		else return ("Coefficient k: "+coefficient+", Exponent n: "+exponent
+				+", Certainity: "+certainity);
 	}
 }

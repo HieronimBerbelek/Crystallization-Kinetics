@@ -14,6 +14,9 @@ public class OzawaModel extends CrystallizationModel {
 	private LinearApprox approximation;
 	private HashMap<Double, ArrayList<Double>> plot;
 	
+	double lowerTempLimit;
+	double upperTempLimit;
+	
 	public OzawaModel(ArrayList<CrystallizationData> data){
 		this.data = data;
 		setDefaultApprox();
@@ -45,6 +48,31 @@ public class OzawaModel extends CrystallizationModel {
 
 	public void calculate() throws DataSizeException{
 		plot = new HashMap<Double, ArrayList<Double>>();
-				
+		setTempLimits();
+		
+	}
+	private void setTempLimits(){
+		lowerTempLimit = Double.NEGATIVE_INFINITY;
+		upperTempLimit = Double.POSITIVE_INFINITY;
+		
+		for(int index=0; index<data.size();index++){
+			for(int index2=0;index2<data.get(index).getSize();index2++){
+				if(super.isInBounds(data.get(index).getRelativeX().get(index2))
+						&&data.get(index).getTemperature().get(index2)>lowerTempLimit){
+					lowerTempLimit = data.get(index).getTemperature().get(index2);
+				}
+				if(super.isAboveUpperLimit(data.get(index).getRelativeX().get(index2))
+						&&data.get(index).getTemperature().get(index2)<upperTempLimit){
+					upperTempLimit = data.get(index).getTemperature().get(index2);
+					break;
+				}
+			}
+		}
+	}
+	public double getLowerTempLimit(){
+		return lowerTempLimit;
+	}
+	public double getUpperTempLimit(){
+		return upperTempLimit;
 	}
 }

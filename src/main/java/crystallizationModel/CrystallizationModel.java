@@ -8,18 +8,18 @@ public abstract class CrystallizationModel {
 	private static double upperLimit = 0.9;
 	
 	public static void setLowerLimit(double d){
-		if(d<=1.0 && d<getUpperLimit()) lowerLimit = d;
+		if(d<=1.0 && d<upperLimit) lowerLimit = d;
 		else throw new ConversionLimitException();
 	}
 	public static void setUpperlimit(double d){
-		if(d<=1.0 && d>getLowerLimit()) upperLimit = d;
+		if(d<=1.0 && d>lowerLimit) upperLimit = d;
 		else throw new ConversionLimitException();
 	}
-	protected static double getUpperLimit() {
-		return upperLimit;
+	protected static boolean isAboveUpperLimit(double d) {
+		return (d<upperLimit);
 	}
-	protected static double getLowerLimit() {
-		return lowerLimit;
+	protected static boolean isBelowLowerLimit(double d) {
+		return (d>lowerLimit);
 	}
 	protected static boolean isInBounds(double d){
 		return (d<upperLimit && d>lowerLimit);

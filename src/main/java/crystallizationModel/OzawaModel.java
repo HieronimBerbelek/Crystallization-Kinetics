@@ -10,9 +10,14 @@ import linearRegression.LeastSquaresApprox;
 import linearRegression.LinearApprox;
 
 public class OzawaModel extends CrystallizationModel {
+	private final static int two = 2;
+	private final static int three = 3;
+	private final static int five = 5;
+	private final static int ten = 10;
 	private ArrayList<CrystallizationData> data;
 	private LinearApprox approximation;
 	private HashMap<Double, ArrayList<Double>> plot;
+	private ArrayList<Double> Xs; //log10(coolingRate) list
 	
 	double lowerTempLimit;
 	double upperTempLimit;
@@ -47,27 +52,51 @@ public class OzawaModel extends CrystallizationModel {
 	}
 
 	public void calculate() throws DataSizeException{
-		plot = new HashMap<Double, ArrayList<Double>>();
-		setTempLimits();
-		
+		initXs();
+		initTempLimits();
+		initPlot(createTemperaturesList());
 	}
-	private void setTempLimits(){
-		lowerTempLimit = Double.NEGATIVE_INFINITY;
-		upperTempLimit = Double.POSITIVE_INFINITY;
+	private void initTempLimits(){
+		upperTempLimit = Double.NEGATIVE_INFINITY;
+		lowerTempLimit = Double.POSITIVE_INFINITY;
 		
+		//iterating through all data series
 		for(int index=0; index<data.size();index++){
-			for(int index2=0;index2<data.get(index).getSize();index2++){
+			
+			//one iterator for each data serie
+			int index2=0;
+			//iterate through data serie, upperTempLimit first because 
+			//temperatures are decreasing with time
+			for(;index2<data.get(index).getSize();index2++){
 				if(super.isInBounds(data.get(index).getRelativeX().get(index2))
-						&&data.get(index).getTemperature().get(index2)>lowerTempLimit){
-					lowerTempLimit = data.get(index).getTemperature().get(index2);
-				}
-				if(super.isAboveUpperLimit(data.get(index).getRelativeX().get(index2))
-						&&data.get(index).getTemperature().get(index2)<upperTempLimit){
+						&&data.get(index).getTemperature().get(index2)>upperTempLimit){
 					upperTempLimit = data.get(index).getTemperature().get(index2);
 					break;
 				}
 			}
+			for(;index2<data.get(index).getSize();index2++){
+				if(super.isAboveUpperLimit(data.get(index).getRelativeX().get(index2))
+						&&data.get(index).getTemperature().get(index2)<lowerTempLimit){
+					lowerTempLimit = data.get(index).getTemperature().get(index2);
+					break;
+				}
+			}
 		}
+	}
+	private void initXs(){
+		Xs = new ArrayList<Double>();
+		for(int index=0;index<data.size();index++){
+			Xs.add(Math.log10(data.get(index).getCoolingRate()));
+		}
+	}
+	private ArrayList<Integer> createTemperaturesList(){
+		ArrayList<Integer> temperatures = new ArrayList<Integer>();
+		double range = upperTempLimit - lowerTempLimit;
+		
+		return temperatures;
+	}
+	private void initPlot(ArrayList<Integer> temperatures){
+		plot = new HashMap<Double, ArrayList<Double>>();
 	}
 	public double getLowerTempLimit(){
 		return lowerTempLimit;

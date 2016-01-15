@@ -9,10 +9,8 @@ import exceptions.NoDataException;
 import linearRegression.LeastSquaresApprox;
 import linearRegression.LinearApprox;
 
-public class AvramiModel {
+public class AvramiModel extends CrystallizationModel {
 	//conversion limits, essential for good data fit
-	private static double lowerLimit = 0.05;
-	private static double upperLimit = 0.9;
 	private ArrayList<Double> lnTime = new ArrayList<Double>();
 	private ArrayList<Double> Ys = new ArrayList<Double>();
 	private CrystallizationData data;
@@ -21,14 +19,6 @@ public class AvramiModel {
 	private Double exponent;
 	private Double certainity;
 
-	public static void setLowerLimit(double d){
-		if(d<=1.0 && d<upperLimit) lowerLimit = d;
-		else throw new ConversionLimitException();
-	}
-	public static void setUpperlimit(double d){
-		if(d<=1.0 && d>lowerLimit) upperLimit = d;
-		else throw new ConversionLimitException();
-	}
 	public AvramiModel(CrystallizationData input){
 		putData(input);
 		setDefaultApprox();
@@ -37,7 +27,7 @@ public class AvramiModel {
 		putData(input);
 		putLinearApprox(approx);
 	}
-	private void putData(CrystallizationData input){
+	public void putData(CrystallizationData input){
 		data=input;
 	}
 	public void putLinearApprox(LinearApprox approx){
@@ -51,10 +41,10 @@ public class AvramiModel {
 		if(exponent != null) return; //returns method if model is already calculated
 		double toLogTime;
 		double toYs;
-		//Avrami plot consist of all points without first(=-INF) and last 2 (=INF)
+		//Avrami plot consist of points with limited conversion to crystalline phase
+		//limits come from super class CrystallizationModel
 		for(int index = 0; index<data.getSize();index++){
-			if (data.getRelativeX().get(index)<upperLimit
-					&& data.getRelativeX().get(index)>lowerLimit) {
+			if (super.isInBounds(data.getRelativeX().get(index))) {
 				toLogTime = (Math.log10(data.getRelativeTime().get(index)));
 				toYs = (Math.log10(-1 * Math.log(1 - data.getRelativeX().get(index))));
 				//lower and upper limit should get nonfinite values, but for certainity:

@@ -17,9 +17,9 @@ public class OzawaModelTest {
 	OzawaModel tested;
 	@Test
 	public void testThreeFiles() {
-		String path1 = ".//resource//test//test PURE 10K.txt";
-		String path2 = ".//resource//test//test PURE 5K.txt";
-		String path3 = ".//resource//test//test PURE 7,5K.txt";
+		String path1 = ".//resource//test//test PURE 5K.txt";
+		String path2 = ".//resource//test//test PURE 7,5K.txt";
+		String path3 = ".//resource//test//test PURE 10K.txt";
 		try {
 			ProteusFileOpener opener1 = new ProteusFileOpener(path1);
 			ProteusFileOpener opener2 = new ProteusFileOpener(path2);
@@ -39,6 +39,11 @@ public class OzawaModelTest {
 			
 			tested.calculate();
 			limitsAssertions();
+			
+			tested.printPlot();
+			System.out.println(tested.getAvgSlope());
+			System.out.println(tested.getAvgIntercept());
+			System.out.println(tested.getAvgCertainity());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -80,10 +85,8 @@ public class OzawaModelTest {
 		}
 	}
 	private void limitsAssertions(){
-		//assertTrue(Double.isFinite(tested.getLowerTempLimit()));
-		System.out.println(tested.getLowerTempLimit());	
-		//assertTrue(Double.isFinite(tested.getUpperTempLimit()));
-		System.out.println(tested.getUpperTempLimit()+"\n");
+		assertTrue(Double.isFinite(tested.getLowerTempLimit()));
+		assertTrue(Double.isFinite(tested.getUpperTempLimit()));
 	}
 
 }

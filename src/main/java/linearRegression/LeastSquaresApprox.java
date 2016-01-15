@@ -9,6 +9,7 @@ public class LeastSquaresApprox implements LinearApprox {
 	private Double intercept;
 	private Double certainity;
 
+
 	public LeastSquaresApprox(){
 	}
 	public LeastSquaresApprox(ArrayList<Double> x, ArrayList<Double>y) throws DataSizeException{
@@ -63,5 +64,7 @@ public class LeastSquaresApprox implements LinearApprox {
 		else
 			return "Slope: "+slope+", Intercept: "+intercept+", certainity: "+certainity;
 	}
-
+	public double interpole(int arg,double t1, double rel1, double t2, double rel2){
+		return (rel1+((arg-t1)*((rel2-rel1)/(t2-t1))));
+	}
 }

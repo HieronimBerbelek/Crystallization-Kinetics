@@ -23,7 +23,10 @@ LeastSquaresApprox tested = new LeastSquaresApprox();
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(tested);
+	}
+	@Test
+	public void testInterpole(){
+		assertEquals(15, tested.interpole(4, 2, 10, 6, 20), 0.1);
 	}
 
 }

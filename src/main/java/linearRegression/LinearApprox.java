@@ -10,4 +10,5 @@ public interface LinearApprox {
 	public double getSlope();
 	public double getIntercept();
 	public double getCertainity();
+	public double interpole(int arg,double t1, double rel1, double t2, double rel2);
 }

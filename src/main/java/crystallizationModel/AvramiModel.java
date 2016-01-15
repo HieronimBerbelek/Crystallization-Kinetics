@@ -9,7 +9,7 @@ import exceptions.NoDataException;
 import linearRegression.LeastSquaresApprox;
 import linearRegression.LinearApprox;
 
-public class AvramiEquation {
+public class AvramiModel {
 	//conversion limits, essential for good data fit
 	private static double lowerLimit = 0.05;
 	private static double upperLimit = 0.9;
@@ -29,11 +29,11 @@ public class AvramiEquation {
 		if(d<=1.0 && d>lowerLimit) upperLimit = d;
 		else throw new ConversionLimitException();
 	}
-	public AvramiEquation(CrystallizationData input){
+	public AvramiModel(CrystallizationData input){
 		putData(input);
 		setDefaultApprox();
 	}
-	public AvramiEquation(CrystallizationData input, LinearApprox approx){
+	public AvramiModel(CrystallizationData input, LinearApprox approx){
 		putData(input);
 		putLinearApprox(approx);
 	}

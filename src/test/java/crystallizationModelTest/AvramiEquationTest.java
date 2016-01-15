@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import crystallizationModel.AvramiEquation;
+import crystallizationModel.AvramiModel;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
@@ -16,7 +16,7 @@ public class AvramiEquationTest {
 
 	@Test
 	public void testMock() {
-		AvramiEquation tested = new AvramiEquation(new MockCrystData());
+		AvramiModel tested = new AvramiModel(new MockCrystData());
 		try {
 			tested.calculate();
 		} catch (DataSizeException e) {	e.printStackTrace();}
@@ -31,7 +31,7 @@ public class AvramiEquationTest {
 			ProteusFileOpener opener = new ProteusFileOpener(path);
 			DataLoader loader = new DataLoader(opener);
 			loader.loadNumericData();
-			AvramiEquation tested = new AvramiEquation(loader.getDataObj());
+			AvramiModel tested = new AvramiModel(loader.getDataObj());
 			tested.calculate();
 			//System.out.println(tested.getLogTime());	
 			System.out.println(tested);		

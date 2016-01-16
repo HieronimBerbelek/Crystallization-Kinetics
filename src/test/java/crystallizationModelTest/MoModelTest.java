@@ -39,10 +39,7 @@ public class MoModelTest {
 			tested.putData(loader.getDataObj());
 			tested.calculate();
 			
-			tested.printPlot();
-			System.out.println(tested.getCoefficientsB());
-			System.out.println(tested.getCoefficientsFT());
-			System.out.println(tested.getCertainities());			
+			tested.printPlot();		
 			
 	} catch (IOException e) {
 		// TODO Auto-generated catch block

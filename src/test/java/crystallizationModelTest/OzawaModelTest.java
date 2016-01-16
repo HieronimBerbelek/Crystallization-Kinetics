@@ -41,7 +41,7 @@ public class OzawaModelTest {
 			limitsAssertions();
 			
 			tested.printPlot();
-			System.out.println(tested.getAvgSlope());
+			System.out.println("\n"+tested.getAvgSlope());
 			System.out.println(tested.getAvgIntercept());
 			System.out.println(tested.getAvgCertainity());
 			

@@ -18,16 +18,17 @@ public class OzawaModel extends CrystallizationModel {
 	private final static int FIVE = 5;
 	private final static int EIGHT = 8;
 	private final static int TEN = 10;
-	private final static int MIN_NUM_OF_LINES = 4;
+	
+	private int minNumOfLines = 10;
 	
 	private ArrayList<CrystallizationData> data;
 	private LinearApprox approximation;
 	private HashMap<Integer, ArrayList<Double>> plot; //multiple Ys
 	private ArrayList<Double> Xs; //log10(coolingRate) list
-	private ArrayList<Double> slopes;
-	private double avgSlope=0;
-	private ArrayList<Double> interceptions;
-	private double avgIntercept=0;
+	private ArrayList<Double> exponents;
+	private double avgExponent=0;
+	private ArrayList<Double> coefficients;
+	private double avgCoefficient=0;
 	private ArrayList<Double> certainities;
 	private double avgCertainity=0;
 	
@@ -109,11 +110,12 @@ public class OzawaModel extends CrystallizationModel {
 		
 		int startT=0;
 		int deltaT=0;
-		if((range/TEN)>MIN_NUM_OF_LINES) deltaT=TEN;
-		else if ((range/EIGHT)>MIN_NUM_OF_LINES) deltaT=EIGHT;
-		else if ((range/FIVE)>MIN_NUM_OF_LINES) deltaT=FIVE;
-		else if ((range/THREE)>MIN_NUM_OF_LINES) deltaT=THREE;
-		else if ((range/TWO)>MIN_NUM_OF_LINES) deltaT=TWO;
+		if((range/TEN)>minNumOfLines) deltaT=TEN;
+		else if ((range/EIGHT)>minNumOfLines) deltaT=EIGHT;
+		else if ((range/FIVE)>minNumOfLines) deltaT=FIVE;
+		else if ((range/THREE)>minNumOfLines) deltaT=THREE;
+		else if ((range/TWO)>minNumOfLines) deltaT=TWO;
+		else if ((range/ONE)>minNumOfLines) deltaT=ONE;
 		else throw new OzawaModelRangeException();
 		
 		for(int index = (int)lowerTempLimit+1;index<upperTempLimit;index++){
@@ -140,6 +142,7 @@ public class OzawaModel extends CrystallizationModel {
 								data.get(index2).getRelativeX().get(index3-1), 
 								data.get(index2).getTemperature().get(index3), 
 								data.get(index2).getRelativeX().get(index3));
+						input = (Math.log10(-1 * Math.log(input)));
 						plot.get(temperatures.get(index)).add(input);
 						break;
 						}
@@ -156,8 +159,8 @@ public class OzawaModel extends CrystallizationModel {
 		**/
 	}
 	private void initParameters(){
-		slopes = new ArrayList<Double>();
-		interceptions = new ArrayList<Double>();
+		exponents = new ArrayList<Double>();
+		coefficients = new ArrayList<Double>();
 		certainities = new ArrayList<Double>();
 		Set<Integer> keys = plot.keySet();
 		for(Integer i : keys){
@@ -167,15 +170,15 @@ public class OzawaModel extends CrystallizationModel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			slopes.add(approximation.getSlope());
-			avgSlope += approximation.getSlope();
-			interceptions.add(approximation.getIntercept());
-			avgIntercept +=approximation.getIntercept();
+			exponents.add(approximation.getSlope());
+			avgExponent += approximation.getSlope();
+			coefficients.add(Math.pow(10, approximation.getIntercept()));
+			avgCoefficient +=Math.pow(10, approximation.getIntercept());
 			certainities.add(approximation.getCertainity());
 			avgCertainity += approximation.getCertainity();
 		}
-		avgSlope /= slopes.size();
-		avgIntercept /= interceptions.size();
+		avgExponent /= exponents.size();
+		avgCoefficient /= coefficients.size();
 		avgCertainity /= certainities.size();
 	}
 	
@@ -189,21 +192,29 @@ public class OzawaModel extends CrystallizationModel {
 		System.out.println(plot);
 	}
 	public ArrayList<Double> getSlopes(){
-		return slopes;
+		return exponents;
 	}
 	public double getAvgSlope(){
-		return avgSlope;
+		return avgExponent;
 	}
 	public ArrayList<Double> getIntercepts(){
-		return interceptions;
+		return coefficients;
 	}
 	public double getAvgIntercept(){
-		return avgIntercept;
+		return avgCoefficient;
 	}
 	public ArrayList<Double> getCertainities(){
 		return certainities;
 	}
 	public double getAvgCertainity(){
 		return avgCertainity;
+	}
+	public void setMinNumOfLines(int d){
+		if(d<upperTempLimit-lowerTempLimit) minNumOfLines=d;
+		else throw new OzawaModelRangeException();
+	}
+	
+	public ArrayList<Double> getXs(){
+		return Xs;
 	}
 }

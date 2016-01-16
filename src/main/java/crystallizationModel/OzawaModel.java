@@ -3,7 +3,6 @@ package crystallizationModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import dataWrappers.CrystallizationData;
 import exceptions.DataSizeException;
@@ -68,8 +67,8 @@ public class OzawaModel extends CrystallizationModel {
 	public void calculate() throws DataSizeException{
 		initXs();
 		initTempLimits();
-		initPlot(createTemperaturesList());
-		initParameters();
+		initPlot(createSeriesList());
+		initLinearity();
 	}
 	private void initTempLimits(){
 		upperTempLimit = Double.NEGATIVE_INFINITY;
@@ -104,7 +103,7 @@ public class OzawaModel extends CrystallizationModel {
 			Xs.add(Math.log10(data.get(index).getCoolingRate()));
 		}
 	}
-	private ArrayList<Integer> createTemperaturesList(){
+	public ArrayList<Integer> createSeriesList(){
 		ArrayList<Integer> temperatures = new ArrayList<Integer>();
 		double range = upperTempLimit - lowerTempLimit;
 		
@@ -158,18 +157,13 @@ public class OzawaModel extends CrystallizationModel {
 		 * then it is put to list in plot for temperature
 		**/
 	}
-	private void initParameters(){
+	private void initLinearity() throws DataSizeException{
 		exponents = new ArrayList<Double>();
 		coefficients = new ArrayList<Double>();
 		certainities = new ArrayList<Double>();
-		Set<Integer> keys = plot.keySet();
-		for(Integer i : keys){
-			try {
-				approximation.calculate(Xs, plot.get(i));
-			} catch (DataSizeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		for(Integer i : plot.keySet()){
+			approximation.calculate(Xs, plot.get(i));
+
 			exponents.add(approximation.getSlope());
 			avgExponent += approximation.getSlope();
 			coefficients.add(Math.pow(10, approximation.getIntercept()));

@@ -64,7 +64,10 @@ public class LeastSquaresApprox implements LinearApprox {
 		else
 			return "Slope: "+slope+", Intercept: "+intercept+", certainity: "+certainity;
 	}
-	public double interpole(int arg,double t1, double rel1, double t2, double rel2){
-		return (rel1+((arg-t1)*((rel2-rel1)/(t2-t1))));
+	public double interpole(int arg,double x1, double y1, double x2, double y2){
+		return (y1+((arg-x1)*((y2-y1)/(x2-x1))));
+	}
+	public double interpole(double arg,double x1, double y1, double x2, double y2){
+		return (y1+((arg-x1)*((y2-x1)/(y2-x1))));
 	}
 }

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import crystallizationModel.AvramiModel;
 import crystallizationModel.OzawaModel;
+import crystallizationModel.OzawaResults;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
@@ -39,6 +40,8 @@ public class OzawaModelTest {
 			
 			tested.calculate();
 			limitsAssertions();
+			OzawaResults result = tested.calculate();
+			System.out.println(result.extendedOutput());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

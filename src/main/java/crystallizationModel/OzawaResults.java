@@ -3,7 +3,7 @@ package crystallizationModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class OzawaResults {
+public class OzawaResults implements ModelOutput {
 	private HashMap<Integer, ArrayList<Double>> plot; //multiple Ys
 	private ArrayList<Double> xs; //log10(coolingRate) list
 	private ArrayList<Double> exponents;
@@ -12,6 +12,7 @@ public class OzawaResults {
 	private double avgCoefficient=0;
 	private ArrayList<Double> certainities;
 	private double avgCertainity=0;
+	private String identity;
 	
 	public OzawaResults(
 			HashMap<Integer, ArrayList<Double>> plot, 
@@ -21,7 +22,8 @@ public class OzawaResults {
 			ArrayList<Double> coefficients, 
 			double avgCoefficient, 
 			ArrayList<Double> certainities,
-			double avgCertainity) {
+			double avgCertainity,
+			String identity) {
 		this.plot = plot;
 		this.xs = xs;
 		this.exponents = exponents;
@@ -30,6 +32,7 @@ public class OzawaResults {
 		this.avgCoefficient = avgCoefficient;
 		this.certainities = certainities;
 		this.avgCertainity = avgCertainity;
+		this.identity = identity;
 	}
 
 	public HashMap<Integer, ArrayList<Double>> getPlot() {
@@ -62,6 +65,29 @@ public class OzawaResults {
 
 	public double getAvgCertainity() {
 		return avgCertainity;
+	}
+
+	public String getIdentity() {
+		return identity;
+	}
+
+	public String basicOutput() {
+		return null;
+	}
+
+	public String extendedOutput() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(identity+"\n");
+		for(Integer temp : plot.keySet()){
+			builder.append(temp+"\t\t\n");
+			for(int index=0, index2=0;index<xs.size();index++){
+				builder.append("\t"+xs.get(index)+"\t"
+						+plot.get(temp).get(index2)+"\n");
+				if(index2==plot.get(temp).size()-1) index2=0;
+				else index2++;
+			}
+		}
+		return builder.toString();
 	}
 	
 }

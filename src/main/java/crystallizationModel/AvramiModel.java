@@ -57,6 +57,7 @@ public class AvramiModel extends CrystallizationModel {
 		exponent = approximation.getSlope();
 		coefficient = Math.pow(10, approximation.getIntercept());
 		certainity = approximation.getCertainity();
-		return new AvramiResult(lnTime, ys, coefficient, exponent, certainity);
+		return new AvramiResult(lnTime, ys, coefficient, exponent, 
+				certainity, data.getIdentity());
 	}
 }

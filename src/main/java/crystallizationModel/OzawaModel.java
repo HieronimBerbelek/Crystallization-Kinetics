@@ -30,7 +30,7 @@ public class OzawaModel extends CrystallizationModel {
 	private double avgCoefficient=0;
 	private ArrayList<Double> certainities;
 	private double avgCertainity=0;
-	
+	private String identity;
 	
 	private double lowerTempLimit;
 	private double upperTempLimit;
@@ -69,6 +69,7 @@ public class OzawaModel extends CrystallizationModel {
 		initTempLimits();
 		initPlot(createSeriesList());
 		initLinearity();
+		initIdentity();
 		return new OzawaResults(
 			plot, 
 			Xs, 
@@ -77,7 +78,12 @@ public class OzawaModel extends CrystallizationModel {
 			coefficients, 
 			avgCoefficient, 
 			certainities,
-			avgCertainity);
+			avgCertainity,
+			identity);
+	}
+	private void initIdentity() {
+		int endIndex = data.get(0).getIdentity().lastIndexOf(" ");
+		identity=data.get(0).getIdentity().substring(0, endIndex);
 	}
 	private void initTempLimits(){
 		upperTempLimit = Double.NEGATIVE_INFINITY;

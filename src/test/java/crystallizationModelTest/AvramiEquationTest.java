@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import crystallizationModel.AvramiModel;
+import crystallizationModel.AvramiResult;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
@@ -18,11 +19,10 @@ public class AvramiEquationTest {
 	public void testMock() {
 		AvramiModel tested = new AvramiModel(new MockCrystData());
 		try {
-			tested.calculate();
-		} catch (DataSizeException e) {	e.printStackTrace();}
-		assertEquals(5, tested.getAvramiY().size());
-		//checks for null pointer exception too
-		assertNotEquals(0, tested.getCoefficient());
+			AvramiResult result = tested.calculate();
+			assertEquals(5, result.getAvramiY().size());
+			assertNotEquals(0, result.getCoefficient());
+		} catch (DataSizeException e) {	e.printStackTrace();}		
 	}
 	@Test
 	public void testFile(){
@@ -33,8 +33,6 @@ public class AvramiEquationTest {
 			loader.loadNumericData();
 			AvramiModel tested = new AvramiModel(loader.getDataObj());
 			tested.calculate();
-			//System.out.println(tested.getLogTime());	
-			System.out.println(tested);		
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

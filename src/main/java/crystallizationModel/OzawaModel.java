@@ -18,7 +18,7 @@ public class OzawaModel extends CrystallizationModel {
 	private final static int EIGHT = 8;
 	private final static int TEN = 10;
 	
-	private int minNumOfLines = 10;
+	private int minNumOfLines = 5;
 	
 	private ArrayList<CrystallizationData> data;
 	private LinearApprox approximation;

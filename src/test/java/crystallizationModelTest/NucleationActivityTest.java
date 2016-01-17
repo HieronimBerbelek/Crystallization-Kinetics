@@ -59,7 +59,6 @@ public class NucleationActivityTest {
 			nucleated.add(loader.getDataObj());
 			
 			tested = new NucleationActivity(neat, nucleated);
-			tested.calculate(220, 228);
 			
 	} catch (IOException e) {
 		// TODO Auto-generated catch block

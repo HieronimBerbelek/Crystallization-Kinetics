@@ -81,14 +81,14 @@ public class OzawaModel extends CrystallizationModel {
 			int index2=0;
 			//iterate through data serie, upperTempLimit first because 
 			//temperatures are decreasing with time
-			for(;index2<data.get(index).getSize();index2++){
+			for(;index2<data.get(index).size();index2++){
 				if(super.isInBounds(data.get(index).getRelativeX().get(index2))
 						&&data.get(index).getTemperature().get(index2)>upperTempLimit){
 					upperTempLimit = data.get(index).getTemperature().get(index2);
 					break;
 				}
 			}
-			for(;index2<data.get(index).getSize();index2++){
+			for(;index2<data.get(index).size();index2++){
 				if(super.isAboveUpperLimit(data.get(index).getRelativeX().get(index2))
 						&&data.get(index).getTemperature().get(index2)<lowerTempLimit){
 					lowerTempLimit = data.get(index).getTemperature().get(index2);
@@ -133,7 +133,7 @@ public class OzawaModel extends CrystallizationModel {
 		for(int index=0;index<temperatures.size();index++){ //iterate through temperatures
 			plot.put(temperatures.get(index), new ArrayList<Double>());
 			for(int index2=0;index2 < data.size();index2++){  //iterate through data series
-				for(int index3=0;index3 < data.get(index2).getSize();index3++){ 
+				for(int index3=0;index3 < data.get(index2).size();index3++){ 
 					//iterate through single serie
 					if(data.get(index2).getTemperature().get(index3)<temperatures.get(index)){
 						double input = approximation.interpole(temperatures.get(index),

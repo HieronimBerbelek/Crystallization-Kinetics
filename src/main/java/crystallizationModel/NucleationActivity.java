@@ -15,6 +15,7 @@ public class NucleationActivity {
 	private double neatMeltingT;
 	private double nucleatedMeltingT;
 	private ArrayList<Double> Ys; //ln(coolingRate) list
+
 	private LinearApprox approximation;
 	
 	private double neatCertainity;
@@ -59,8 +60,8 @@ public class NucleationActivity {
 			ArrayList<CrystallizationData> nucleated){
 		Ys = new ArrayList<Double>();
 		for(int index=0;index<neat.size();index++){
-			if(neat.get(index).getCoolingRate()
-					==nucleated.get(index).getCoolingRate()){
+			if((int)neat.get(index).getCoolingRate()
+					==(int)nucleated.get(index).getCoolingRate()){
 				Ys.add(Math.log(neat.get(index).getCoolingRate()));
 			}
 		}
@@ -79,9 +80,16 @@ public class NucleationActivity {
 			xOfNucleated.add(1/(nucleatedUC*nucleatedUC));
 		}
 	}
-	public void calculate(double neat, double nucleated) throws DataSizeException{
+	public NucleationResults calculate(double neat, double nucleated) throws DataSizeException{
 		initXs(neat, nucleated);
 		initLinearity();
+		return new NucleationResults (
+				xOfNeat,
+				xOfNucleated,
+				Ys,
+				neatCertainity,
+				nucleatedCertainity,
+				nucleationActivity);
 	}
 	private void initLinearity() throws DataSizeException {
 		double neatSlope;

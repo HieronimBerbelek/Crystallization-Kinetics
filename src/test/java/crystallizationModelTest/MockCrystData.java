@@ -74,7 +74,7 @@ public class MockCrystData implements CrystallizationData {
 	public CrystallizationMode getMode(){
 		return mode;
 	}
-	public int getSize(){
+	public int size(){
 		return size;
 	}
 }

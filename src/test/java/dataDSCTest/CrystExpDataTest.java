@@ -48,11 +48,11 @@ public class CrystExpDataTest {
 	@Test
 	public void testData(){
 		int numOfPoints =28;
-		assertEquals(numOfPoints, tested.getSize());
+		assertEquals(numOfPoints, tested.size());
 		
 		double lowest = tested.getRelativeX().get(0);
 		double largest = tested.getRelativeX().get(numOfPoints-1);
-		for(int index=1; index<tested.getSize();index++){
+		for(int index=1; index<tested.size();index++){
 			if(tested.getRelativeX().get(index)>largest
 					||tested.getRelativeX().get(index)<lowest) fail("DATA ERROR");
 		}

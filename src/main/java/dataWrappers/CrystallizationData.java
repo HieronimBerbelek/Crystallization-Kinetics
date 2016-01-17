@@ -15,5 +15,5 @@ public interface CrystallizationData {
 	public ArrayList<Double> getTemperature();
 	public double getPeakTemperature();
 	public CrystallizationMode getMode();
-	public int getSize();
+	public int size();
 }

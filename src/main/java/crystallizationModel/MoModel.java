@@ -102,7 +102,7 @@ public class MoModel extends CrystallizationModel {
 			plot.put(series.get(index), new ArrayList<Double>());
 			for(int index2 = 0;index2<data.size();index2++){	//iterate through data series
 				//iterate through single serie
-				for(int index3=0;index3<data.get(index2).getSize();index3++){
+				for(int index3=0;index3<data.get(index2).size();index3++){
 					if(data.get(index2).getRelativeX().get(index3)>series.get(index)){
 						double input = approximation.interpole(series.get(index), 
 								data.get(index2).getRelativeX().get(index3), 

@@ -43,7 +43,7 @@ public class AvramiModel extends CrystallizationModel {
 		double toYs;
 		//Avrami plot consist of points with limited conversion to crystalline phase
 		//limits come from super class CrystallizationModel
-		for(int index = 0; index<data.getSize();index++){
+		for(int index = 0; index<data.size();index++){
 			if (super.isInBounds(data.getRelativeX().get(index))) {
 				toLogTime = (Math.log10(data.getRelativeTime().get(index)));
 				toYs = (Math.log10(-1 * Math.log(1 - data.getRelativeX().get(index))));

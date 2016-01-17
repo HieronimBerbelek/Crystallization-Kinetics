@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import crystallizationModel.MoModel;
+import crystallizationModel.MoResult;
 import crystallizationModel.OzawaModel;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
@@ -37,9 +38,8 @@ public class MoModelTest {
 			loader = new DataLoader(opener3);
 			loader.loadNumericData();
 			tested.putData(loader.getDataObj());
-			tested.calculate();
-			
-			tested.printPlot();		
+			MoResult result = tested.calculate();
+			System.out.println(result.getCoefficientsB());
 			
 	} catch (IOException e) {
 		// TODO Auto-generated catch block

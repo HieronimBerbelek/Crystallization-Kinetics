@@ -51,10 +51,19 @@ public class MoModel extends CrystallizationModel {
 		approximation = new LeastSquaresApprox();
 	}
 	
-	public void calculate() throws DataSizeException{
+	public MoResult calculate() throws DataSizeException{
 		initYs();
 		initPlot(createSeriesList());
 		initLinearity();
+		return new MoResult(
+				plot,
+				Ys,
+				coefficientsB,
+				avgCoeffB,
+				coefficientsFT,
+				avgCoeffFT,
+				certainities,
+				avgCertainity);
 	}
 	private void initLinearity() throws DataSizeException {
 		coefficientsB = new ArrayList<Double>();
@@ -80,7 +89,7 @@ public class MoModel extends CrystallizationModel {
 			Ys.add(Math.log10(data.get(index).getCoolingRate()));
 		}
 	}
-	public ArrayList<Double> createSeriesList(){
+	private ArrayList<Double> createSeriesList(){
 		ArrayList<Double> series = new ArrayList<Double>();
 		int delta;
 		int percentLowerLimit = (int)(super.getLowerLimit()*100);
@@ -125,28 +134,5 @@ public class MoModel extends CrystallizationModel {
 		 * then it is put to list in plot for temperature
 		**/
 	}
-	public ArrayList<Double> getYs(){
-		return Ys;
-	}
-	public void printPlot(){
-		System.out.println(plot);
-	}
-	public ArrayList<Double> getCoefficientsB() {
-		return coefficientsB;
-	}
-	public double getAvgCoeffB() {
-		return avgCoeffB;
-	}
-	public ArrayList<Double> getCoefficientsFT() {
-		return coefficientsFT;
-	}
-	public double getAvgCoeffFT() {
-		return avgCoeffFT;
-	}
-	public ArrayList<Double> getCertainities() {
-		return certainities;
-	}
-	public double getAvgCertainity() {
-		return avgCertainity;
-	}
+	
 }

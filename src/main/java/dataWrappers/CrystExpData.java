@@ -127,4 +127,7 @@ public class CrystExpData implements CrystallizationData {
 	public int size(){
 		return size;
 	}
+	public String toString(){
+		return identity;
+	}
 }

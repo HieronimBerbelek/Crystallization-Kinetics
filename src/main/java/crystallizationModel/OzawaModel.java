@@ -32,8 +32,8 @@ public class OzawaModel extends CrystallizationModel {
 	private double avgCertainity=0;
 	
 	
-	double lowerTempLimit;
-	double upperTempLimit;
+	private double lowerTempLimit;
+	private double upperTempLimit;
 	
 	public OzawaModel(ArrayList<CrystallizationData> data){
 		this.data = data;
@@ -64,11 +64,20 @@ public class OzawaModel extends CrystallizationModel {
 		approximation = new LeastSquaresApprox();
 	}
 
-	public void calculate() throws DataSizeException{
+	public OzawaResults calculate() throws DataSizeException{
 		initXs();
 		initTempLimits();
 		initPlot(createSeriesList());
 		initLinearity();
+		return new OzawaResults(
+			plot, 
+			Xs, 
+			exponents,
+			avgExponent, 
+			coefficients, 
+			avgCoefficient, 
+			certainities,
+			avgCertainity);
 	}
 	private void initTempLimits(){
 		upperTempLimit = Double.NEGATIVE_INFINITY;
@@ -103,7 +112,7 @@ public class OzawaModel extends CrystallizationModel {
 			Xs.add(Math.log10(data.get(index).getCoolingRate()));
 		}
 	}
-	public ArrayList<Integer> createSeriesList(){
+	private ArrayList<Integer> createSeriesList(){
 		ArrayList<Integer> temperatures = new ArrayList<Integer>();
 		double range = upperTempLimit - lowerTempLimit;
 		
@@ -182,33 +191,8 @@ public class OzawaModel extends CrystallizationModel {
 	public double getUpperTempLimit(){
 		return upperTempLimit;
 	}
-	public void printPlot(){
-		System.out.println(plot);
-	}
-	public ArrayList<Double> getSlopes(){
-		return exponents;
-	}
-	public double getAvgSlope(){
-		return avgExponent;
-	}
-	public ArrayList<Double> getIntercepts(){
-		return coefficients;
-	}
-	public double getAvgIntercept(){
-		return avgCoefficient;
-	}
-	public ArrayList<Double> getCertainities(){
-		return certainities;
-	}
-	public double getAvgCertainity(){
-		return avgCertainity;
-	}
 	public void setMinNumOfLines(int d){
 		if(d<upperTempLimit-lowerTempLimit) minNumOfLines=d;
 		else throw new OzawaModelRangeException();
-	}
-	
-	public ArrayList<Double> getXs(){
-		return Xs;
 	}
 }

@@ -40,11 +40,6 @@ public class OzawaModelTest {
 			tested.calculate();
 			limitsAssertions();
 			
-			tested.printPlot();
-			System.out.println("\n"+tested.getAvgSlope());
-			System.out.println(tested.getAvgIntercept());
-			System.out.println(tested.getAvgCertainity());
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

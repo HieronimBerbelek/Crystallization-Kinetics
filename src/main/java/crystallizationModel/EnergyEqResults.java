@@ -1,29 +1,34 @@
 package crystallizationModel;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
 import dataWrappers.CrystallizationData;
 import linearRegression.LinearApprox;
 
-public class EnergyEqResults {
+public class EnergyEqResults implements ModelOutput {
+	static final String MODEL_NAME = "ENERGY BARRIER";
 	private Map<Double, ArrayList<Double>> x;
 	private Map<Double, ArrayList<Double>> y;
 	private Map<Double, Double> energyBarriers;
 	private Map<Double, Double> certainities;
 	private double avgCertainity;
+	String identity;
 	
 	public EnergyEqResults(
 			Map<Double, ArrayList<Double>> x,
 			Map<Double, ArrayList<Double>> y,
 			Map<Double, Double> energyBarriers,
 			Map<Double, Double> certainities,
-			double avgCertainity){
+			double avgCertainity,
+			String identity){
 		this.x = x;
 		this.y = y;
 		this.energyBarriers = energyBarriers;
 		this.certainities = certainities;
 		this.avgCertainity = avgCertainity;
+		this.identity = identity;
 	}
 
 	public Map<Double, ArrayList<Double>> getX() {
@@ -44,6 +49,40 @@ public class EnergyEqResults {
 
 	public double getAvgCertainity() {
 		return avgCertainity;
+	}
+
+	public String basicOutput() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(identity+"\n");
+		builder.append("conversion \t EnergyBarrier[kJ/mol] \t certainity \n");
+		for(Double conv : energyBarriers.keySet()){
+			builder.append(String.format("%.2f", (double)conv)+"\t"
+					+energyBarriers.get(conv)+"\t"+certainities.get(conv)+"\n");
+		}
+		builder.append("\nAverage Certainity:"+"\t"+avgCertainity+"\n\n");
+		return builder.toString();
+	}
+
+	public String extendedOutput() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(identity+"\n");
+		builder.append("conversion \t x[1/T] \t y[ln(dX/dT] \n");
+		for(double conv : x.keySet()){
+			builder.append(String.format("%.2f", (double)conv)+"\n");
+			for(int index=0;index<x.get(conv).size();index++){
+				builder.append("\t"+x.get(conv).get(index)
+						+"\t"+y.get(conv).get(index)+"\n");
+			}
+		}
+		return builder.toString();
+	}
+
+	public String getIdentity() {
+		return identity;
+	}
+
+	public String getModelName() {
+		return MODEL_NAME;
 	}
 	
 }

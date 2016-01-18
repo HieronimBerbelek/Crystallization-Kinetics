@@ -19,6 +19,7 @@ public class EnergyEq {
 	private Map<Double, Double> energyBarriers;
 	private Map<Double, Double> certainities;
 	private double avgCertainity;
+	String identity;
 	
 	public EnergyEq(ArrayList<CrystallizationData> data){
 		this.data = data;
@@ -50,9 +51,15 @@ public class EnergyEq {
 	
 	public EnergyEqResults calculate() throws DataSizeException{
 		initSeries();
+		initIdentity();
 		initData();
 		initBarriers();
-		return new EnergyEqResults(x, y, energyBarriers, certainities, avgCertainity);
+		return new EnergyEqResults(x, y, energyBarriers, 
+				certainities, avgCertainity, identity);
+	}
+	private void initIdentity(){
+		int endIndex = data.get(0).getIdentity().lastIndexOf(" ");
+		identity=data.get(0).getIdentity().substring(0, endIndex);
 	}
 	private void initBarriers() throws DataSizeException {
 		avgCertainity =0;

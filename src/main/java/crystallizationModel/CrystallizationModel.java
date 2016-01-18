@@ -5,7 +5,7 @@ import exceptions.ConversionLimitException;
 
 public abstract class CrystallizationModel {
 	private double lowerLimit = 0.05;
-	private double upperLimit = 0.9;
+	private double upperLimit = 0.95;
 	
 	public void setLowerLimit(double d){
 		if(d<=1.0 && d<upperLimit) lowerLimit = d;

@@ -45,6 +45,7 @@ public class DataTuple {
 	public double getSegment() {
 		return segment;
 	}
+	@Override
 	public String toString(){
 		return ("Temperature: "+temperature
 				+" Time: "+time

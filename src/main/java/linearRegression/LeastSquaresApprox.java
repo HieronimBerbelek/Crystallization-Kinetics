@@ -59,6 +59,7 @@ public class LeastSquaresApprox implements LinearApprox {
 	public double getCertainity() {
 		return certainity;
 	}
+	@Override
 	public String toString(){
 		if(slope == null) return "Not calculated yet!";
 		else

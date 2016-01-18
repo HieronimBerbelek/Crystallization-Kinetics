@@ -151,11 +151,15 @@ public class OzawaModel extends CrystallizationModel {
 				for(int index3=0;index3 < data.get(index2).size();index3++){ 
 					//iterate through single serie
 					if(data.get(index2).getTemperature().get(index3)<temperatures.get(index)){
-						double input = approximation.interpole(temperatures.get(index),
-								data.get(index2).getTemperature().get(index3-1), 
-								data.get(index2).getRelativeX().get(index3-1), 
-								data.get(index2).getTemperature().get(index3), 
-								data.get(index2).getRelativeX().get(index3));
+						double input;
+						if (index3>0) {
+							input = approximation.interpole(temperatures.get(index),
+									data.get(index2).getTemperature().get(index3 - 1),
+									data.get(index2).getRelativeX().get(index3 - 1),
+									data.get(index2).getTemperature().get(index3),
+									data.get(index2).getRelativeX().get(index3));
+						}
+						else input = data.get(index2).getRelativeX().get(index3);
 						input = (Math.log10(-1 * Math.log(input)));
 						plot.get(temperatures.get(index)).add(input);
 						break;

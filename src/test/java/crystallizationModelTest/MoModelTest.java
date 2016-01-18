@@ -1,14 +1,11 @@
 package crystallizationModelTest;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 
 import org.junit.Test;
 
 import crystallizationModel.MoModel;
 import crystallizationModel.MoResults;
-import crystallizationModel.OzawaModel;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;

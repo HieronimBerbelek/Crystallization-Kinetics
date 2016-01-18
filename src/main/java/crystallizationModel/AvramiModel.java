@@ -3,9 +3,7 @@ package crystallizationModel;
 import java.util.ArrayList;
 
 import dataWrappers.CrystallizationData;
-import exceptions.ConversionLimitException;
 import exceptions.DataSizeException;
-import exceptions.NoDataException;
 import linearRegression.LeastSquaresApprox;
 import linearRegression.LinearApprox;
 

@@ -2,7 +2,10 @@ package dataWrappers;
 
 import java.util.ArrayList;
 
-public class CrystExpData implements CrystallizationData {
+import crystallizationModel.ModelOutput;
+
+public class CrystExpData implements CrystallizationData, ModelOutput {
+	static final String MODEL_NAME = "CRYSTALLIZATION";
 	//data lists
 	private ArrayList<Double> relativeX = new ArrayList<Double>();
 	private ArrayList<Double> relativeTime = new ArrayList<Double>();
@@ -127,7 +130,26 @@ public class CrystExpData implements CrystallizationData {
 	public int size(){
 		return size;
 	}
+	@Override
 	public String toString(){
 		return identity;
+	}
+	public String basicOutput() {
+		return (identity+"\t"+new Double(peakT).toString()+"\n");
+	}
+	public String extendedOutput() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(identity+"\n");
+		builder.append("\tRelative time \t temperature \t RelativeX \n");
+		for(int index = 0; index<temperature.size();index+=50){
+			builder.append("\t"+String.format("%.5f", relativeTime.get(index))+"\t"
+						+String.format("%.2f",temperature.get(index))
+						+"\t"+relativeX.get(index)+"\n");
+		}
+		builder.append("\n\n");
+		return builder.toString();
+	}
+	public String getModelName() {
+		return MODEL_NAME;
 	}
 }

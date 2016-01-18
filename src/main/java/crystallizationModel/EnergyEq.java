@@ -10,6 +10,7 @@ import linearRegression.LeastSquaresApprox;
 import linearRegression.LinearApprox;
 
 public class EnergyEq {
+	static final int range = 15;
 	static final double DELTA_REL = 0.05; //delta between data series
 	static final double constantR = 8.3144598;
 	private ArrayList<CrystallizationData> data;
@@ -92,8 +93,8 @@ public class EnergyEq {
 				if(data.getRelativeX().get(index2)>threshold){
 					x.get(threshold).add(toX(data.getTemperature().get(index2)));
 					y.get(threshold).add(toY(
-							data.getRelativeTime().get(index2-10),
-							data.getRelativeX().get(index2-10),
+							data.getRelativeTime().get(index2-range),
+							data.getRelativeX().get(index2-range),
 							data.getRelativeTime().get(index2),
 							data.getRelativeX().get(index2)));
 					threshold +=DELTA_REL;

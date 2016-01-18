@@ -1,14 +1,11 @@
 package crystallizationModelTest;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 
 import org.junit.Test;
 
 import crystallizationModel.EnergyEq;
 import crystallizationModel.EnergyEqResults;
-import crystallizationModel.MoModel;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;

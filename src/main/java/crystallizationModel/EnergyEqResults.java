@@ -1,11 +1,7 @@
 package crystallizationModel;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Map;
-
-import dataWrappers.CrystallizationData;
-import linearRegression.LinearApprox;
 
 public class EnergyEqResults implements ModelOutput {
 	static final String MODEL_NAME = "ENERGY BARRIER";
@@ -68,7 +64,7 @@ public class EnergyEqResults implements ModelOutput {
 		builder.append(identity+"\n");
 		builder.append("conversion \t x[1/T] \t y[ln(dX/dT] \n");
 		for(double conv : x.keySet()){
-			builder.append(String.format("%.2f", (double)conv)+"\n");
+			builder.append(String.format("%.2f", conv)+"\n");
 			for(int index=0;index<x.get(conv).size();index++){
 				builder.append("\t"+x.get(conv).get(index)
 						+"\t"+y.get(conv).get(index)+"\n");

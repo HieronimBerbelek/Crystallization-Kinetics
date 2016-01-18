@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import crystallizationModel.AvramiModel;
 import crystallizationModel.OzawaModel;
 import crystallizationModel.OzawaResults;
 import dataLoader.DataLoader;

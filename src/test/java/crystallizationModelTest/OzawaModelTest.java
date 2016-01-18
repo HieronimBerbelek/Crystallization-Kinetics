@@ -41,7 +41,7 @@ public class OzawaModelTest {
 			tested.calculate();
 			limitsAssertions();
 			OzawaResults result = tested.calculate();
-			System.out.println(result.extendedOutput());
+			System.out.println(result.basicOutput());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

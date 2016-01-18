@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import crystallizationModel.MoModel;
 import crystallizationModel.NucleationActivity;
+import crystallizationModel.NucleationResults;
 import dataWrappers.CrystallizationData;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
@@ -59,7 +60,8 @@ public class NucleationActivityTest {
 			nucleated.add(loader.getDataObj());
 			
 			tested = new NucleationActivity(neat, nucleated);
-			
+			NucleationResults result = tested.calculate(220, 222);
+			System.out.println(result.getActivity());
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

@@ -37,7 +37,7 @@ public class AvramiModel extends CrystallizationModel {
 		approximation = new LeastSquaresApprox();
 	}
 	
-	public AvramiResult calculate() throws DataSizeException{
+	public AvramiResults calculate() throws DataSizeException{
 		double toLogTime;
 		double toYs;
 		//Avrami plot consist of points with limited conversion to crystalline phase
@@ -57,7 +57,7 @@ public class AvramiModel extends CrystallizationModel {
 		exponent = approximation.getSlope();
 		coefficient = Math.pow(10, approximation.getIntercept());
 		certainity = approximation.getCertainity();
-		return new AvramiResult(lnTime, ys, coefficient, exponent, 
+		return new AvramiResults(lnTime, ys, coefficient, exponent, 
 				certainity, data.getIdentity());
 	}
 }

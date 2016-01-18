@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import crystallizationModel.MoModel;
-import crystallizationModel.MoResult;
+import crystallizationModel.MoResults;
 import crystallizationModel.OzawaModel;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
@@ -38,7 +38,7 @@ public class MoModelTest {
 			loader = new DataLoader(opener3);
 			loader.loadNumericData();
 			tested.putData(loader.getDataObj());
-			MoResult result = tested.calculate();
+			MoResults result = tested.calculate();
 			System.out.println(result.getCoefficientsB());
 			
 	} catch (IOException e) {

@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import crystallizationModel.AvramiModel;
-import crystallizationModel.AvramiResult;
+import crystallizationModel.AvramiResults;
 import dataLoader.DataLoader;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
@@ -19,7 +19,7 @@ public class AvramiEquationTest {
 	public void testMock() {
 		AvramiModel tested = new AvramiModel(new MockCrystData());
 		try {
-			AvramiResult result = tested.calculate();
+			AvramiResults result = tested.calculate();
 			assertEquals(5, result.getAvramiY().size());
 			assertNotEquals(0, result.getCoefficient());
 		} catch (DataSizeException e) {	e.printStackTrace();}		

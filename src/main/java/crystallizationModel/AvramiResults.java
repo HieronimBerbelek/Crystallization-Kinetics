@@ -1,18 +1,20 @@
 package crystallizationModel;
-
+//TO DO: extended output!
 import java.util.ArrayList;
 
 import dataWrappers.CrystallizationData;
 import linearRegression.LinearApprox;
 
-public class AvramiResult implements ModelOutput {
+public class AvramiResults implements ModelOutput {
+	static final String MODEL_NAME = "AVRAMI";
+	
 	private ArrayList<Double> lnTime = new ArrayList<Double>();
 	private ArrayList<Double> ys = new ArrayList<Double>();
 	private Double coefficient;
 	private Double exponent;
 	private Double certainity;
 	String identity;
-	public AvramiResult(
+	public AvramiResults(
 			ArrayList<Double> lnTime, 
 			ArrayList<Double> ys, 
 			Double coefficient,
@@ -46,7 +48,13 @@ public class AvramiResult implements ModelOutput {
 	}
 	public String extendedOutput() {
 		// TODO Auto-generated method stub
-		return null;
+		return basicOutput();
+	}
+	public String getIdentity() {
+		return identity;
+	}
+	public String getModelName() {
+		return MODEL_NAME;
 	}
 	
 }

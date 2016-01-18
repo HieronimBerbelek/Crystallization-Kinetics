@@ -8,6 +8,7 @@ import linearRegression.LeastSquaresApprox;
 import linearRegression.LinearApprox;
 
 public class NucleationActivity {
+	String identity;
 	private ArrayList<Double> xOfNeat;
 	private ArrayList<Double> xOfNucleated;
 	private ArrayList<Double> tempOfNeat;
@@ -59,12 +60,16 @@ public class NucleationActivity {
 			ArrayList<CrystallizationData> neat,
 			ArrayList<CrystallizationData> nucleated){
 		Ys = new ArrayList<Double>();
-		for(int index=0;index<neat.size();index++){
-			if((int)neat.get(index).getCoolingRate()
-					==(int)nucleated.get(index).getCoolingRate()){
-				Ys.add(Math.log(neat.get(index).getCoolingRate()));
+		for(int index=0;index<nucleated.size();index++){
+			if(neat.get(index).getCoolingRate()
+					-(int)nucleated.get(index).getCoolingRate()<2){
+				double average = (neat.get(index).getCoolingRate()
+						+(int)nucleated.get(index).getCoolingRate())/2;
+				Ys.add(Math.log(average));
 			}
 		}
+		int endIndex = nucleated.get(0).getIdentity().lastIndexOf(" ");
+		identity=nucleated.get(0).getIdentity().substring(0, endIndex);
 	}
 	private void initXs(double neat, double nucleated){
 		neatMeltingT = neat;
@@ -89,7 +94,8 @@ public class NucleationActivity {
 				Ys,
 				neatCertainity,
 				nucleatedCertainity,
-				nucleationActivity);
+				nucleationActivity,
+				identity);
 	}
 	private void initLinearity() throws DataSizeException {
 		double neatSlope;

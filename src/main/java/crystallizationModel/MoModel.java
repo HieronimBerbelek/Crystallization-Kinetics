@@ -14,9 +14,10 @@ public class MoModel extends CrystallizationModel {
 	
 	private ArrayList<CrystallizationData> data;
 	private LinearApprox approximation;
-	private HashMap<Double, ArrayList<Double>> plot; //multiple Ys
+	private HashMap<Double, ArrayList<Double>> plot; //multiple Xs
 	private ArrayList<Double> Ys; //log10(coolingRate) list
 	
+	String identity;
 	private ArrayList<Double> coefficientsB;
 	private double avgCoeffB=0;
 	private ArrayList<Double> coefficientsFT;
@@ -51,11 +52,12 @@ public class MoModel extends CrystallizationModel {
 		approximation = new LeastSquaresApprox();
 	}
 	
-	public MoResult calculate() throws DataSizeException{
+	public MoResults calculate() throws DataSizeException{
 		initYs();
 		initPlot(createSeriesList());
 		initLinearity();
-		return new MoResult(
+		initIdentity();
+		return new MoResults(
 				plot,
 				Ys,
 				coefficientsB,
@@ -63,7 +65,12 @@ public class MoModel extends CrystallizationModel {
 				coefficientsFT,
 				avgCoeffFT,
 				certainities,
-				avgCertainity);
+				avgCertainity,
+				identity);
+	}
+	private void initIdentity() {
+		int endIndex = data.get(0).getIdentity().lastIndexOf(" ");
+		identity=data.get(0).getIdentity().substring(0, endIndex);
 	}
 	private void initLinearity() throws DataSizeException {
 		coefficientsB = new ArrayList<Double>();

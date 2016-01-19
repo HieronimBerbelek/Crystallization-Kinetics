@@ -26,11 +26,8 @@ public class DataLoaderTest {
 		try {
 			testedOpener = new ProteusFileOpener(path);
 			tested = new DataLoader(testedOpener);
-			tested.loadNumericData();
+			tested.loadData();
 			
-			testedCorruptedOpener = new ProteusFileOpener(pathCorrupted);
-			testedCorrupted = new DataLoader(testedCorruptedOpener);
-			testedCorrupted.loadNumericData();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,8 +38,13 @@ public class DataLoaderTest {
 	}
 	@Test
 	public void testDataLoader() {
-		assertEquals("AP52DE55 PURE 10K/min", tested.getIdentity());
-		assertEquals(DecimalSeparator.COMMA, tested.getDecimalSeparator());
+		try {
+			assertEquals("AP52DE55 PURE 10K/min", tested.getIdentity());
+			assertEquals(DecimalSeparator.COMMA, tested.getDecimalSeparator());
+		} catch (DscDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	@Test
 	public void testLoadNumericData(){
@@ -51,5 +53,19 @@ public class DataLoaderTest {
 	@Test
 	public void testGetDataObj(){
 		
+	}
+	@Test
+	public void testCorrupted(){
+		try {
+			testedCorruptedOpener = new ProteusFileOpener(pathCorrupted);
+			testedCorrupted = new DataLoader(testedCorruptedOpener);
+			testedCorrupted.loadData();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DscDataException e) {
+			return;
+		}
+		fail("corrupted file not failed!?");
 	}
 }

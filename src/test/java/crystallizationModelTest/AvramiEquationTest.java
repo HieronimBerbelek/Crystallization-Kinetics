@@ -30,7 +30,7 @@ public class AvramiEquationTest {
 		try {
 			ProteusFileOpener opener = new ProteusFileOpener(path);
 			DataLoader loader = new DataLoader(opener);
-			loader.loadNumericData();
+			loader.loadData();
 			AvramiModel tested = new AvramiModel(loader.getDataObj());
 			tested.calculate();
 			

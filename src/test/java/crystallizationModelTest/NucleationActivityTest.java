@@ -37,27 +37,27 @@ public class NucleationActivityTest {
 					new ArrayList<CrystallizationData>();
 			
 			DataLoader loader = new DataLoader(opener1);
-			loader.loadNumericData();
+			loader.loadData();
 			neat.add(loader.getDataObj());
 			loader = new DataLoader(opener2);
-			loader.loadNumericData();
+			loader.loadData();
 			neat.add(loader.getDataObj());
 			loader = new DataLoader(opener3);
-			loader.loadNumericData();
+			loader.loadData();
 			neat.add(loader.getDataObj());
 			
 			loader = new DataLoader(opener4);
-			loader.loadNumericData();
+			loader.loadData();
 			nucleated.add(loader.getDataObj());
 			loader = new DataLoader(opener5);
-			loader.loadNumericData();
+			loader.loadData();
 			nucleated.add(loader.getDataObj());
 			loader = new DataLoader(opener6);
-			loader.loadNumericData();
+			loader.loadData();
 			nucleated.add(loader.getDataObj());
 			
 			tested = new NucleationActivity(neat, nucleated);
-			NucleationResults result = tested.calculate(220, 222);
+			NucleationResults result = tested.calculate(220, 222.5);
 			System.out.println(result.getActivity());
 	} catch (IOException e) {
 		// TODO Auto-generated catch block

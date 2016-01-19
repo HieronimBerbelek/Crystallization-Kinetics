@@ -8,16 +8,22 @@ import dataWrappers.DataTuple;
 import dataWrappers.DataTupleBuilder;
 import exceptions.DscDataException;
 import inputProvider.DataProvider;
-/*is there need and way to divide loadMetaData and loadNumericData into shorter methods?
+/* Class which loads data from proteus export txt file to data object
+ * is there need and way to divide loadMetaData and loadNumericData into shorter methods?
  * TO DO make it more robust, improve input check
  */
 public class DataLoader {
 	private Scanner fileScanner;
+	//flags for checking dsc data file
+	private final static String exportFlag = "#EXPORTTYPE:DATA SINGLE";
+	private final static String fileFlag = "#FILE:";
+	private final static String formatFlag = "#FORMAT:";
+	private final static String fTypeFlag = "#FTYPE:";
+	private final static String identityFlag = "#IDENTITY:";
 	
-	private static String identityFlag = "#IDENTITY:";
-	private static String commaDecimalFlag = "#DECIMAL:COMMA";
-	private static String numericDataFlag = "##Temp";
-	private static String delimiters =";\\s*|\\s+|\\n+|\\t+";
+	private final static String commaDecimalFlag = "#DECIMAL:COMMA";
+	private final static String numericDataFlag = "##Temp";
+	private final static String delimiters =";\\s*|\\s+|\\n+|\\t+";
 	
 	private ArrayList<DataTuple> data = new ArrayList<DataTuple>();
 	private DataTupleBuilder builder;
@@ -31,12 +37,16 @@ public class DataLoader {
 		fileScanner = data.getData();
 		metaDataLoaded = false;
 	}
-	public void loadMetaData(){
+	public void loadMetaData() throws DscDataException{
 		if(!metaDataLoaded){
-			for(int i =0; i<4; i++){
-				fileScanner.nextLine(); //go to identity line
+			//NEGATION! of checkHead
+			if(!checkHead()) throw new DscDataException();
+			//getting identity
+			String id = fileScanner.nextLine();
+			if(id.startsWith(identityFlag)){
+				identity = id.substring(identityFlag.length());
 			}
-			identity = fileScanner.nextLine().substring(identityFlag.length());
+			else throw new DscDataException();
 			
 			//get proper decimal separator, 
 			//in proteus txt files it can be either comma or dot
@@ -46,7 +56,7 @@ public class DataLoader {
 			metaDataLoaded = true;
 		}
 	}
-	public void loadNumericData() throws DscDataException{
+	public void loadData() throws DscDataException{
 		loadMetaData();
 		if(data.isEmpty()){
 			while(fileScanner.hasNextLine()){
@@ -58,7 +68,13 @@ public class DataLoader {
 			else aquireDotData();
 		}
 	}
-	
+	private boolean checkHead(){
+		boolean toReturn= fileScanner.nextLine().startsWith(exportFlag)
+				&&fileScanner.nextLine().startsWith(fileFlag)
+				&&fileScanner.nextLine().startsWith(formatFlag)
+				&&fileScanner.nextLine().startsWith(fTypeFlag);
+		return toReturn;
+	}
 	private void aquireDotData() throws DscDataException{
 		while (fileScanner.hasNext()) {
 			builder.setTemperature(Double.parseDouble(fileScanner.next()));
@@ -85,11 +101,11 @@ public class DataLoader {
 		return in.replace(",", ".");
 	}
 	//getters
-	public String getIdentity(){
+	public String getIdentity() throws DscDataException{
 		loadMetaData();
 		return identity;
 	}
-	public DecimalSeparator getDecimalSeparator(){
+	public DecimalSeparator getDecimalSeparator() throws DscDataException{
 		loadMetaData();
 		return decimalSeparator;
 	}

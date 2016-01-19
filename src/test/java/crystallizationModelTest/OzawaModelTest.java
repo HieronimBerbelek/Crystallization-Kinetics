@@ -26,15 +26,15 @@ public class OzawaModelTest {
 			ProteusFileOpener opener3 = new ProteusFileOpener(path3);
 			
 			DataLoader loader = new DataLoader(opener1);
-			loader.loadNumericData();
+			loader.loadData();
 			tested = new OzawaModel(loader.getDataObj());
 			
 			loader = new DataLoader(opener2);
-			loader.loadNumericData();
+			loader.loadData();
 			tested.putData(loader.getDataObj());
 			
 			loader = new DataLoader(opener3);
-			loader.loadNumericData();
+			loader.loadData();
 			tested.putData(loader.getDataObj());
 			
 			tested.calculate();
@@ -62,7 +62,7 @@ public class OzawaModelTest {
 			ProteusFileOpener opener = new ProteusFileOpener(path2);
 			
 			DataLoader loader = new DataLoader(opener);
-			loader.loadNumericData();
+			loader.loadData();
 			tested = new OzawaModel(loader.getDataObj());
 			
 			tested.setLowerLimit(0.0);

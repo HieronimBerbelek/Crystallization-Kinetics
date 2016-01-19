@@ -24,7 +24,7 @@ public class CrystExpDataTest {
 		try {
 			opener = new ProteusFileOpener(path);
 			loader = new DataLoader(opener);
-			loader.loadNumericData();
+			loader.loadData();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -25,15 +25,15 @@ public class MoModelTest {
 			ProteusFileOpener opener3 = new ProteusFileOpener(path3);
 			
 			DataLoader loader = new DataLoader(opener1);
-			loader.loadNumericData();
+			loader.loadData();
 			tested = new MoModel(loader.getDataObj());
 			
 			loader = new DataLoader(opener2);
-			loader.loadNumericData();
+			loader.loadData();
 			tested.putData(loader.getDataObj());
 			
 			loader = new DataLoader(opener3);
-			loader.loadNumericData();
+			loader.loadData();
 			tested.putData(loader.getDataObj());
 			MoResults result = tested.calculate();
 			System.out.println(result.getCoefficientsB());

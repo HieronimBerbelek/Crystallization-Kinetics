@@ -19,6 +19,8 @@ public class EnergyEq {
 	private Map<Double, ArrayList<Double>> y;
 	private Map<Double, Double> energyBarriers;
 	private Map<Double, Double> certainities;
+	private Map<Double, ArrayList<Double>> temperatures;
+	private Map<Double, Double> avgTemp;
 	private double avgCertainity;
 	String identity;
 	
@@ -56,7 +58,7 @@ public class EnergyEq {
 		initData();
 		initBarriers();
 		return new EnergyEqResults(x, y, energyBarriers, 
-				certainities, avgCertainity, identity);
+				certainities, avgCertainity, avgTemp, identity);
 	}
 	private void initIdentity(){
 		int endIndex = data.get(0).getIdentity().lastIndexOf(" ");
@@ -71,17 +73,21 @@ public class EnergyEq {
 			energyBarriers.put(rel, (constantR*approximation.getSlope()/-1000));
 			certainities.put(rel, approximation.getCertainity());
 			avgCertainity += approximation.getCertainity();
+			avgTemp.put(rel, average(temperatures.get(rel)));
 		}
 		avgCertainity /=certainities.size();
 	}
 	private void initSeries() {
 		x = new LinkedHashMap<Double, ArrayList<Double>>();
 		y = new LinkedHashMap<Double, ArrayList<Double>>();
+		temperatures = new LinkedHashMap<Double, ArrayList<Double>>();
+		avgTemp = new LinkedHashMap<Double, Double>();
 		//no calculations for 0 and 1, because physically there is  
 		//no crystallization, and certainities are too low
 		for(double rel=DELTA_REL;rel<1.0;rel+=DELTA_REL){
 			x.put(rel, new ArrayList<Double>());
 			y.put(rel, new ArrayList<Double>());
+			temperatures.put(rel, new ArrayList<Double>());
 		}
 	}
 	private void initData(){
@@ -91,6 +97,9 @@ public class EnergyEq {
 			//iterate through single data serie
 			for(int index2=0;index2<data.size()&&threshold<1.0;index2++){
 				if(data.getRelativeX().get(index2)>threshold){
+					temperatures.get(threshold)
+					.add(data.getTemperature().get(index2));
+					
 					x.get(threshold).add(toX(data.getTemperature().get(index2)));
 					y.get(threshold).add(toY(
 							data.getRelativeTime().get(index2-range),
@@ -107,5 +116,12 @@ public class EnergyEq {
 	}
 	private double toY(double time1, double x1, double time2, double x2){
 		return Math.log((x2-x1)/(time2-time1));
+	}
+	private double average (ArrayList<Double> input){
+		double toReturn=0;
+		for(Double d : input){
+			toReturn +=d;
+		}
+		return toReturn/input.size();
 	}
 }

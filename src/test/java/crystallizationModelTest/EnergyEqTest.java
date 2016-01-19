@@ -24,15 +24,15 @@ public class EnergyEqTest {
 			ProteusFileOpener opener3 = new ProteusFileOpener(path3);
 			
 			DataLoader loader = new DataLoader(opener1);
-			loader.loadNumericData();
+			loader.loadData();
 			tested = new EnergyEq(loader.getDataObj());
 			
 			loader = new DataLoader(opener2);
-			loader.loadNumericData();
+			loader.loadData();
 			tested.putData(loader.getDataObj());
 			
 			loader = new DataLoader(opener3);
-			loader.loadNumericData();
+			loader.loadData();
 			tested.putData(loader.getDataObj());
 			EnergyEqResults results = tested.calculate();
 			System.out.println(results.getEnergyBarriers());

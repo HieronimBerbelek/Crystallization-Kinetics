@@ -9,6 +9,7 @@ public class EnergyEqResults implements ModelOutput {
 	private Map<Double, ArrayList<Double>> y;
 	private Map<Double, Double> energyBarriers;
 	private Map<Double, Double> certainities;
+	private Map<Double, Double> avgTemp;
 	private double avgCertainity;
 	String identity;
 	
@@ -18,12 +19,14 @@ public class EnergyEqResults implements ModelOutput {
 			Map<Double, Double> energyBarriers,
 			Map<Double, Double> certainities,
 			double avgCertainity,
+			Map<Double, Double> avgTemp,
 			String identity){
 		this.x = x;
 		this.y = y;
 		this.energyBarriers = energyBarriers;
 		this.certainities = certainities;
 		this.avgCertainity = avgCertainity;
+		this.avgTemp = avgTemp;
 		this.identity = identity;
 	}
 
@@ -52,8 +55,11 @@ public class EnergyEqResults implements ModelOutput {
 		builder.append(identity+"\n");
 		builder.append("conversion \t EnergyBarrier[kJ/mol] \t certainity \n");
 		for(Double conv : energyBarriers.keySet()){
-			builder.append(String.format("%.2f", (double)conv)+"\t"
-					+energyBarriers.get(conv)+"\t"+certainities.get(conv)+"\n");
+			builder.append(
+					String.format("%.2f", (double)conv)+"\t"
+					+energyBarriers.get(conv)+"\t"
+					+String.format("%.2f", avgTemp.get(conv))
+					+"\t"+certainities.get(conv)+"\n");
 		}
 		builder.append("\nAverage Certainity:"+"\t"+avgCertainity+"\n\n");
 		return builder.toString();

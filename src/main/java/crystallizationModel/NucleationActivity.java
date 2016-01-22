@@ -68,6 +68,7 @@ public class NucleationActivity {
 				Ys.add(Math.log(average));
 			}
 		}
+		
 		int endIndex = nucleated.get(0).getIdentity().lastIndexOf(" ");
 		identity=nucleated.get(0).getIdentity().substring(0, endIndex);
 	}
@@ -76,8 +77,8 @@ public class NucleationActivity {
 		nucleatedMeltingT = nucleated;
 		xOfNeat =new ArrayList<Double>();
 		xOfNucleated = new ArrayList<Double>();
-		double neatUC;
-		double nucleatedUC;
+		double neatUC; 		//undercooling
+		double nucleatedUC; //undercooling
 		for(int index=0;index<tempOfNeat.size();index++){
 			neatUC = neatMeltingT - tempOfNeat.get(index);
 			nucleatedUC = nucleatedMeltingT - tempOfNucleated.get(index);
@@ -109,6 +110,6 @@ public class NucleationActivity {
 		nucleatedSlope = approximation.getSlope();
 		nucleatedCertainity = approximation.getCertainity();
 		
-		nucleationActivity = neatSlope/nucleatedSlope;
+		nucleationActivity = nucleatedSlope/neatSlope;
 	}
 }

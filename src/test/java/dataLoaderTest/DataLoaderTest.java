@@ -9,14 +9,16 @@ import org.junit.Test;
 
 import dataLoader.DataLoader;
 import dataLoader.DecimalSeparator;
+import dataWrappers.CrystExpData;
 import exceptions.DscDataException;
 import inputProvider.ProteusFileOpener;
 
 public class DataLoaderTest {
+	//setting up fields for correct dsc file
 	static ProteusFileOpener testedOpener;
 	static DataLoader tested;
 	static String path = ".//resource//test//input file.txt";
-	
+	//setting up fields for corrupted dsc file
 	static ProteusFileOpener testedCorruptedOpener;
 	static DataLoader testedCorrupted;
 	static String pathCorrupted = ".//resource//test//corrupted input file.txt";
@@ -52,7 +54,14 @@ public class DataLoaderTest {
 	}
 	@Test
 	public void testGetDataObj(){
+		//it's partly testing CrystExpData too
+		String testString = "its just test stuff";
+		CrystExpData result = tested.getDataObj();
+		assertTrue(result.getRelativeTime().size()>0);
+		assertTrue(result.getCoolingRate()>0);
 		
+		result.putComment(testString);
+		assertEquals(testString, result.getComments());
 	}
 	@Test
 	public void testCorrupted(){

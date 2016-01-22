@@ -53,7 +53,8 @@ public class AvramiModel extends CrystallizationModel {
 		}
 		approximation.calculate(lnTime, ys);
 		exponent = approximation.getSlope();
-		coefficient = Math.pow(10, approximation.getIntercept());
+		coefficient = Math.pow(10, approximation.getIntercept())
+				/data.getCoolingRate();
 		certainity = approximation.getCertainity();
 		return new AvramiResults(lnTime, ys, coefficient, exponent, 
 				certainity, data.getIdentity());

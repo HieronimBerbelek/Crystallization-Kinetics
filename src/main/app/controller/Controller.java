@@ -1,6 +1,6 @@
 package controller;
 
-import view.GuiListener;
+import view.DataListListener;
 import view.View;
 
 import java.io.File;
@@ -11,7 +11,7 @@ import exceptions.DscDataException;
 import inputProvider.ProteusFileOpener;
 import model.DataModel;
 
-public class Controller implements GuiListener {
+public class Controller implements DataListListener {
 	private View view;
  	private DataModel model;
  	private ProteusFileOpener opener;
@@ -28,27 +28,29 @@ public class Controller implements GuiListener {
  		this.view = view;
  	}
 	public void addPerformed() {
-		try {
-			File file = view.showFileChooser();
-			if (file == null) return;
-			opener = new ProteusFileOpener(file);
-			dataLoader = new DataLoader(opener);
-			dataLoader.loadData();
-			if(model.contains(dataLoader.getDataObj()))
-				view.showAlreadyLoadedMessage();
-			else model.add(dataLoader.getDataObj());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			view.showIOExceptionMessage();
-		} catch (DscDataException e) {
-			// TODO Auto-generated catch block
-			view.showDscExceptionMessage();
-		}
+			File[] files = view.showFileChooser();
+			if (files == null) return;
+			for(int index=0;index<files.length;index++){
+				try {
+				opener = new ProteusFileOpener(files[index]);
+				dataLoader = new DataLoader(opener);
+				dataLoader.loadData();
+				} catch (IOException e) {
+					view.showIOExceptionMessage();
+				} catch (DscDataException e) {
+					view.showDscExceptionMessage();
+				}
+				if(model.contains(dataLoader.getDataObj())){
+					view.showAlreadyLoadedMessage();
+				}
+				else{
+					model.add(dataLoader.getDataObj());
+				}
 		
+			}
 	}
-	public void removePerformed() {
-		// TODO Auto-generated method stub
-		
+	public void removePerformed(int[] items) {
+		if(items.length>0) model.remove(items);		
 	}
 	public void proceedPerformed() {
 		// TODO Auto-generated method stub

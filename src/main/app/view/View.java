@@ -16,14 +16,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import dataWrappers.CrystallizationData;
 import model.DataModel;
 
-public class View extends JFrame implements ActionListener {
+public class View extends JFrame implements ActionListener, ListDataListener {
 	private static final long serialVersionUID = 1L;
 	private DataModel model;
-	private GuiListener guiListener;
+	private DataListListener guiListener;
 	
 	private JPanel dataPanel;
 	private JList<CrystallizationData> dataList; 
@@ -46,11 +48,12 @@ public class View extends JFrame implements ActionListener {
 	public void setModel(DataModel model){
 		this.model = model;
 	}
-	public void setGuiListener(GuiListener listener){
+	public void setGuiListener(DataListListener listener){
 		guiListener = listener;
 	}
 	private void initMainPanel(){		
 		dataList = new JList<CrystallizationData>(model);
+		model.addListDataListener(this);
 		
 		dataList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		dataList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -61,10 +64,14 @@ public class View extends JFrame implements ActionListener {
 		
 		add = new JButton("ADD");
 		add.addActionListener(this);
+		
 		remove = new JButton("REMOVE");
 		remove.addActionListener(this);
+		remove.setEnabled(false);
+		
 		proceed = new JButton("PROCEED");
 		proceed.addActionListener(this);
+		proceed.setEnabled(false);
 		
 		dataPanel = new JPanel(new BorderLayout());
 		dataPanel.add(dataListScroller, BorderLayout.CENTER);
@@ -77,20 +84,22 @@ public class View extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource()==add){
-				guiListener.addPerformed();
+			guiListener.addPerformed();
 		}
 		if(event.getSource()==remove){
-			guiListener.removePerformed();
+			guiListener.removePerformed(dataList.getSelectedIndices());
+			dataList.clearSelection();
 		}
 		if(event.getSource()==proceed){
 			guiListener.proceedPerformed();
 		}
 		
 	}
-	public File showFileChooser(){
+	public File[] showFileChooser(){
+		addChooser.setMultiSelectionEnabled(true);
 		int chooserVal = addChooser.showOpenDialog(this);
 		if(chooserVal == JFileChooser.APPROVE_OPTION){
-			return addChooser.getSelectedFile();
+			return addChooser.getSelectedFiles();
 		}
 		else return null;
 	}
@@ -111,5 +120,26 @@ public class View extends JFrame implements ActionListener {
 			    "DSC data with this identity is already loaded!",
 			    "INFO",
 			    JOptionPane.INFORMATION_MESSAGE);
+	}
+	public void contentsChanged(ListDataEvent arg0) {
+		if(model.isEmpty()){
+			remove.setEnabled(false);
+			proceed.setEnabled(false);
+		}	
+		else if(remove.isEnabled()&&proceed.isEnabled());//do nothing
+		else {
+			remove.setEnabled(true);
+			proceed.setEnabled(true);
+		}
+	}
+	public void intervalAdded(ListDataEvent arg0) {
+		remove.setEnabled(true);
+		proceed.setEnabled(true);		
+	}
+	public void intervalRemoved(ListDataEvent arg0) {
+		if(model.isEmpty()){
+			remove.setEnabled(false);
+			proceed.setEnabled(false);
+		}		
 	}
 }

@@ -31,6 +31,16 @@ public class DataModel implements ListModel<CrystallizationData> {
 		fireEvent(ListDataEvent.INTERVAL_REMOVED, 0, list.size()-1);
 		list = new ArrayList<CrystallizationData>();
 	}
+	public void remove(int items){
+		fireEvent(ListDataEvent.INTERVAL_REMOVED, items, items);
+		list.remove(items);
+	}
+	public void remove(int[] items){
+		fireEvent(ListDataEvent.INTERVAL_REMOVED, items[0], items[items.length-1]);
+		for(int index=0;index<items.length;index++){
+			list.remove(items[index]-index);
+		}		
+	}
 	public void addListDataListener(ListDataListener arg0) {
 		listeners.addElement(arg0);		
 	}
@@ -43,10 +53,23 @@ public class DataModel implements ListModel<CrystallizationData> {
 		return list.size();
 	}
 	
+	public boolean isEmpty(){
+		if(list.isEmpty()) return true;
+		else return false;
+	}
+	
 	public boolean contains(CrystallizationData other){
 		boolean toReturn = false;
 		for(CrystallizationData serie : list){
-			if(serie.getIdentity() == other.getIdentity()) toReturn = true;
+			if(serie.getIdentity().equals(other.getIdentity())) toReturn = true;
+		}
+		return toReturn;
+	}
+	
+	public boolean contains(String other){
+		boolean toReturn = false;
+		for(CrystallizationData serie : list){
+			if(serie.getIdentity() == other) toReturn = true;
 		}
 		return toReturn;
 	}

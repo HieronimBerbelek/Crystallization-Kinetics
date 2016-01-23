@@ -25,21 +25,21 @@ public class DataModel implements ListModel<CrystallizationData> {
 	
 	public void add(CrystallizationData in){
 		list.add(in);
-		fireEvent(ListDataEvent.INTERVAL_ADDED, list.size()-1,list.size()-1);
+		fireAddedEvent(ListDataEvent.INTERVAL_ADDED, list.size()-1,list.size()-1);
 	}
 	public void clear(){
-		fireEvent(ListDataEvent.INTERVAL_REMOVED, 0, list.size()-1);
 		list = new ArrayList<CrystallizationData>();
+		fireRemovedEvent(ListDataEvent.INTERVAL_REMOVED, 0, list.size()-1);
 	}
 	public void remove(int items){
-		fireEvent(ListDataEvent.INTERVAL_REMOVED, items, items);
 		list.remove(items);
+		fireRemovedEvent(ListDataEvent.INTERVAL_REMOVED, items, items);
 	}
 	public void remove(int[] items){
-		fireEvent(ListDataEvent.INTERVAL_REMOVED, items[0], items[items.length-1]);
 		for(int index=0;index<items.length;index++){
 			list.remove(items[index]-index);
 		}		
+		fireRemovedEvent(ListDataEvent.INTERVAL_REMOVED, items[0], items[items.length-1]);
 	}
 	public void addListDataListener(ListDataListener arg0) {
 		listeners.addElement(arg0);		
@@ -54,8 +54,7 @@ public class DataModel implements ListModel<CrystallizationData> {
 	}
 	
 	public boolean isEmpty(){
-		if(list.isEmpty()) return true;
-		else return false;
+		return list.isEmpty();
 	}
 	
 	public boolean contains(CrystallizationData other){
@@ -78,9 +77,14 @@ public class DataModel implements ListModel<CrystallizationData> {
 		listeners.remove(arg0);		
 	}
 
-	private void fireEvent(int type, int index0, int index1){
+	private void fireAddedEvent(int type, int index0, int index1){
 		for (ListDataListener listener : listeners){
 			listener.intervalAdded(new ListDataEvent(this, type, index0, index1));
+		}
+	}
+	private void fireRemovedEvent(int type, int index0, int index1){
+		for (ListDataListener listener : listeners){
+			listener.intervalRemoved(new ListDataEvent(this, type, index0, index1));
 		}
 	}
 }

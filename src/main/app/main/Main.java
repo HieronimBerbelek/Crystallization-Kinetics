@@ -19,5 +19,7 @@ public class Main {
 		DataModel model = new DataModel();
 		View view = new View(model);
 		Controller controller = new Controller(model, view);
+		
+		view.setGuiListener(controller);
 	}
 }

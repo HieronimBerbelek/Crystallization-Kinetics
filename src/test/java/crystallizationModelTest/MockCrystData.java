@@ -77,4 +77,7 @@ public class MockCrystData implements CrystallizationData {
 	public int size(){
 		return size;
 	}
+	public String toString(){
+		return getIdentity();
+	}
 }

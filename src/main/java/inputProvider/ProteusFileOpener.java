@@ -1,5 +1,6 @@
 package inputProvider;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +15,9 @@ public class ProteusFileOpener implements DataProvider {
 	public ProteusFileOpener(String path) throws IOException{
 		Path dataFile = Paths.get(path);
 		connection = new Scanner(dataFile);
+	}
+	public ProteusFileOpener(File file) throws IOException{
+		connection = new Scanner(file);
 	}
 	
 	public Scanner getData(){

@@ -68,11 +68,15 @@ public class DataLoader {
 			else aquireDotData();
 		}
 	}
-	private boolean checkHead(){
-		boolean toReturn= fileScanner.nextLine().startsWith(exportFlag)
-				&&fileScanner.nextLine().startsWith(fileFlag)
-				&&fileScanner.nextLine().startsWith(formatFlag)
-				&&fileScanner.nextLine().startsWith(fTypeFlag);
+	private boolean checkHead() throws DscDataException{
+		boolean toReturn;
+		if (fileScanner.hasNextLine()){
+			toReturn= fileScanner.nextLine().startsWith(exportFlag)
+					&&fileScanner.nextLine().startsWith(fileFlag)
+					&&fileScanner.nextLine().startsWith(formatFlag)
+					&&fileScanner.nextLine().startsWith(fTypeFlag);
+		}
+		else throw new DscDataException();
 		return toReturn;
 	}
 	private void aquireDotData() throws DscDataException{

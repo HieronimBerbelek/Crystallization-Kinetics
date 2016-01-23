@@ -1,44 +1,115 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 
 import dataWrappers.CrystallizationData;
 import model.DataModel;
 
-public class View extends JFrame {
+public class View extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private DataModel model;
+	private GuiListener guiListener;
 	
+	private JPanel dataPanel;
 	private JList<CrystallizationData> dataList; 
+	private JButton add;
+	private JButton remove;
+	private JButton proceed;
+	private final JFileChooser addChooser = new JFileChooser();
 	
 	public View(DataModel model){
 		super("Crystallization Kinetics");
-		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		super.setSize(new Dimension(400, 400));
-		super.setVisible(true);
-		setModel(model);
 		
-		initDataList();
+		setModel(model);
+		initMainPanel();
+		
+		super.add(dataPanel);
+		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setSize(new Dimension(600, 200));
+		super.setVisible(true);
 	}
 	public void setModel(DataModel model){
 		this.model = model;
 	}
-	private void initDataList(){
-		dataList = new JList<CrystallizationData>(model.getDataList());
+	public void setGuiListener(GuiListener listener){
+		guiListener = listener;
+	}
+	private void initMainPanel(){		
+		dataList = new JList<CrystallizationData>(model);
 		
 		dataList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		dataList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		dataList.setVisibleRowCount(-1);
+		dataList.setVisibleRowCount(10);
 		
 		JScrollPane dataListScroller = new JScrollPane(dataList);
-		dataListScroller.setPreferredSize(new Dimension(250, 80));
-		dataListScroller.setVisible(true);
+		
+		add = new JButton("ADD");
+		add.addActionListener(this);
+		remove = new JButton("REMOVE");
+		remove.addActionListener(this);
+		proceed = new JButton("PROCEED");
+		proceed.addActionListener(this);
+		
+		dataPanel = new JPanel(new BorderLayout());
+		dataPanel.add(dataListScroller, BorderLayout.CENTER);
+		dataPanel.add(add, BorderLayout.PAGE_START);
+		dataPanel.add(remove, BorderLayout.PAGE_END);
+		dataPanel.add(proceed, BorderLayout.EAST);
+		dataPanel.setVisible(true);
+		dataPanel.repaint();
+	}
+	
+	public void actionPerformed(ActionEvent event) {
+		if(event.getSource()==add){
+				guiListener.addPerformed();
+		}
+		if(event.getSource()==remove){
+			guiListener.removePerformed();
+		}
+		if(event.getSource()==proceed){
+			guiListener.proceedPerformed();
+		}
+		
+	}
+	public File showFileChooser(){
+		int chooserVal = addChooser.showOpenDialog(this);
+		if(chooserVal == JFileChooser.APPROVE_OPTION){
+			return addChooser.getSelectedFile();
+		}
+		else return null;
+	}
+	public void showIOExceptionMessage(){
+		JOptionPane.showMessageDialog(this,
+			    "Can't access the file!",
+			    "ERROR",
+			    JOptionPane.ERROR_MESSAGE);
+	}
+	public void showDscExceptionMessage(){
+		JOptionPane.showMessageDialog(this,
+			    "Can't access the DSC data!",
+			    "ERROR",
+			    JOptionPane.ERROR_MESSAGE);
+	}
+	public void showAlreadyLoadedMessage(){
+		JOptionPane.showMessageDialog(this,
+			    "DSC data with this identity is already loaded!",
+			    "INFO",
+			    JOptionPane.INFORMATION_MESSAGE);
 	}
 }

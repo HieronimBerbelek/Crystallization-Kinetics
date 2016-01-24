@@ -4,7 +4,6 @@ import crystallization_model.results.ModelOutput;
 import exceptions.DataSizeException;
 import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
-import wrappers.CrystallizationData;
 
 public abstract class LinearityModel {
 

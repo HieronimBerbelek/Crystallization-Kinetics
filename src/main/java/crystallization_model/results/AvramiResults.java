@@ -47,7 +47,7 @@ public class AvramiResults implements ModelOutput {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
 		builder.append("x[log(t)] \t y[log(-ln(1-X))] \n");
-		int numberOfPoints = (int)(lnTime.size()/50);
+		int numberOfPoints = lnTime.size()/50;
 		for(int index =0;index< lnTime.size();index+=numberOfPoints){
 			builder.append(lnTime.get(index) + "\t" + ys.get(index) + "\n");
 		}

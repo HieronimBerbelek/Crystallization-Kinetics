@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import crystallization_model.results.MoResults;
 import exceptions.DataSizeException;
-import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
@@ -45,6 +44,7 @@ public class MoModel extends LimitedConversionModel {
 	public void putData(CrystallizationData data){
 		this.data.add(data);
 	}
+	@Override
 	public MoResults calculate(double...input) throws DataSizeException{
 		initYs();
 		initPlot(createSeriesList());

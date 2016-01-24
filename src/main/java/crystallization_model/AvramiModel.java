@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import crystallization_model.results.AvramiResults;
 import exceptions.DataSizeException;
-import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
@@ -28,6 +27,7 @@ public class AvramiModel extends LimitedConversionModel {
 	public void putData(CrystallizationData input){
 		data=input;
 	}	
+	@Override
 	public AvramiResults calculate(double...input) throws DataSizeException{
 		double toLogTime;
 		double toYs;

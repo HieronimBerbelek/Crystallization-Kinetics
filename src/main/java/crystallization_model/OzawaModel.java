@@ -7,7 +7,6 @@ import java.util.HashMap;
 import crystallization_model.results.OzawaResults;
 import exceptions.DataSizeException;
 import exceptions.OzawaModelRangeException;
-import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
@@ -57,6 +56,7 @@ public class OzawaModel extends LimitedConversionModel {
 		this.data.add(data);
 	}
 
+	@Override
 	public OzawaResults calculate(double...input) throws DataSizeException{
 		initXs();
 		initTempLimits();

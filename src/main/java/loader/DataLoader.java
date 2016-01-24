@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import exceptions.DscDataException;
 import input.DataProvider;
-import wrappers.CrystExpData;
+import wrappers.ExperimentalData;
 import wrappers.DataTuple;
 import wrappers.DataTupleBuilder;
 /* Class which loads data from proteus export txt file to data object
@@ -117,7 +117,7 @@ public class DataLoader {
 	public boolean isDataLoaded(){
 		return !data.isEmpty();
 	}
-	public CrystExpData getDataObj(){
-		return new CrystExpData(data, identity);
+	public ExperimentalData getDataObj(){
+		return new ExperimentalData(data, identity);
 	}
 }

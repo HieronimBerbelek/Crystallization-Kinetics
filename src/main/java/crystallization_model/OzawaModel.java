@@ -4,13 +4,14 @@ package crystallization_model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import crystallization_model.results.OzawaResults;
 import exceptions.DataSizeException;
 import exceptions.OzawaModelRangeException;
 import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
-public class OzawaModel extends CrystallizationModel {
+public class OzawaModel extends LimitedConversionModel {
 	private final static int ONE = 1;
 	private final static int TWO = 2;
 	private final static int THREE = 3;
@@ -21,7 +22,6 @@ public class OzawaModel extends CrystallizationModel {
 	private int minNumOfLines = 5;
 	
 	private ArrayList<CrystallizationData> data;
-	private LinearApprox approximation;
 	private HashMap<Integer, ArrayList<Double>> plot; //multiple Ys
 	private ArrayList<Double> Xs; //log10(coolingRate) list
 	private ArrayList<Double> exponents;
@@ -46,25 +46,18 @@ public class OzawaModel extends CrystallizationModel {
 	}
 	public OzawaModel(ArrayList<CrystallizationData> data, LinearApprox approx){
 		this.data = data;
-		approximation = approx;
+		super.putLinearApprox(approx);
 	}
 	public OzawaModel(CrystallizationData data, LinearApprox approx){
 		this.data = new ArrayList<CrystallizationData>();
 		this.data.add(data);
-		approximation = approx;
-	}
-	
-	public void putLinearApprox(LinearApprox approx){
-		approximation = approx;
+		super.putLinearApprox(approx);
 	}
 	public void putData(CrystallizationData data){
 		this.data.add(data);
 	}
-	public void setDefaultApprox(){
-		approximation = new LeastSquaresApprox();
-	}
 
-	public OzawaResults calculate() throws DataSizeException{
+	public OzawaResults calculate(double...input) throws DataSizeException{
 		initXs();
 		initTempLimits();
 		initPlot(createSeriesList());
@@ -90,23 +83,23 @@ public class OzawaModel extends CrystallizationModel {
 		lowerTempLimit = Double.POSITIVE_INFINITY;
 		
 		//iterating through all data series
-		for(int index=0; index<data.size();index++){
+		for(int i=0; i<data.size();i++){
 			
 			//one iterator for each data serie
-			int index2=0;
+			int j=0;
 			//iterate through data serie, upperTempLimit first because 
 			//temperatures are decreasing with time
-			for(;index2<data.get(index).size();index2++){
-				if(super.isInBounds(data.get(index).getRelativeX().get(index2))
-						&&data.get(index).getTemperature().get(index2)>upperTempLimit){
-					upperTempLimit = data.get(index).getTemperature().get(index2);
+			for(;j<data.get(i).size();j++){
+				if(super.isInBounds(data.get(i).getRelativeX().get(j))
+						&&data.get(i).getTemperature().get(j)>upperTempLimit){
+					upperTempLimit = data.get(i).getTemperature().get(j);
 					break;
 				}
 			}
-			for(;index2<data.get(index).size();index2++){
-				if(super.isAboveUpperLimit(data.get(index).getRelativeX().get(index2))
-						&&data.get(index).getTemperature().get(index2)<lowerTempLimit){
-					lowerTempLimit = data.get(index).getTemperature().get(index2);
+			for(;j<data.get(i).size();j++){
+				if(super.isAboveUpperLimit(data.get(i).getRelativeX().get(j))
+						&&data.get(i).getTemperature().get(j)<lowerTempLimit){
+					lowerTempLimit = data.get(i).getTemperature().get(j);
 					break;
 				}
 			}
@@ -145,23 +138,23 @@ public class OzawaModel extends CrystallizationModel {
 	}
 	private void initPlot(ArrayList<Integer> temperatures){
 		plot = new HashMap<Integer, ArrayList<Double>>();
-		for(int index=0;index<temperatures.size();index++){ //iterate through temperatures
-			plot.put(temperatures.get(index), new ArrayList<Double>());
-			for(int index2=0;index2 < data.size();index2++){  //iterate through data series
-				for(int index3=0;index3 < data.get(index2).size();index3++){ 
+		for(int i=0;i<temperatures.size();i++){ //iterate through temperatures
+			plot.put(temperatures.get(i), new ArrayList<Double>());
+			for(int j=0;j < data.size();j++){  //iterate through data series
+				for(int k=0;k < data.get(j).size();k++){ 
 					//iterate through single serie
-					if(data.get(index2).getTemperature().get(index3)<temperatures.get(index)){
+					if(data.get(j).getTemperature().get(k)<temperatures.get(i)){
 						double input;
-						if (index3>0) {
-							input = approximation.interpole(temperatures.get(index),
-									data.get(index2).getTemperature().get(index3 - 1),
-									data.get(index2).getRelativeX().get(index3 - 1),
-									data.get(index2).getTemperature().get(index3),
-									data.get(index2).getRelativeX().get(index3));
+						if (k>0) {
+							input=super.approximation.interpole(temperatures.get(i),
+									data.get(j).getTemperature().get(k - 1),
+									data.get(j).getRelativeX().get(k - 1),
+									data.get(j).getTemperature().get(k),
+									data.get(j).getRelativeX().get(k));
 						}
-						else input = data.get(index2).getRelativeX().get(index3);
+						else input = data.get(j).getRelativeX().get(k);
 						input = (Math.log10(-1 * Math.log(input)));
-						plot.get(temperatures.get(index)).add(input);
+						plot.get(temperatures.get(i)).add(input);
 						break;
 						}
 				}
@@ -183,12 +176,12 @@ public class OzawaModel extends CrystallizationModel {
 		for(Integer i : plot.keySet()){
 			approximation.calculate(Xs, plot.get(i));
 
-			exponents.add(approximation.getSlope());
-			avgExponent += approximation.getSlope();
-			coefficients.add(Math.pow(10, approximation.getIntercept()));
+			exponents.add(super.approximation.getSlope());
+			avgExponent += super.approximation.getSlope();
+			coefficients.add(Math.pow(10, super.approximation.getIntercept()));
 			avgCoefficient +=Math.pow(10, approximation.getIntercept());
-			certainities.add(approximation.getCertainity());
-			avgCertainity += approximation.getCertainity();
+			certainities.add(super.approximation.getCertainity());
+			avgCertainity += super.approximation.getCertainity();
 		}
 		avgExponent /= exponents.size();
 		avgCoefficient /= coefficients.size();

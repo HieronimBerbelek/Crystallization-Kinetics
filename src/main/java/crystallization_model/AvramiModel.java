@@ -2,17 +2,17 @@ package crystallization_model;
 
 import java.util.ArrayList;
 
+import crystallization_model.results.AvramiResults;
 import exceptions.DataSizeException;
 import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
-public class AvramiModel extends CrystallizationModel {
+public class AvramiModel extends LimitedConversionModel {
 	//conversion limits, essential for good data fit
 	private ArrayList<Double> lnTime = new ArrayList<Double>();
 	private ArrayList<Double> ys = new ArrayList<Double>();
 	private CrystallizationData data;
-	private LinearApprox approximation;
 	private Double coefficient;
 	private Double exponent;
 	private Double certainity;
@@ -27,15 +27,8 @@ public class AvramiModel extends CrystallizationModel {
 	}
 	public void putData(CrystallizationData input){
 		data=input;
-	}
-	public void putLinearApprox(LinearApprox approx){
-		approximation = approx;
-	}
-	public void setDefaultApprox(){
-		approximation = new LeastSquaresApprox();
-	}
-	
-	public AvramiResults calculate() throws DataSizeException{
+	}	
+	public AvramiResults calculate(double...input) throws DataSizeException{
 		double toLogTime;
 		double toYs;
 		//Avrami plot consist of points with limited conversion to crystalline phase
@@ -51,11 +44,11 @@ public class AvramiModel extends CrystallizationModel {
 				} 
 			}
 		}
-		approximation.calculate(lnTime, ys);
-		exponent = approximation.getSlope();
-		coefficient = Math.pow(10, approximation.getIntercept())
+		super.approximation.calculate(lnTime, ys);
+		exponent = super.approximation.getSlope();
+		coefficient = Math.pow(10, super.approximation.getIntercept())
 				/data.getCoolingRate();
-		certainity = approximation.getCertainity();
+		certainity = super.approximation.getCertainity();
 		return new AvramiResults(lnTime, ys, coefficient, exponent, 
 				certainity, data.getIdentity());
 	}

@@ -2,9 +2,9 @@ package wrappers;
 
 import java.util.ArrayList;
 
-import crystallization_model.ModelOutput;
+import crystallization_model.results.ModelOutput;
 
-public class CrystExpData implements CrystallizationData, ModelOutput {
+public class ExperimentalData implements CrystallizationData, ModelOutput {
 	static final String MODEL_NAME = "CRYSTALLIZATION";
 	//data lists
 	private ArrayList<Double> relativeX = new ArrayList<Double>();
@@ -21,17 +21,17 @@ public class CrystExpData implements CrystallizationData, ModelOutput {
 	private double peakHeat;
 	private int size;
 	
-	public CrystExpData(){
+	public ExperimentalData(){
 		peakHeat = Double.NEGATIVE_INFINITY;
 		summaricHeat=0;
 	}
-	public CrystExpData(ArrayList<DataTuple> data){
+	public ExperimentalData(ArrayList<DataTuple> data){
 		peakHeat = Double.NEGATIVE_INFINITY;
 		size = data.size();
 		summaricHeat=0; //crystallization heat t0->t=inf
 		injectData(data);
 	}
-	public CrystExpData(ArrayList<DataTuple> data, String id){
+	public ExperimentalData(ArrayList<DataTuple> data, String id){
 		peakHeat = Double.NEGATIVE_INFINITY;
 		identity = id;
 		size = data.size();

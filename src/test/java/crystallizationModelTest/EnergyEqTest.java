@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import crystallization_model.EnergyEq;
-import crystallization_model.EnergyEqResults;
+import crystallization_model.results.EnergyEqResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
 import input.ProteusFileOpener;

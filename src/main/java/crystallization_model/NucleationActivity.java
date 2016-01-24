@@ -2,12 +2,13 @@ package crystallization_model;
 
 import java.util.ArrayList;
 
+import crystallization_model.results.NucleationResults;
 import exceptions.DataSizeException;
 import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
-public class NucleationActivity {
+public class NucleationActivity extends LinearityModel {
 	String identity;
 	private ArrayList<Double> xOfNeat;
 	private ArrayList<Double> xOfNucleated;
@@ -16,8 +17,6 @@ public class NucleationActivity {
 	private double neatMeltingT;
 	private double nucleatedMeltingT;
 	private ArrayList<Double> Ys; //ln(coolingRate) list
-
-	private LinearApprox approximation;
 	
 	private double neatCertainity;
 	private double nucleatedCertainity;
@@ -29,7 +28,7 @@ public class NucleationActivity {
 		if(neat.size()!=nucleated.size()) throw new DataSizeException();
 		initYs(neat, nucleated);
 		initTemps(neat, nucleated);
-		setDefaultApprox();
+		super.setDefaultApprox();
 	}
 	public NucleationActivity(
 			ArrayList<CrystallizationData> neat,
@@ -38,7 +37,7 @@ public class NucleationActivity {
 		if(neat.size()!=nucleated.size()) throw new DataSizeException();
 		initYs(neat, nucleated);
 		initTemps(neat, nucleated);
-		putLinearApprox(approx);
+		super.putLinearApprox(approx);
 	}
 	private void initTemps(
 			ArrayList<CrystallizationData> neat, 
@@ -49,12 +48,6 @@ public class NucleationActivity {
 			tempOfNeat.add(neat.get(index).getPeakTemperature());
 			tempOfNucleated.add(nucleated.get(index).getPeakTemperature());
 		}		
-	}
-	public void setDefaultApprox(){
-		approximation = new LeastSquaresApprox();
-	}
-	public void putLinearApprox(LinearApprox approx){
-		approximation = approx;
 	}
 	private void initYs(
 			ArrayList<CrystallizationData> neat,
@@ -86,7 +79,9 @@ public class NucleationActivity {
 			xOfNucleated.add(1/(nucleatedUC*nucleatedUC));
 		}
 	}
-	public NucleationResults calculate(double neat, double nucleated) throws DataSizeException{
+	public NucleationResults calculate(double...input) throws DataSizeException{
+		double neat = input[0];
+		double nucleated = input[1];
 		initXs(neat, nucleated);
 		initLinearity();
 		return new NucleationResults (
@@ -102,13 +97,13 @@ public class NucleationActivity {
 		double neatSlope;
 		double nucleatedSlope;
 		
-		approximation.calculate(xOfNeat, Ys);
-		neatSlope=approximation.getSlope();
-		neatCertainity=approximation.getCertainity();
+		super.approximation.calculate(xOfNeat, Ys);
+		neatSlope=super.approximation.getSlope();
+		neatCertainity=super.approximation.getCertainity();
 		
-		approximation.calculate(xOfNucleated, Ys);
-		nucleatedSlope = approximation.getSlope();
-		nucleatedCertainity = approximation.getCertainity();
+		super.approximation.calculate(xOfNucleated, Ys);
+		nucleatedSlope = super.approximation.getSlope();
+		nucleatedCertainity = super.approximation.getCertainity();
 		
 		nucleationActivity = nucleatedSlope/neatSlope;
 	}

@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import crystallization_model.AvramiModel;
-import crystallization_model.AvramiResults;
+import crystallization_model.results.AvramiResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
 import input.ProteusFileOpener;

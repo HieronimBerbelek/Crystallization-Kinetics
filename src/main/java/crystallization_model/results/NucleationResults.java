@@ -1,4 +1,4 @@
-package crystallization_model;
+package crystallization_model.results;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class NucleationResults implements ModelOutput {
 	private double nucleatedCertainity;
 	private double nucleationActivity;
 	
-	NucleationResults(
+	public NucleationResults(
 			ArrayList<Double> xNeat,
 			ArrayList<Double> xNucl,
 			ArrayList<Double> ys,

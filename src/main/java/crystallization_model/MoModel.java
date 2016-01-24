@@ -3,17 +3,17 @@ package crystallization_model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import crystallization_model.results.MoResults;
 import exceptions.DataSizeException;
 import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
-public class MoModel extends CrystallizationModel {
+public class MoModel extends LimitedConversionModel {
 	private final int deltaConversionTen = 10;
 	private final int deltaConversionFive = 5;
 	
 	private ArrayList<CrystallizationData> data;
-	private LinearApprox approximation;
 	private HashMap<Double, ArrayList<Double>> plot; //multiple Xs
 	private ArrayList<Double> Ys; //log10(coolingRate) list
 	
@@ -35,24 +35,17 @@ public class MoModel extends CrystallizationModel {
 	}
 	public MoModel(ArrayList<CrystallizationData> data, LinearApprox approx){
 		this.data = data;
-		approximation = approx;
+		super.putLinearApprox(approx);
 	}
 	public MoModel(CrystallizationData data, LinearApprox approx){
 		this.data = new ArrayList<CrystallizationData>();
 		this.data.add(data);
-		approximation = approx;
-	}
-	public void putLinearApprox(LinearApprox approx){
-		approximation = approx;
+		super.putLinearApprox(approx);
 	}
 	public void putData(CrystallizationData data){
 		this.data.add(data);
 	}
-	public void setDefaultApprox(){
-		approximation = new LeastSquaresApprox();
-	}
-	
-	public MoResults calculate() throws DataSizeException{
+	public MoResults calculate(double...input) throws DataSizeException{
 		initYs();
 		initPlot(createSeriesList());
 		initLinearity();
@@ -78,13 +71,13 @@ public class MoModel extends CrystallizationModel {
 		certainities = new ArrayList<Double>();
 		
 		for(Double i: plot.keySet()){
-			approximation.calculate(plot.get(i), Ys);
-			coefficientsB.add(-approximation.getSlope());
-			avgCoeffB += -approximation.getSlope();
-			coefficientsFT.add(Math.pow(Math.E, approximation.getIntercept()));
-			avgCoeffFT += Math.pow(Math.E, approximation.getIntercept());
-			certainities.add(approximation.getCertainity());
-			avgCertainity += approximation.getCertainity();
+			super.approximation.calculate(plot.get(i), Ys);
+			coefficientsB.add(-super.approximation.getSlope());
+			avgCoeffB += -super.approximation.getSlope();
+			coefficientsFT.add(Math.pow(Math.E, super.approximation.getIntercept()));
+			avgCoeffFT += Math.pow(Math.E, super.approximation.getIntercept());
+			certainities.add(super.approximation.getCertainity());
+			avgCertainity += super.approximation.getCertainity();
 		}
 		avgCoeffB /= coefficientsB.size();
 		avgCoeffFT /= coefficientsFT.size();
@@ -114,18 +107,18 @@ public class MoModel extends CrystallizationModel {
 	}
 	private void initPlot(ArrayList<Double> series){
 		plot = new HashMap<Double, ArrayList<Double>>();
-		for(int index=0;index<series.size();index++){	//iterate through plot series
-			plot.put(series.get(index), new ArrayList<Double>());
-			for(int index2 = 0;index2<data.size();index2++){	//iterate through data series
+		for(int i=0;i<series.size();i++){	//iterate through plot series
+			plot.put(series.get(i), new ArrayList<Double>());
+			for(int j = 0;j<data.size();j++){	//iterate through data series
 				//iterate through single serie
-				for(int index3=0;index3<data.get(index2).size();index3++){
-					if(data.get(index2).getRelativeX().get(index3)>series.get(index)){
-						double input = approximation.interpole(series.get(index), 
-								data.get(index2).getRelativeX().get(index3), 
-								data.get(index2).getRelativeTime().get(index3), 
-								data.get(index2).getRelativeX().get(index3-1), 
-								data.get(index2).getRelativeTime().get(index3-1));
-						plot.get(series.get(index)).add(Math.log(input));
+				for(int k=0;k<data.get(j).size();k++){
+					if(data.get(j).getRelativeX().get(k)>series.get(i)){
+						double input = super.approximation.interpole(series.get(i), 
+								data.get(j).getRelativeX().get(k), 
+								data.get(j).getRelativeTime().get(k), 
+								data.get(j).getRelativeX().get(k-1), 
+								data.get(j).getRelativeTime().get(k-1));
+						plot.get(series.get(i)).add(Math.log(input));
 						break;
 					}
 				}

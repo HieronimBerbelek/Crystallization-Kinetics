@@ -1,4 +1,4 @@
-package crystallization_model;
+package crystallization_model.results;
 
 public interface ModelOutput {
 	public String basicOutput();

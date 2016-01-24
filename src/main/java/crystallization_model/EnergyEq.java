@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import crystallization_model.results.EnergyEqResults;
 import exceptions.DataSizeException;
 import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
-public class EnergyEq {
+public class EnergyEq extends LinearityModel {
 	static final int range = 15;
 	static final double DELTA_REL = 0.02; //delta between data series
 	static final double constantR = 8.3144598;
 	private ArrayList<CrystallizationData> data;
-	private LinearApprox approximation;
 	private Map<Double, ArrayList<Double>> x;
 	private Map<Double, ArrayList<Double>> y;
 	private Map<Double, Double> energyBarriers;
@@ -26,33 +26,27 @@ public class EnergyEq {
 	
 	public EnergyEq(ArrayList<CrystallizationData> data){
 		this.data = data;
-		setDefaultApprox();
+		super.setDefaultApprox();
 	}
 	public EnergyEq(CrystallizationData data){
 		this.data = new ArrayList<CrystallizationData>();
 		this.data.add(data);
-		setDefaultApprox();
+		super.setDefaultApprox();
 	}
 	public EnergyEq(ArrayList<CrystallizationData> data, LinearApprox approx){
 		this.data = data;
-		putLinearApprox(approx);
+		super.putLinearApprox(approx);
 	}
 	public EnergyEq(CrystallizationData data, LinearApprox approx){
 		this.data = new ArrayList<CrystallizationData>();
 		putData(data);
-		putLinearApprox(approx);
-	}
-	public void putLinearApprox(LinearApprox approx){
-		approximation = approx;
+		super.putLinearApprox(approx);
 	}
 	public void putData(CrystallizationData data){
 		this.data.add(data);
 	}
-	public void setDefaultApprox(){
-		approximation = new LeastSquaresApprox();
-	}
 	
-	public EnergyEqResults calculate() throws DataSizeException{
+	public EnergyEqResults calculate(double...input) throws DataSizeException{
 		initSeries();
 		initIdentity();
 		initData();
@@ -69,10 +63,10 @@ public class EnergyEq {
 		energyBarriers = new LinkedHashMap<Double, Double>();
 		certainities = new LinkedHashMap<Double, Double>();
 		for(double rel = DELTA_REL;rel<1.0;rel+=DELTA_REL){
-			approximation.calculate(x.get(rel), y.get(rel));
-			energyBarriers.put(rel, (constantR*approximation.getSlope()/-1000));
-			certainities.put(rel, approximation.getCertainity());
-			avgCertainity += approximation.getCertainity();
+			super.approximation.calculate(x.get(rel), y.get(rel));
+			energyBarriers.put(rel,(constantR*super.approximation.getSlope()/-1000));
+			certainities.put(rel, super.approximation.getCertainity());
+			avgCertainity += super.approximation.getCertainity();
 			avgTemp.put(rel, average(temperatures.get(rel)));
 		}
 		avgCertainity /=certainities.size();
@@ -95,17 +89,18 @@ public class EnergyEq {
 		for(CrystallizationData data : data ){
 			double threshold = DELTA_REL;
 			//iterate through single data serie
-			for(int index2=0;index2<data.size()&&threshold<1.0;index2++){
-				if(data.getRelativeX().get(index2)>threshold){
+			//j as index because nested loop
+			for(int j=0;j<data.size()&&threshold<1.0;j++){
+				if(data.getRelativeX().get(j)>threshold){
 					temperatures.get(threshold)
-					.add(data.getTemperature().get(index2));
+					.add(data.getTemperature().get(j));
 					
-					x.get(threshold).add(toX(data.getTemperature().get(index2)));
+					x.get(threshold).add(toX(data.getTemperature().get(j)));
 					y.get(threshold).add(toY(
-							data.getRelativeTime().get(index2-range),
-							data.getRelativeX().get(index2-range),
-							data.getRelativeTime().get(index2),
-							data.getRelativeX().get(index2)));
+							data.getRelativeTime().get(j-range),
+							data.getRelativeX().get(j-range),
+							data.getRelativeTime().get(j),
+							data.getRelativeX().get(j)));
 					threshold +=DELTA_REL;
 				}
 			}

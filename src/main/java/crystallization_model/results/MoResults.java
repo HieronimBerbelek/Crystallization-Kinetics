@@ -1,4 +1,4 @@
-package crystallization_model;
+package crystallization_model.results;
 
 import java.util.ArrayList;
 import java.util.HashMap;

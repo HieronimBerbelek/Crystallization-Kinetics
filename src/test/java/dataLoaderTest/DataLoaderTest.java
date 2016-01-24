@@ -11,7 +11,7 @@ import exceptions.DscDataException;
 import input.ProteusFileOpener;
 import loader.DataLoader;
 import loader.DecimalSeparator;
-import wrappers.CrystExpData;
+import wrappers.ExperimentalData;
 
 public class DataLoaderTest {
 	//setting up fields for correct dsc file
@@ -56,7 +56,7 @@ public class DataLoaderTest {
 	public void testGetDataObj(){
 		//it's partly testing CrystExpData too
 		String testString = "its just test stuff";
-		CrystExpData result = tested.getDataObj();
+		ExperimentalData result = tested.getDataObj();
 		assertTrue(result.getRelativeTime().size()>0);
 		assertTrue(result.getCoolingRate()>0);
 		

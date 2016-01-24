@@ -10,13 +10,13 @@ import org.junit.Test;
 import exceptions.DscDataException;
 import input.ProteusFileOpener;
 import loader.DataLoader;
-import wrappers.CrystExpData;
+import wrappers.ExperimentalData;
 import wrappers.CrystallizationMode;
 
 public class CrystExpDataTest {
 	static ProteusFileOpener opener;
 	static DataLoader loader;
-	static CrystExpData tested;
+	static ExperimentalData tested;
 	static String path = ".//resource//test//7,5 test data.txt";
 	
 	@BeforeClass

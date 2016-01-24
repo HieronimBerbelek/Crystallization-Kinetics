@@ -3,7 +3,7 @@ package crystallization_model;
 import exceptions.ConversionLimitException;
 
 
-public abstract class CrystallizationModel {
+public abstract class LimitedConversionModel extends LinearityModel {
 	private double lowerLimit = 0.05;
 	private double upperLimit = 0.95;
 	

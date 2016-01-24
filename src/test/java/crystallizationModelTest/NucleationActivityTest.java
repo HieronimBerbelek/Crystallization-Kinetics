@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import crystallization_model.NucleationActivity;
-import crystallization_model.NucleationResults;
+import crystallization_model.results.NucleationResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
 import input.ProteusFileOpener;

@@ -113,11 +113,12 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 			    "ERROR",
 			    JOptionPane.ERROR_MESSAGE);
 	}
-	public void showAlreadyLoadedMessage(){
-		JOptionPane.showMessageDialog(this,
-			    "DSC data with this identity is already loaded!",
+	public int showAlreadyLoadedMessage(){
+		return JOptionPane.showConfirmDialog(this,
+			    "DSC data with this identity is already loaded! "
+			    + "Do You want to overwrite it?",
 			    "INFO",
-			    JOptionPane.INFORMATION_MESSAGE);
+			    JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 	public void contentsChanged(ListDataEvent arg0) {
 		if(model.isEmpty()){

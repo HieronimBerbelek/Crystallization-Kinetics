@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import crystallization_model.results.NucleationResults;
 import exceptions.DataSizeException;
-import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
@@ -79,6 +78,7 @@ public class NucleationActivity extends LinearityModel {
 			xOfNucleated.add(1/(nucleatedUC*nucleatedUC));
 		}
 	}
+	@Override
 	public NucleationResults calculate(double...input) throws DataSizeException{
 		double neat = input[0];
 		double nucleated = input[1];

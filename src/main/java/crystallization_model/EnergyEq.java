@@ -6,7 +6,6 @@ import java.util.Map;
 
 import crystallization_model.results.EnergyEqResults;
 import exceptions.DataSizeException;
-import linearity.LeastSquaresApprox;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;
 
@@ -46,6 +45,7 @@ public class EnergyEq extends LinearityModel {
 		this.data.add(data);
 	}
 	
+	@Override
 	public EnergyEqResults calculate(double...input) throws DataSizeException{
 		initSeries();
 		initIdentity();

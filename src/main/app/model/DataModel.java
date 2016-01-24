@@ -7,7 +7,7 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import dataWrappers.CrystallizationData;
+import wrappers.CrystallizationData;
 
 public class DataModel implements ListModel<CrystallizationData> {
 	ArrayList<CrystallizationData> list;

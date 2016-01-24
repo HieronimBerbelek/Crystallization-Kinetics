@@ -1,11 +1,11 @@
-package crystallizationModel;
+package crystallization_model;
 
 import java.util.ArrayList;
 
-import dataWrappers.CrystallizationData;
 import exceptions.DataSizeException;
-import linearRegression.LeastSquaresApprox;
-import linearRegression.LinearApprox;
+import linearity.LeastSquaresApprox;
+import linearity.LinearApprox;
+import wrappers.CrystallizationData;
 
 public class AvramiModel extends CrystallizationModel {
 	//conversion limits, essential for good data fit

@@ -6,12 +6,12 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import crystallizationModel.AvramiModel;
-import crystallizationModel.AvramiResults;
-import dataLoader.DataLoader;
+import crystallization_model.AvramiModel;
+import crystallization_model.AvramiResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
-import inputProvider.ProteusFileOpener;
+import input.ProteusFileOpener;
+import loader.DataLoader;
 
 public class AvramiEquationTest {
 

@@ -1,13 +1,13 @@
-package dataLoader;
+package loader;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import dataWrappers.CrystExpData;
-import dataWrappers.DataTuple;
-import dataWrappers.DataTupleBuilder;
 import exceptions.DscDataException;
-import inputProvider.DataProvider;
+import input.DataProvider;
+import wrappers.CrystExpData;
+import wrappers.DataTuple;
+import wrappers.DataTupleBuilder;
 /* Class which loads data from proteus export txt file to data object
  * is there need and way to divide loadMetaData and loadNumericData into shorter methods?
  * TO DO make it more robust, improve input check

@@ -7,11 +7,11 @@ import java.io.IOException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dataLoader.DataLoader;
-import dataWrappers.CrystallizationMode;
-import dataWrappers.CrystExpData;
 import exceptions.DscDataException;
-import inputProvider.ProteusFileOpener;
+import input.ProteusFileOpener;
+import loader.DataLoader;
+import wrappers.CrystExpData;
+import wrappers.CrystallizationMode;
 
 public class CrystExpDataTest {
 	static ProteusFileOpener opener;

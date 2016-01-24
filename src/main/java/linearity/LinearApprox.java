@@ -1,4 +1,4 @@
-package linearRegression;
+package linearity;
 
 import java.util.ArrayList;
 

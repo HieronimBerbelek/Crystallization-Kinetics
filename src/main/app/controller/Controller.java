@@ -6,9 +6,9 @@ import view.View;
 import java.io.File;
 import java.io.IOException;
 
-import dataLoader.DataLoader;
 import exceptions.DscDataException;
-import inputProvider.ProteusFileOpener;
+import input.ProteusFileOpener;
+import loader.DataLoader;
 import model.DataModel;
 
 public class Controller implements DataListListener {

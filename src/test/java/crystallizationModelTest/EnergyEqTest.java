@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import crystallizationModel.EnergyEq;
-import crystallizationModel.EnergyEqResults;
-import dataLoader.DataLoader;
+import crystallization_model.EnergyEq;
+import crystallization_model.EnergyEqResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
-import inputProvider.ProteusFileOpener;
+import input.ProteusFileOpener;
+import loader.DataLoader;
 
 public class EnergyEqTest {
 	EnergyEq tested;

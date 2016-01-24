@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import crystallizationModel.NucleationActivity;
-import crystallizationModel.NucleationResults;
-import dataWrappers.CrystallizationData;
-import dataLoader.DataLoader;
+import crystallization_model.NucleationActivity;
+import crystallization_model.NucleationResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
-import inputProvider.ProteusFileOpener;
+import input.ProteusFileOpener;
+import loader.DataLoader;
+import wrappers.CrystallizationData;
 
 public class NucleationActivityTest {
 	private NucleationActivity tested;

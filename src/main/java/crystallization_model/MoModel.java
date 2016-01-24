@@ -1,12 +1,12 @@
-package crystallizationModel;
+package crystallization_model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dataWrappers.CrystallizationData;
 import exceptions.DataSizeException;
-import linearRegression.LeastSquaresApprox;
-import linearRegression.LinearApprox;
+import linearity.LeastSquaresApprox;
+import linearity.LinearApprox;
+import wrappers.CrystallizationData;
 
 public class MoModel extends CrystallizationModel {
 	private final int deltaConversionTen = 10;

@@ -7,11 +7,11 @@ import java.io.IOException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dataLoader.DataLoader;
-import dataLoader.DecimalSeparator;
-import dataWrappers.CrystExpData;
 import exceptions.DscDataException;
-import inputProvider.ProteusFileOpener;
+import input.ProteusFileOpener;
+import loader.DataLoader;
+import loader.DecimalSeparator;
+import wrappers.CrystExpData;
 
 public class DataLoaderTest {
 	//setting up fields for correct dsc file

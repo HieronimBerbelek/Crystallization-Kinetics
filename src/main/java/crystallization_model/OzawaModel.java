@@ -1,14 +1,14 @@
-package crystallizationModel;
+package crystallization_model;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dataWrappers.CrystallizationData;
 import exceptions.DataSizeException;
 import exceptions.OzawaModelRangeException;
-import linearRegression.LeastSquaresApprox;
-import linearRegression.LinearApprox;
+import linearity.LeastSquaresApprox;
+import linearity.LinearApprox;
+import wrappers.CrystallizationData;
 
 public class OzawaModel extends CrystallizationModel {
 	private final static int ONE = 1;

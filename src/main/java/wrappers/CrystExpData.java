@@ -1,8 +1,8 @@
-package dataWrappers;
+package wrappers;
 
 import java.util.ArrayList;
 
-import crystallizationModel.ModelOutput;
+import crystallization_model.ModelOutput;
 
 public class CrystExpData implements CrystallizationData, ModelOutput {
 	static final String MODEL_NAME = "CRYSTALLIZATION";

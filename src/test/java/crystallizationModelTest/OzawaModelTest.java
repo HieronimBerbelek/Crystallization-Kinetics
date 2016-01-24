@@ -6,12 +6,12 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import crystallizationModel.OzawaModel;
-import crystallizationModel.OzawaResults;
-import dataLoader.DataLoader;
+import crystallization_model.OzawaModel;
+import crystallization_model.OzawaResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
-import inputProvider.ProteusFileOpener;
+import input.ProteusFileOpener;
+import loader.DataLoader;
 
 public class OzawaModelTest {
 	OzawaModel tested;

@@ -19,8 +19,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import dataWrappers.CrystallizationData;
 import model.DataModel;
+import wrappers.CrystallizationData;
 
 public class View extends JFrame implements ActionListener, ListDataListener {
 	private static final long serialVersionUID = 1L;

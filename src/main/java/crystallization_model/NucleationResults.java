@@ -1,4 +1,4 @@
-package crystallizationModel;
+package crystallization_model;
 
 import java.util.ArrayList;
 

@@ -1,13 +1,13 @@
-package crystallizationModel;
+package crystallization_model;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import dataWrappers.CrystallizationData;
 import exceptions.DataSizeException;
-import linearRegression.LeastSquaresApprox;
-import linearRegression.LinearApprox;
+import linearity.LeastSquaresApprox;
+import linearity.LinearApprox;
+import wrappers.CrystallizationData;
 
 public class EnergyEq {
 	static final int range = 15;

@@ -1,4 +1,4 @@
-package inputProvider;
+package input;
 
 import java.util.Scanner;
 //Interface which provides Scanner with proteus DSC data file loaded;

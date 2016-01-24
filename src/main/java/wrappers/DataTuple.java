@@ -1,6 +1,6 @@
 //wrapper class for all 5 variables in Proteus DSC file
 //has builder: DataTupleBuilder
-package dataWrappers;
+package wrappers;
 
 public class DataTuple {
 	private double temperature;

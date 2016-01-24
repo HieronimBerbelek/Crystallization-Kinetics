@@ -2,7 +2,7 @@
 //implementing builderPattern
 //quite straight-forward
 
-package dataWrappers;
+package wrappers;
 
 import exceptions.DscDataException;
 

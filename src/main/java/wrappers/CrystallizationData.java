@@ -1,4 +1,4 @@
-package dataWrappers;
+package wrappers;
 
 import java.util.ArrayList;
 //using interface to simplify further testing of models etc.

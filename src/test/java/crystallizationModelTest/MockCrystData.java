@@ -2,9 +2,9 @@ package crystallizationModelTest;
 
 import java.util.ArrayList;
 
-import dataWrappers.CrystallizationData;
-import dataWrappers.CrystallizationMode;
-import dataWrappers.DataTuple;
+import wrappers.CrystallizationData;
+import wrappers.CrystallizationMode;
+import wrappers.DataTuple;
 
 public class MockCrystData implements CrystallizationData {
 	private ArrayList<Double> relativeX = new ArrayList<Double>();

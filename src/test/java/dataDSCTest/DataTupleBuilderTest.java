@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import dataWrappers.DataTupleBuilder;
 import exceptions.DscDataException;
+import wrappers.DataTupleBuilder;
 //not testing basic setters and getters
 public class DataTupleBuilderTest {
 	@Test

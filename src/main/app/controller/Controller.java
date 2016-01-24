@@ -6,6 +6,8 @@ import view.View;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import exceptions.DscDataException;
 import input.ProteusFileOpener;
 import loader.DataLoader;
@@ -40,8 +42,14 @@ public class Controller implements DataListListener {
 				} catch (DscDataException e) {
 					view.showDscExceptionMessage();
 				}
+				
 				if(model.contains(dataLoader.getDataObj())){
-					view.showAlreadyLoadedMessage();
+					int answear = view.showAlreadyLoadedMessage();
+					if(answear==JOptionPane.YES_OPTION) 
+						model.overwrite(dataLoader.getDataObj());
+					else if(answear==JOptionPane.CANCEL_OPTION)
+						break;//breaks adding the files if cancel!
+					//just continue if no!
 				}
 				else{
 					model.add(dataLoader.getDataObj());

@@ -60,9 +60,22 @@ public class DataModel implements ListModel<CrystallizationData> {
 	public boolean contains(CrystallizationData other){
 		boolean toReturn = false;
 		for(CrystallizationData serie : list){
-			if(serie.getIdentity().equals(other.getIdentity())) toReturn = true;
+			if(serie.getIdentity().equals(other.getIdentity())){
+				toReturn = true;
+				break;
+			}
 		}
 		return toReturn;
+	}
+	public void overwrite(CrystallizationData other){
+		int i=0;
+		for(;i<list.size();i++){
+			if(list.get(i).getIdentity().equals(other.getIdentity())){
+				remove(i);
+				break;
+			}
+		}
+		add(other);
 	}
 	
 	public boolean contains(String other){

@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,13 +31,17 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	private JList<CrystallizationData> dataList; 
 	private JButton add;
 	private JButton remove;
-	private JButton proceed;
 	private final JFileChooser addChooser = new JFileChooser();
+	private JMenuBar menuBar;
+	private JMenu fileMenu;
+	private JMenu calculationMenu;
+	private JMenu helpMenu;
 	
 	public View(DataModel model){
 		super("Crystallization Kinetics");
 		
 		setModel(model);
+		initMenuBar();
 		initMainPanel();
 		
 		super.add(dataPanel);
@@ -43,6 +49,7 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 		super.setSize(new Dimension(600, 200));
 		super.setVisible(true);
 	}
+
 	public void setModel(DataModel model){
 		this.model = model;
 	}
@@ -67,17 +74,27 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 		remove.addActionListener(this);
 		remove.setEnabled(false);
 		
-		proceed = new JButton("PROCEED");
-		proceed.addActionListener(this);
-		proceed.setEnabled(false);
-		
 		dataPanel = new JPanel(new BorderLayout());
 		dataPanel.add(dataListScroller, BorderLayout.CENTER);
 		dataPanel.add(add, BorderLayout.PAGE_START);
 		dataPanel.add(remove, BorderLayout.PAGE_END);
-		dataPanel.add(proceed, BorderLayout.EAST);
 		dataPanel.setVisible(true);
 		dataPanel.repaint();
+	}
+	
+	private void initMenuBar() {
+		menuBar = new JMenuBar();
+		
+		fileMenu = new JMenu("File");
+		menuBar.add(fileMenu);
+		
+		calculationMenu = new JMenu("Calculations");
+		menuBar.add(calculationMenu);
+		
+		helpMenu = new JMenu("Help");
+		menuBar.add(helpMenu);
+		
+		super.setJMenuBar(menuBar);
 	}
 	
 	public void actionPerformed(ActionEvent event) {
@@ -87,11 +104,7 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 		if(event.getSource()==remove){
 			guiListener.removePerformed(dataList.getSelectedIndices());
 			dataList.clearSelection();
-		}
-		if(event.getSource()==proceed){
-			guiListener.proceedPerformed();
-		}
-		
+		}		
 	}
 	public File[] showFileChooser(){
 		addChooser.setMultiSelectionEnabled(true);
@@ -123,22 +136,18 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	public void contentsChanged(ListDataEvent arg0) {
 		if(model.isEmpty()){
 			remove.setEnabled(false);
-			proceed.setEnabled(false);
 		}	
-		else if(remove.isEnabled()&&proceed.isEnabled());//do nothing
+		else if(remove.isEnabled());//do nothing
 		else {
 			remove.setEnabled(true);
-			proceed.setEnabled(true);
 		}
 	}
 	public void intervalAdded(ListDataEvent arg0) {
-		remove.setEnabled(true);
-		proceed.setEnabled(true);		
+		remove.setEnabled(true);		
 	}
 	public void intervalRemoved(ListDataEvent arg0) {
 		if(model.isEmpty()){
 			remove.setEnabled(false);
-			proceed.setEnabled(false);
 		}		
 	}
 }

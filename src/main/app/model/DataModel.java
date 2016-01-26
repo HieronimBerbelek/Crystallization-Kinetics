@@ -36,7 +36,8 @@ public class DataModel implements ListModel<CrystallizationData>, Serializable {
 		fireAddedEvent(ListDataEvent.INTERVAL_ADDED, list.size()-1,list.size()-1);
 	}
 	public synchronized void clear(){
-		fireRemovedEvent(ListDataEvent.INTERVAL_REMOVED, 0, list.size()-1);
+		if(list.size()>0) fireRemovedEvent(ListDataEvent.INTERVAL_REMOVED, 0, list.size()-1);
+		else fireRemovedEvent(ListDataEvent.INTERVAL_REMOVED, 0, 0);
 		list = new ArrayList<CrystallizationData>();
 	}
 	public synchronized void remove(int items){

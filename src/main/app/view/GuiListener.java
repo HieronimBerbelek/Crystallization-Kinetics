@@ -9,4 +9,11 @@ public interface GuiListener {
 	public void saveAsPerformed();
 	public void openPerformed();
 	public void exitPerformed();
+	
+	public void basicPerformed();
+	public void avramiPerformed();
+	public void ozawaPerformed();
+	public void moPerformed();
+	public void nucleaPerformed();
+	public void energyPerformed();
 }

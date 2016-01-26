@@ -49,7 +49,7 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	private JPanel dataPanel;
 	
 	private JList<CrystallizationData> dataList; 
-	private DataListListener listListener;
+	private GuiListener guiListener;
 	private JButton add;
 	private JButton remove;
 	private final JFileChooser addChooser = new JFileChooser();
@@ -89,8 +89,8 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	public void setModel(DataModel model){
 		this.model = model;
 	}
-	public void setGuiListener(DataListListener listener){
-		listListener = listener;
+	public void setGuiListener(GuiListener listener){
+		guiListener = listener;
 	}
 	private void initMainPanel(){		
 		dataList = new JList<CrystallizationData>(model);
@@ -176,12 +176,18 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource()==add){
-			listListener.addPerformed();
+			guiListener.addPerformed();
 		}
 		if(event.getSource()==remove){
-			listListener.removePerformed(dataList.getSelectedIndices());
+			guiListener.removePerformed(dataList.getSelectedIndices());
 			dataList.clearSelection();
-		}		
+		}	
+		if(event.getSource()==itemNew){
+			guiListener.newPerformed();
+		}
+		if(event.getSource()==itemExit){
+			guiListener.exitPerformed();
+		}
 	}
 	public File[] showFileChooser(){
 		addChooser.setMultiSelectionEnabled(true);
@@ -209,6 +215,12 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 			    + "Do You want to overwrite it?",
 			    "INFO",
 			    JOptionPane.YES_NO_CANCEL_OPTION);
+	}
+	public int showAreUSureMessage(){
+		return JOptionPane.showConfirmDialog(this,
+			    "Dude, You sure You want to do this?",
+			    "RLLY?",
+			    JOptionPane.YES_NO_OPTION);
 	}
 	public void contentsChanged(ListDataEvent arg0) {
 		if(model.isEmpty()){

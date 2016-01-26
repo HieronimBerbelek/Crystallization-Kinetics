@@ -27,8 +27,8 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String S_FILE = "File";
-	private static final String S_NEW = "New";
-	private static final String S_OPEN = "Open";
+	private static final String S_NEW = "New datalist";
+	private static final String S_OPEN = "Open datalist";
 	private static final String S_SAVE = "Save datalist";
 	private static final String S_SAVE_AS = "Save datalist as...";
 	private static final String S_EXIT = "Exit";
@@ -46,9 +46,8 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	private static final String S_ABOUT = "About";
 	
 	private DataModel model;
-	private JPanel dataPanel;
+	private JPanel mainPanel;
 	
-	private JList<CrystallizationData> dataList; 
 	private GuiListener guiListener;
 	private JButton add;
 	private JButton remove;
@@ -74,18 +73,26 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	private JMenu helpMenu;
 	private JMenuItem itemAbout;
 	private JMenuItem itemHelp;
+	
+	private DataListPanel dataPanel;
+	
 	public View(DataModel model){
 		super("Crystallization Kinetics");
+		super.setLayout(new BorderLayout());
 		
 		addChooser = new JFileChooser();
 		saveOpenChooser = new JFileChooser();
+		
+		model.addListDataListener(this);
 		setModel(model);
+		
 		initMenuBar();
 		initMainPanel();
 		
-		super.add(dataPanel);
+		super.add(mainPanel, BorderLayout.CENTER);
+		
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		super.setSize(new Dimension(500, 200));//just temporary
+		super.pack();
 		super.setVisible(true);
 	}
 
@@ -95,30 +102,22 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	public void setGuiListener(GuiListener listener){
 		guiListener = listener;
 	}
-	private void initMainPanel(){		
-		dataList = new JList<CrystallizationData>(model);
-		model.addListDataListener(this);
+	private void initMainPanel(){
 		
-		dataList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		dataList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		dataList.setVisibleRowCount(-1);
-		dataList.setVisibleRowCount(10);
-		
-		JScrollPane dataListScroller = new JScrollPane(dataList);
-		
-		add = new JButton("ADD");
+		add = new JButton("ADD DATA");
 		add.addActionListener(this);
 		
-		remove = new JButton("REMOVE");
+		remove = new JButton("REMOVE DATA");
 		remove.addActionListener(this);
 		remove.setEnabled(false);
 		
-		dataPanel = new JPanel(new BorderLayout());
-		dataPanel.add(dataListScroller, BorderLayout.CENTER);
-		dataPanel.add(add, BorderLayout.PAGE_START);
-		dataPanel.add(remove, BorderLayout.PAGE_END);
-		dataPanel.setVisible(true);
-		dataPanel.repaint();
+		dataPanel = new DataListPanel(model);
+		
+		mainPanel = new JPanel(new BorderLayout());
+		mainPanel.add(add, BorderLayout.PAGE_START);
+		mainPanel.add(dataPanel, BorderLayout.CENTER);
+		mainPanel.add(remove, BorderLayout.PAGE_END);
+		mainPanel.setVisible(true);
 	}
 	
 	private void initMenuBar() {
@@ -182,8 +181,8 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 			guiListener.addPerformed();
 		}
 		if(event.getSource()==remove){
-			guiListener.removePerformed(dataList.getSelectedIndices());
-			dataList.clearSelection();
+			guiListener.removePerformed(dataPanel.getSelectedIndices());
+			dataPanel.clearSelection();
 		}	
 		if(event.getSource()==itemNew){
 			guiListener.newPerformed();
@@ -199,6 +198,9 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 		}
 		if(event.getSource()==itemExit){
 			guiListener.exitPerformed();
+		}
+		if(event.getSource()==itemBasic){
+			guiListener.basicPerformed();
 		}
 	}
 	public File[] showAddFileChooser(){
@@ -223,6 +225,9 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 		}
 		else return null;
 	}
+	public int[] showSelectionDialog(int modelID){
+		return AnalysisDialog.showSelectionDialog(this, model, modelID);
+	}
 	public void showIOExceptionMessage(){
 		JOptionPane.showMessageDialog(this,
 			    "Can't access the file!",
@@ -241,6 +246,12 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 			    "SAVE",
 			    JOptionPane.INFORMATION_MESSAGE);
 	}
+	public void showDataError(){
+		JOptionPane.showMessageDialog(this,
+			    "Your DSC data is invalid!",
+			    "ERROR",
+			    JOptionPane.ERROR_MESSAGE);
+	}
 	public void showOpenComplete(){
 		JOptionPane.showMessageDialog(this,
 			    "Loading complete!",
@@ -252,6 +263,12 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 			    "DSC data with this identity is already loaded! "
 			    + "Do You want to overwrite it?",
 			    "INFO",
+			    JOptionPane.YES_NO_CANCEL_OPTION);
+	}
+	public int showIfInSingleFile(){
+		return JOptionPane.showConfirmDialog(this,
+			    "Do you want to save it in single file?",
+			    "DO YA?",
 			    JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 	public int showAreUSureMessage(){
@@ -269,6 +286,7 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 			remove.setEnabled(true);
 		}
 	}
+	
 	public void intervalAdded(ListDataEvent arg0) {
 		remove.setEnabled(true);		
 	}

@@ -1,5 +1,6 @@
 package controller;
 
+import view.SelectionDialog;
 import view.GuiListener;
 import view.View;
 
@@ -11,6 +12,8 @@ import java.io.ObjectInputStream;
 
 import javax.swing.JOptionPane;
 
+import crystallization_model.AvramiModel;
+import exceptions.DataSizeException;
 import exceptions.DscDataException;
 import input.ProteusFileOpener;
 import loader.DataLoader;
@@ -22,7 +25,8 @@ public class Controller implements GuiListener, IoListener {
  	
  	private ProteusFileOpener opener;
  	private DataLoader dataLoader;
- 	private Save save;
+ 	private SaveWriter save;
+ 	private OutputWriter writer;
  	
  	public Controller(DataModel model, View view){
  		setModel(model);
@@ -81,7 +85,7 @@ public class Controller implements GuiListener, IoListener {
 	public void saveAsPerformed() {
 		File file = view.showSaveFileChooser();
 		if (file == null) return;
-		save = new Save(model, file, this);
+		save = new SaveWriter(model, file, this);
 		save.run();
 	}
 	public void openPerformed() {
@@ -93,7 +97,7 @@ public class Controller implements GuiListener, IoListener {
 			open = new ObjectInputStream(new FileInputStream(file));
 			model.setData((DataModel)open.readObject());
 			view.showOpenComplete();
-			save = new Save(model, file, this);
+			save = new SaveWriter(model, file, this);
 		} catch (FileNotFoundException e) {
 			view.showIOExceptionMessage();
 		} catch (IOException e) {
@@ -118,5 +122,42 @@ public class Controller implements GuiListener, IoListener {
 	}
 	public void saveCompleted() {
 		view.showSaveComplete();		
+	}
+	public void basicPerformed() {
+		int[] selection = view.showSelectionDialog(SelectionDialog.BASIC);		
+		if(selection.length<1) return;
+		initWriter();
+		AvramiModel avrami;
+		for(int i=0;i<selection.length;i++){
+			avrami = new AvramiModel(model.getElementAt(selection[i]));
+			try {
+				avrami.calculate().basicOutput();
+			} catch (DataSizeException e) {
+				view.showDataError();
+			}
+		}
+	}
+	public void avramiPerformed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void ozawaPerformed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void moPerformed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void nucleaPerformed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void energyPerformed() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void initWriter(){
+		if (writer==null) writer = new OutputWriter();
 	}
 }

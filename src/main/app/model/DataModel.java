@@ -28,8 +28,8 @@ public class DataModel implements ListModel<CrystallizationData> {
 		fireAddedEvent(ListDataEvent.INTERVAL_ADDED, list.size()-1,list.size()-1);
 	}
 	public void clear(){
-		list = new ArrayList<CrystallizationData>();
 		fireRemovedEvent(ListDataEvent.INTERVAL_REMOVED, 0, list.size()-1);
+		list = new ArrayList<CrystallizationData>();
 	}
 	public void remove(int items){
 		list.remove(items);

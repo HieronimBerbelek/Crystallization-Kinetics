@@ -1,6 +1,6 @@
 package controller;
 
-import view.DataListListener;
+import view.GuiListener;
 import view.View;
 
 import java.io.File;
@@ -13,7 +13,7 @@ import input.ProteusFileOpener;
 import loader.DataLoader;
 import model.DataModel;
 
-public class Controller implements DataListListener {
+public class Controller implements GuiListener {
 	private View view;
  	private DataModel model;
  	private ProteusFileOpener opener;
@@ -60,8 +60,22 @@ public class Controller implements DataListListener {
 	public void removePerformed(int[] items) {
 		if(items.length>0) model.remove(items);		
 	}
-	public void proceedPerformed() {
+	public void newPerformed() {
+		if(view.showAreUSureMessage()==JOptionPane.YES_OPTION) model.clear();		
+	}
+	public void savePerformed() {
 		// TODO Auto-generated method stub
 		
+	}
+	public void saveAsPerformed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void openPerformed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void exitPerformed() {
+		System.exit(0);		
 	}
 }

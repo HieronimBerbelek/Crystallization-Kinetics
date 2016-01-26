@@ -52,7 +52,8 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	private GuiListener guiListener;
 	private JButton add;
 	private JButton remove;
-	private final JFileChooser addChooser = new JFileChooser();
+	private final JFileChooser addChooser;
+	private final JFileChooser saveOpenChooser;
 	
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
@@ -76,13 +77,15 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 	public View(DataModel model){
 		super("Crystallization Kinetics");
 		
+		addChooser = new JFileChooser();
+		saveOpenChooser = new JFileChooser();
 		setModel(model);
 		initMenuBar();
 		initMainPanel();
 		
 		super.add(dataPanel);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		super.setSize(new Dimension(500, 200));
+		super.setSize(new Dimension(500, 200));//just temporary
 		super.setVisible(true);
 	}
 
@@ -185,15 +188,38 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 		if(event.getSource()==itemNew){
 			guiListener.newPerformed();
 		}
+		if(event.getSource()==itemOpen){
+			guiListener.openPerformed();
+		}
+		if(event.getSource()==itemSave){
+			guiListener.savePerformed();
+		}
+		if(event.getSource()==itemSaveAs){
+			guiListener.saveAsPerformed();
+		}
 		if(event.getSource()==itemExit){
 			guiListener.exitPerformed();
 		}
 	}
-	public File[] showFileChooser(){
+	public File[] showAddFileChooser(){
 		addChooser.setMultiSelectionEnabled(true);
 		int chooserVal = addChooser.showOpenDialog(this);
 		if(chooserVal == JFileChooser.APPROVE_OPTION){
 			return addChooser.getSelectedFiles();
+		}
+		else return null;
+	}
+	public File showSaveFileChooser(){
+		int chooserVal = saveOpenChooser.showSaveDialog(this);
+		if(chooserVal == JFileChooser.APPROVE_OPTION){
+			return saveOpenChooser.getSelectedFile();
+		}
+		else return null;
+	}
+	public File showOpenFileChooser(){
+		int chooserVal = saveOpenChooser.showOpenDialog(this);
+		if(chooserVal == JFileChooser.APPROVE_OPTION){
+			return saveOpenChooser.getSelectedFile();
 		}
 		else return null;
 	}
@@ -208,6 +234,18 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 			    "Can't access the DSC data!",
 			    "ERROR",
 			    JOptionPane.ERROR_MESSAGE);
+	}
+	public void showSaveComplete(){
+		JOptionPane.showMessageDialog(this,
+			    "Save complete!",
+			    "SAVE",
+			    JOptionPane.INFORMATION_MESSAGE);
+	}
+	public void showOpenComplete(){
+		JOptionPane.showMessageDialog(this,
+			    "Loading complete!",
+			    "OPEN",
+			    JOptionPane.INFORMATION_MESSAGE);
 	}
 	public int showAlreadyLoadedMessage(){
 		return JOptionPane.showConfirmDialog(this,

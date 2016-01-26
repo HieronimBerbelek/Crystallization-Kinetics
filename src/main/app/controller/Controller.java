@@ -4,7 +4,10 @@ import view.GuiListener;
 import view.View;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.JOptionPane;
 
@@ -13,15 +16,18 @@ import input.ProteusFileOpener;
 import loader.DataLoader;
 import model.DataModel;
 
-public class Controller implements GuiListener {
+public class Controller implements GuiListener, IoListener {
 	private View view;
  	private DataModel model;
+ 	
  	private ProteusFileOpener opener;
  	private DataLoader dataLoader;
+ 	private Saver save;
  	
  	public Controller(DataModel model, View view){
  		setModel(model);
  		setView(view);
+ 		save=null;
  	}
  	public void setModel(DataModel model){
  		this.model = model;
@@ -30,7 +36,7 @@ public class Controller implements GuiListener {
  		this.view = view;
  	}
 	public void addPerformed() {
-			File[] files = view.showFileChooser();
+			File[] files = view.showAddFileChooser();
 			if (files == null) return;
 			for(int index=0;index<files.length;index++){
 				try {
@@ -61,21 +67,54 @@ public class Controller implements GuiListener {
 		if(items.length>0) model.remove(items);		
 	}
 	public void newPerformed() {
-		if(view.showAreUSureMessage()==JOptionPane.YES_OPTION) model.clear();		
+		if(view.showAreUSureMessage()==JOptionPane.YES_OPTION){
+			model.clear();		
+			save=null;
+		}
 	}
 	public void savePerformed() {
-		// TODO Auto-generated method stub
-		
+		if(save==null) saveAsPerformed();
+		else{
+			save.run();
+		}
 	}
 	public void saveAsPerformed() {
-		// TODO Auto-generated method stub
-		
+		File file = view.showSaveFileChooser();
+		if (file == null) return;
+		save = new Saver(model, file+".txt", this);
+		save.run();
 	}
 	public void openPerformed() {
-		// TODO Auto-generated method stub
-		
+		File file = view.showOpenFileChooser();
+		if (file == null) return;
+		ObjectInputStream open = null;
+		try {
+			open = new ObjectInputStream(new FileInputStream(file));
+			model.setData((DataModel)open.readObject());
+			view.showOpenComplete();
+		} catch (FileNotFoundException e) {
+			view.showIOExceptionMessage();
+		} catch (IOException e) {
+			view.showIOExceptionMessage();
+		} catch (ClassNotFoundException e) {
+			view.showIOExceptionMessage();
+			e.printStackTrace();
+		} finally{
+			try {
+				if(open != null) open.close();
+			} catch (IOException e) {
+				view.showIOExceptionMessage();
+			}
+		}
 	}
 	public void exitPerformed() {
 		System.exit(0);		
+	}
+	public void catchFileExc() {
+		view.showIOExceptionMessage();
+		save = null;
+	}
+	public void saveCompleted() {
+		view.showSaveComplete();		
 	}
 }

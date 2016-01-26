@@ -1,8 +1,9 @@
 package wrappers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 //using interface to simplify further testing of models etc.
-public interface CrystallizationData { 
+public interface CrystallizationData extends Serializable { 
 	
 	public void injectData(ArrayList<DataTuple> data);
 	public String getIdentity();

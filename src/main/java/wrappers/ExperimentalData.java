@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import crystallization_model.results.ModelOutput;
 
 public class ExperimentalData implements CrystallizationData, ModelOutput {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4905308770926523599L;
 	static final String MODEL_NAME = "CRYSTALLIZATION";
 	//data lists
 	private ArrayList<Double> relativeX = new ArrayList<Double>();
@@ -135,7 +139,8 @@ public class ExperimentalData implements CrystallizationData, ModelOutput {
 		return identity;
 	}
 	public String basicOutput() {
-		return (identity+"\t"+new Double(peakT).toString()+"\n");
+		return (identity+"\t"+new Double(peakT).toString()+
+				"\t"+new Double(summaricHeat).toString()+"\n");
 	}
 	public String extendedOutput() {
 		StringBuilder builder = new StringBuilder();

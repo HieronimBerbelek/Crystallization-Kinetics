@@ -22,7 +22,7 @@ public class Controller implements GuiListener, IoListener {
  	
  	private ProteusFileOpener opener;
  	private DataLoader dataLoader;
- 	private Saver save;
+ 	private Save save;
  	
  	public Controller(DataModel model, View view){
  		setModel(model);
@@ -81,10 +81,11 @@ public class Controller implements GuiListener, IoListener {
 	public void saveAsPerformed() {
 		File file = view.showSaveFileChooser();
 		if (file == null) return;
-		save = new Saver(model, file+".txt", this);
+		save = new Save(model, file, this);
 		save.run();
 	}
 	public void openPerformed() {
+		if(save!=null&&view.showAreUSureMessage()==JOptionPane.NO_OPTION) return;
 		File file = view.showOpenFileChooser();
 		if (file == null) return;
 		ObjectInputStream open = null;
@@ -92,6 +93,7 @@ public class Controller implements GuiListener, IoListener {
 			open = new ObjectInputStream(new FileInputStream(file));
 			model.setData((DataModel)open.readObject());
 			view.showOpenComplete();
+			save = new Save(model, file, this);
 		} catch (FileNotFoundException e) {
 			view.showIOExceptionMessage();
 		} catch (IOException e) {

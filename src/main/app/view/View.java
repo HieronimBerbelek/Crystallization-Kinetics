@@ -221,74 +221,71 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 		}
 		else return null;
 	}
-	public File showSaveFileChooser(){
+	public File saveFileChooser(){
 		int chooserVal = saveOpenChooser.showSaveDialog(this);
 		if(chooserVal == JFileChooser.APPROVE_OPTION){
 			return saveOpenChooser.getSelectedFile();
 		}
 		else return null;
 	}
-	public File showOpenFileChooser(){
+	public File openFileChooser(){
 		int chooserVal = saveOpenChooser.showOpenDialog(this);
 		if(chooserVal == JFileChooser.APPROVE_OPTION){
 			return saveOpenChooser.getSelectedFile();
 		}
 		else return null;
 	}
-	public int[] showSelectionDialog(int modelID){
-		return AnalysisDialog.showSelectionDialog(this, model, modelID);
+	public int[] selectionDialog(int modelID){
+		return AnalysisDialogMenago.showSelectionDialog(this, model, modelID);
 	}
-	public void showIOExceptionMessage(){
+	public double askDoubleDialog(String title, String info){
+		return AnalysisDialogMenago.showDoubleUserInputDialog(this, title, info);
+	}
+	public void iOExceptionMessage(){
 		JOptionPane.showMessageDialog(this,
 			    "Can't access the file!",
 			    "ERROR",
 			    JOptionPane.ERROR_MESSAGE);
 	}
-	public void showDscExceptionMessage(){
+	public void dscExceptionMessage(){
 		JOptionPane.showMessageDialog(this,
 			    "Can't access the DSC data!",
 			    "ERROR",
 			    JOptionPane.ERROR_MESSAGE);
 	}
-	public void showSaveComplete(){
+	public void saveComplete(){
 		JOptionPane.showMessageDialog(this,
 			    "Save complete!",
 			    "SAVE",
 			    JOptionPane.INFORMATION_MESSAGE);
 	}
-	public void showDataError(){
+	public void dataError(){
 		JOptionPane.showMessageDialog(this,
 			    "Your DSC data is invalid!",
 			    "ERROR",
 			    JOptionPane.ERROR_MESSAGE);
 	}
-	public void showNucleaDataError(){
+	public void nucleaDataError(){
 		JOptionPane.showMessageDialog(this,
 			    "Your DSC data to nucleation is invalid!",
 			    "ERROR",
 			    JOptionPane.ERROR_MESSAGE);
 	}
-	public void showOpenComplete(){
+	public void openComplete(){
 		JOptionPane.showMessageDialog(this,
 			    "Loading complete!",
 			    "OPEN",
 			    JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	public int showAlreadyLoadedMessage(){
+	public int alreadyLoadedMessage(){
 		return JOptionPane.showConfirmDialog(this,
 			    "DSC data with this identity is already loaded! "
 			    + "Do You want to overwrite it?",
 			    "INFO",
 			    JOptionPane.YES_NO_CANCEL_OPTION);
 	}
-	public int showIfInSingleFile(){
-		return JOptionPane.showConfirmDialog(this,
-			    "Do you want to save it in single file?",
-			    "DO YA?",
-			    JOptionPane.YES_NO_CANCEL_OPTION);
-	}
-	public int showAreUSureMessage(){
+	public int areUSureMessage(){
 		return JOptionPane.showConfirmDialog(this,
 			    "Dude, You sure You want to do this?",
 			    "RLLY?",

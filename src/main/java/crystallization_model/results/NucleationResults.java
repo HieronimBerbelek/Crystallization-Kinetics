@@ -3,7 +3,11 @@ package crystallization_model.results;
 import java.util.ArrayList;
 
 public class NucleationResults implements ModelOutput {
-	static final String MODEL_NAME = "NUCLEATION ACTIVITY";
+	private static final String MODEL_NAME = "NUCLEATION ACTIVITY";
+	private static final String BASIC_HEADER=
+			"nucleation activity \t neat certainity \t nucleated certainity \n";
+	private static final String EXTENDED_HEADER=
+			"xNeat[1/dTp] \t xNucleated[1/dTp] \t y[ln(CoolingRate)] \n";
 	
 	private String identity;
 	private ArrayList<Double> xOfNeat;
@@ -46,7 +50,6 @@ public class NucleationResults implements ModelOutput {
 	public String extendedOutput() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
-		builder.append("xNeat[1/dTp] \t xNucleated[1/dTp] \t y[ln(CoolingRate)] \n");
 		for(int index=0;index<Ys.size();index++){
 			builder.append(xOfNeat.get(index)+"\t"+xOfNucleated.get(index)
 							+"\t"+Ys.get(index)+"\n");
@@ -58,5 +61,11 @@ public class NucleationResults implements ModelOutput {
 	}
 	public String getModelName() {
 		return MODEL_NAME;
+	}
+	public String basicHeader() {
+		return BASIC_HEADER;
+	}
+	public String extendedHeader() {
+		return EXTENDED_HEADER;
 	}
 }

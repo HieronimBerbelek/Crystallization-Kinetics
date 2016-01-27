@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class EnergyEqResults implements ModelOutput {
-	static final String MODEL_NAME = "ENERGY BARRIER";
+	private static final String MODEL_NAME = "ENERGY BARRIER";
+	private static final String BASIC_HEADER="conversion \t EnergyBarrier[kJ/mol] \t certainity \n";
+	private static final String EXTENDED_HEADER="conversion \t x[1/T] \t y[ln(dX/dT] \n";
+	
 	private Map<Double, ArrayList<Double>> x;
 	private Map<Double, ArrayList<Double>> y;
 	private Map<Double, Double> energyBarriers;
@@ -53,7 +56,6 @@ public class EnergyEqResults implements ModelOutput {
 	public String basicOutput() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
-		builder.append("conversion \t EnergyBarrier[kJ/mol] \t certainity \n");
 		for(Double conv : energyBarriers.keySet()){
 			builder.append(
 					String.format("%.2f", (double)conv)+"\t"
@@ -68,7 +70,6 @@ public class EnergyEqResults implements ModelOutput {
 	public String extendedOutput() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
-		builder.append("conversion \t x[1/T] \t y[ln(dX/dT] \n");
 		for(double conv : x.keySet()){
 			builder.append(String.format("%.2f", conv)+"\n");
 			for(int index=0;index<x.get(conv).size();index++){
@@ -85,6 +86,14 @@ public class EnergyEqResults implements ModelOutput {
 
 	public String getModelName() {
 		return MODEL_NAME;
+	}
+
+	public String basicHeader() {
+		return BASIC_HEADER;
+	}
+
+	public String extendedHeader() {
+		return EXTENDED_HEADER;
 	}
 	
 }

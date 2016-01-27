@@ -57,6 +57,13 @@ public class DataModel implements ListModel<CrystallizationData>, Serializable {
 	public synchronized CrystallizationData getElementAt(int arg0) {
 		return list.get(arg0);
 	}
+	public synchronized ArrayList<CrystallizationData> getElementsAt(int[] arg){
+		ArrayList<CrystallizationData> toReturn = new ArrayList<CrystallizationData>();
+		for(int i=0;i<arg.length;i++){
+			toReturn.add(list.get(arg[i]));
+		}
+		return toReturn;
+	}
 
 	public synchronized int getSize() {
 		return list.size();

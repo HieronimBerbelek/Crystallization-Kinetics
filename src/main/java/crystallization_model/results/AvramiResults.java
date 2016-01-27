@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class AvramiResults implements ModelOutput {
 	static final String MODEL_NAME = "AVRAMI";
+	private static final String BASIC_HEADER="identity \t coefficient\t exponent\t certainity \n";
+	private static final String EXTENDED_HEADER="x[log(t)] \t y[log(-ln(1-X))] \n";
 	
 	private ArrayList<Double> lnTime = new ArrayList<Double>();
 	private ArrayList<Double> ys = new ArrayList<Double>();
@@ -46,7 +48,6 @@ public class AvramiResults implements ModelOutput {
 	public String extendedOutput() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
-		builder.append("x[log(t)] \t y[log(-ln(1-X))] \n");
 		int numberOfPoints = lnTime.size()/50;
 		for(int index =0;index< lnTime.size();index+=numberOfPoints){
 			builder.append(lnTime.get(index) + "\t" + ys.get(index) + "\n");
@@ -58,6 +59,12 @@ public class AvramiResults implements ModelOutput {
 	}
 	public String getModelName() {
 		return MODEL_NAME;
+	}
+	public String basicHeader() {
+		return BASIC_HEADER;
+	}
+	public String extendedHeader() {
+		return EXTENDED_HEADER;
 	}
 	
 }

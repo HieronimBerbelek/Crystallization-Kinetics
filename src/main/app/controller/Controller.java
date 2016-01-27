@@ -57,13 +57,13 @@ public class Controller implements GuiListener, IoListener {
 				dataLoader = new DataLoader(opener);
 				dataLoader.loadData();
 				} catch (IOException e) {
-					view.showIOExceptionMessage();
+					view.iOExceptionMessage();
 				} catch (DscDataException e) {
-					view.showDscExceptionMessage();
+					view.dscExceptionMessage();
 				}
 				
 				if(model.contains(dataLoader.getDataObj())){
-					int answear = view.showAlreadyLoadedMessage();
+					int answear = view.alreadyLoadedMessage();
 					if(answear==JOptionPane.YES_OPTION) 
 						model.overwrite(dataLoader.getDataObj());
 					else if(answear==JOptionPane.CANCEL_OPTION)
@@ -80,7 +80,7 @@ public class Controller implements GuiListener, IoListener {
 		if(items.length>0) model.remove(items);		
 	}
 	public void newPerformed() {
-		if(view.showAreUSureMessage()==JOptionPane.YES_OPTION){
+		if(view.areUSureMessage()==JOptionPane.YES_OPTION){
 			model.clear();		
 			save=null;
 		}
@@ -92,33 +92,33 @@ public class Controller implements GuiListener, IoListener {
 		}
 	}
 	public void saveAsPerformed() {
-		File file = view.showSaveFileChooser();
+		File file = view.saveFileChooser();
 		if (file == null) return;
 		save = new SaveWriter(model, file, this);
 		save.run();
 	}
 	public void openPerformed() {
-		if(save!=null&&view.showAreUSureMessage()==JOptionPane.NO_OPTION) return;
-		File file = view.showOpenFileChooser();
+		if(save!=null&&view.areUSureMessage()==JOptionPane.NO_OPTION) return;
+		File file = view.openFileChooser();
 		if (file == null) return;
 		ObjectInputStream open = null;
 		try {
 			open = new ObjectInputStream(new FileInputStream(file));
 			model.setData((DataModel)open.readObject());
-			view.showOpenComplete();
+			view.openComplete();
 			save = new SaveWriter(model, file, this);
 		} catch (FileNotFoundException e) {
-			view.showIOExceptionMessage();
+			view.iOExceptionMessage();
 		} catch (IOException e) {
-			view.showIOExceptionMessage();
+			view.iOExceptionMessage();
 		} catch (ClassNotFoundException e) {
-			view.showIOExceptionMessage();
+			view.iOExceptionMessage();
 			e.printStackTrace();
 		} finally{
 			try {
 				if(open != null) open.close();
 			} catch (IOException e) {
-				view.showIOExceptionMessage();
+				view.iOExceptionMessage();
 			}
 		}
 	}
@@ -126,11 +126,11 @@ public class Controller implements GuiListener, IoListener {
 		System.exit(0);		
 	}
 	public void catchFileExc() {
-		view.showIOExceptionMessage();
+		view.iOExceptionMessage();
 		save = null;
 	}
 	public void saveCompleted() {
-		view.showSaveComplete();		
+		view.saveComplete();		
 	}
 	//mono data
 	public void basicPerformed() {
@@ -162,7 +162,7 @@ public class Controller implements GuiListener, IoListener {
 			try {
 				results.add(avrami.calculate());				
 			} catch (DataSizeException e) {
-				view.showDataError();
+				view.dataError();
 				e.printStackTrace();
 			}
 		}
@@ -205,15 +205,23 @@ public class Controller implements GuiListener, IoListener {
 	//double list series
 	public void nucleaPerformed() {
 		NucleationActivity nuclea;
+		double nucl;
+		double neat;
 		try{
 			nuclea = new NucleationActivity(
 					model.getElementsAt(askForSelection(SelectionDialog.NUCLEA_NEAT)),
 					model.getElementsAt(askForSelection(SelectionDialog.NUCLEA_NUCL)));
-			
+			neat =view.askDoubleDialog(
+					"NEAT", 
+					"Please put neat sample melting temperature");
+			nucl =view.askDoubleDialog(
+					"NUCLEATED", 
+					"Please put nucleated sample melting temperature");
+			saveMultiDataModel(askForDirectory(),nuclea, neat, nucl);
 		}catch (GuiException e) {
 			//just do nothing
 		} catch (DataSizeException e) {
-			view.showDataError();
+			view.dataError();
 			e.printStackTrace();
 		}
 	}
@@ -226,12 +234,12 @@ public class Controller implements GuiListener, IoListener {
 		writer.writeFile(file);
 	}
 	private int[] askForSelection(int mode) throws GuiException{
-		int[] selection = view.showSelectionDialog(mode);		
+		int[] selection = view.selectionDialog(mode);		
 		if(selection==null||selection.length<1) throw new GuiException();
 		return selection;
 	}
 	private File askForDirectory() throws GuiException{
-		File file = view.showSaveFileChooser();
+		File file = view.saveFileChooser();
 		if (file == null) throw new GuiException();
 		return file;
 	}
@@ -241,7 +249,17 @@ public class Controller implements GuiListener, IoListener {
 			results = new Results(linear.calculate());
 			writeFile(file, results.getOutput());
 		} catch (DataSizeException e) {
-			view.showDataError();
+			view.dataError();
+			e.printStackTrace();
+		}		
+	}
+	private void saveMultiDataModel(File file, LinearityModel linear, double neat, double nucl){
+		Results results;
+		try {
+			results = new Results(linear.calculate(neat, nucl));
+			writeFile(file, results.getOutput());
+		} catch (DataSizeException e) {
+			view.dataError();
 			e.printStackTrace();
 		}		
 	}

@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import crystallization_model.OzawaModel;
-import crystallization_model.results.OzawaResults;
+import crystallization.OzawaModel;
+import crystallization.results.OzawaResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
 import input.ProteusFileOpener;

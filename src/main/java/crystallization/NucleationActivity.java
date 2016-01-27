@@ -1,8 +1,8 @@
-package crystallization_model;
+package crystallization;
 
 import java.util.ArrayList;
 
-import crystallization_model.results.NucleationResults;
+import crystallization.results.NucleationResults;
 import exceptions.DataSizeException;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;

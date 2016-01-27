@@ -1,10 +1,10 @@
-package crystallization_model;
+package crystallization;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import crystallization_model.results.OzawaResults;
+import crystallization.results.OzawaResults;
 import exceptions.DataSizeException;
 import exceptions.OzawaModelRangeException;
 import linearity.LinearApprox;

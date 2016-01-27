@@ -1,9 +1,9 @@
-package crystallization_model;
+package crystallization;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import crystallization_model.results.MoResults;
+import crystallization.results.MoResults;
 import exceptions.DataSizeException;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import crystallization_model.AvramiModel;
+import crystallization.AvramiModel;
 
 public class CrystallizationModelTest {
 	AvramiModel tested;

@@ -1,10 +1,10 @@
-package crystallization_model;
+package crystallization;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import crystallization_model.results.EnergyEqResults;
+import crystallization.results.EnergyEqResults;
 import exceptions.DataSizeException;
 import linearity.LinearApprox;
 import wrappers.CrystallizationData;

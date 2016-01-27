@@ -1,6 +1,7 @@
 package controller;
 
 import view.SelectionDialog;
+import view.GuiException;
 import view.GuiListener;
 import view.View;
 import wrappers.CrystallizationData;
@@ -11,14 +12,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
 import crystallization_model.AvramiModel;
 import crystallization_model.EnergyEq;
 import crystallization_model.LinearityModel;
 import crystallization_model.MoModel;
+import crystallization_model.NucleationActivity;
 import crystallization_model.OzawaModel;
 import crystallization_model.results.ModelOutput;
 import crystallization_model.results.Results;
@@ -136,11 +136,15 @@ public class Controller implements GuiListener, IoListener {
 	public void basicPerformed() {
 		try {
 			Results results;
-			results =new Results(
-					(ModelOutput) model.getElementsAt(askForSelection(SelectionDialog.BASIC)));
+			ArrayList<ModelOutput> toBasic = new ArrayList<ModelOutput>();
+			int[] selection = askForSelection(SelectionDialog.BASIC);
+			for(int i =0;i<selection.length;i++){
+				toBasic.add((ModelOutput)model.getElementAt(i));
+			}
+			results = new Results(toBasic);
 			writeFile(askForDirectory(), results.getOutput());
-		} catch (Exception e) {
-			//do nothing
+		} catch (GuiException e) {
+			//do nothign
 		}
 	}
 	public void avramiPerformed() {
@@ -148,7 +152,7 @@ public class Controller implements GuiListener, IoListener {
 		ArrayList<CrystallizationData> toAvrami;
 		try {
 			toAvrami = model.getElementsAt(askForSelection(SelectionDialog.AVRAMI));
-		} catch (Exception e1) {
+		} catch (GuiException e) {
 			return;
 		}
 		Results results=new Results();
@@ -164,7 +168,7 @@ public class Controller implements GuiListener, IoListener {
 		}
 		try {
 			writeFile(askForDirectory(), results.getOutput());
-		} catch (Exception e) {
+		} catch (GuiException e) {
 			//do nothing
 		}
 	}
@@ -174,7 +178,7 @@ public class Controller implements GuiListener, IoListener {
 		try {
 			ozawa = new OzawaModel(model.getElementsAt(askForSelection(SelectionDialog.OZAWA)));
 			saveMultiDataModel(askForDirectory(), ozawa);
-		} catch (Exception e) {
+		} catch (GuiException e) {
 			//just do nothing
 		}
 	}
@@ -183,7 +187,7 @@ public class Controller implements GuiListener, IoListener {
 		try {
 			mo = new MoModel(model.getElementsAt(askForSelection(SelectionDialog.MO)));
 			saveMultiDataModel(askForDirectory(), mo);
-		} catch (Exception e) {
+		} catch (GuiException e) {
 			//just do nothing
 		}
 		
@@ -193,15 +197,25 @@ public class Controller implements GuiListener, IoListener {
 		try {
 			energy = new EnergyEq(model.getElementsAt(askForSelection(SelectionDialog.ENERGY)));
 			saveMultiDataModel(askForDirectory(), energy);
-		} catch (Exception e) {
+		} catch (GuiException e) {
 			//just do nothing
 		}
 		
 	}
 	//double list series
 	public void nucleaPerformed() {
-		// TODO Auto-generated method stub
-		
+		NucleationActivity nuclea;
+		try{
+			nuclea = new NucleationActivity(
+					model.getElementsAt(askForSelection(SelectionDialog.NUCLEA_NEAT)),
+					model.getElementsAt(askForSelection(SelectionDialog.NUCLEA_NUCL)));
+			
+		}catch (GuiException e) {
+			//just do nothing
+		} catch (DataSizeException e) {
+			view.showDataError();
+			e.printStackTrace();
+		}
 	}
 	private void initWriter(){
 		if (writer==null) writer = new OutputWriter(this);
@@ -211,14 +225,14 @@ public class Controller implements GuiListener, IoListener {
 		writer.addString(string);
 		writer.writeFile(file);
 	}
-	private int[] askForSelection(int mode) throws Exception{
+	private int[] askForSelection(int mode) throws GuiException{
 		int[] selection = view.showSelectionDialog(mode);		
-		if(selection.length<1) throw new Exception();
+		if(selection==null||selection.length<1) throw new GuiException();
 		return selection;
 	}
-	private File askForDirectory() throws Exception{
+	private File askForDirectory() throws GuiException{
 		File file = view.showSaveFileChooser();
-		if (file == null) throw new Exception();
+		if (file == null) throw new GuiException();
 		return file;
 	}
 	private void saveMultiDataModel(File file, LinearityModel linear){

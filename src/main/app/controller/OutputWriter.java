@@ -3,15 +3,10 @@ package controller;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import crystallization_model.results.ModelOutput;
 
 public class OutputWriter implements Runnable {
 	private String toWrite;
-	private String file;
+	private File argumentFile;
 	private IoListener listener;
 	
 	public OutputWriter(IoListener listener){
@@ -22,20 +17,25 @@ public class OutputWriter implements Runnable {
 		toWrite +=in;
 	}
 	public void writeFile(File file){
-		this.file=file+".txt";
+		this.argumentFile=file;
 		run();
 	}
 	public void run() {
 		FileWriter writer = null;
+		if(argumentFile.toString().endsWith(".txt"));//then do nothing;
+		else argumentFile = new File(argumentFile+".txt");
 		try {
-			writer = new FileWriter(file);
+			writer = new FileWriter(argumentFile, false);
 			writer.write(toWrite);
 		} catch (IOException e) {
 			listener.catchFileExc();
 			e.printStackTrace();
 		} finally{
 				try {
-					if(writer != null) writer.close();
+					if(writer != null){
+						writer.flush();
+						writer.close();
+					}
 					listener.saveCompleted();
 				} catch (IOException e) {
 					listener.catchFileExc();

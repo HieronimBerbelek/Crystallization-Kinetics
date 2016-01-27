@@ -202,6 +202,21 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 		if(event.getSource()==itemBasic){
 			guiListener.basicPerformed();
 		}
+		if(event.getSource()==itemAvrami){
+			guiListener.avramiPerformed();
+		}
+		if(event.getSource()==itemOzawa){
+			guiListener.ozawaPerformed();
+		}
+		if(event.getSource()==itemMo){
+			guiListener.moPerformed();
+		}
+		if(event.getSource()==itemEnergy){
+			guiListener.energyPerformed();
+		}
+		if(event.getSource()==itemNucleation){
+			guiListener.nucleaPerformed();
+		}
 	}
 	public File[] showAddFileChooser(){
 		addChooser.setMultiSelectionEnabled(true);

@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OzawaResults implements ModelOutput {
-	static final String MODEL_NAME = "OZAWA";
+	private static final String MODEL_NAME = "OZAWA";
+	private static final String BASIC_HEADER="temperature \t coefficient\t exponent\t certainity \n";
+	private static final String EXTENDED_HEADER=
+			"temperature \t x[log(CoolingRate)] \t y[log(-ln(1-X))] \n";
+	
 	private HashMap<Integer, ArrayList<Double>> plot; //multiple Ys
 	private ArrayList<Double> xs; //log10(coolingRate) list
 	private ArrayList<Double> exponents;
@@ -77,8 +81,7 @@ public class OzawaResults implements ModelOutput {
 		builder.append(identity+"\n");
 		int index =0;
 		for(Integer temp : plot.keySet()){
-			builder.append(temp+"\t\t\t\n");
-			builder.append("\t"+coefficients.get(index)+"\t"
+			builder.append(temp+"\t"+coefficients.get(index)+"\t"
 						+exponents.get(index)+"\t"+certainities.get(index)+"\n");
 			index++;
 		}
@@ -90,9 +93,8 @@ public class OzawaResults implements ModelOutput {
 	public String extendedOutput() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
-		builder.append("temperature \t x[log(CoolingRate)] \t y[log(-ln(1-X))] \n");
 		for(Integer temp : plot.keySet()){
-			builder.append(temp+"\t\t\n");
+			builder.append(temp);
 			for(int index=0, index2=0;index<xs.size();index++){
 				builder.append("\t"+xs.get(index)+"\t"+plot.get(temp).get(index2)+"\n");
 				if(index2==plot.get(temp).size()-1) index2=0;
@@ -104,6 +106,14 @@ public class OzawaResults implements ModelOutput {
 
 	public String getModelName() {
 		return MODEL_NAME;
+	}
+
+	public String basicHeader() {
+		return BASIC_HEADER;
+	}
+
+	public String extendedHeader() {
+		return EXTENDED_HEADER;
 	}
 	
 }

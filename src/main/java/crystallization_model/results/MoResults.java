@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MoResults implements ModelOutput {
-	static final String MODEL_NAME = "MO";
+	private static final String MODEL_NAME = "MO";
+	private static final String BASIC_HEADER=
+			"conversion \t coefficientB \t coefficientFT \t certainity \n";
+	private static final String EXTENDED_HEADER="conversion \t x[ln(t)] \t y[ln[CoolingRate] \n";
 	private HashMap<Double, ArrayList<Double>> plot; //multiple Xs
 	private ArrayList<Double> Ys; //log10(coolingRate) list
 	
@@ -67,7 +70,6 @@ public class MoResults implements ModelOutput {
 	public String basicOutput() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
-		builder.append("conversion \t coefficientB \t coefficientFT \t certainity \n");
 		int index=0;
 		for(double conv : plot.keySet()){
 			builder.append(conv+"\t"+coefficientsB.get(index)+"\t"
@@ -81,7 +83,6 @@ public class MoResults implements ModelOutput {
 	public String extendedOutput() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
-		builder.append("conversion \t x[ln(t)] \t y[ln[CoolingRate] \n");
 		for(double conv : plot.keySet()){
 			builder.append(conv+"\t\t\n");
 			for(int index=0, index2=0;index<Ys.size();index++){
@@ -95,5 +96,11 @@ public class MoResults implements ModelOutput {
 	}
 	public String getModelName() {
 		return MODEL_NAME;
+	}
+	public String basicHeader() {
+		return BASIC_HEADER;
+	}
+	public String extendedHeader() {
+		return EXTENDED_HEADER;
 	}
 }

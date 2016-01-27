@@ -9,7 +9,9 @@ public class ExperimentalData implements CrystallizationData, ModelOutput {
 	 * 
 	 */
 	private static final long serialVersionUID = 4905308770926523599L;
-	static final String MODEL_NAME = "CRYSTALLIZATION";
+	private static final String MODEL_NAME = "CRYSTALLIZATION";
+	private static final String BASIC_HEADER="identity \t peak T \t summaric heat \n";
+	private static final String EXTENDED_HEADER="\tRelative time \t temperature \t RelativeX \n";
 	//data lists
 	private ArrayList<Double> relativeX = new ArrayList<Double>();
 	private ArrayList<Double> relativeTime = new ArrayList<Double>();
@@ -145,7 +147,6 @@ public class ExperimentalData implements CrystallizationData, ModelOutput {
 	public String extendedOutput() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(identity+"\n");
-		builder.append("\tRelative time \t temperature \t RelativeX \n");
 		for(int index = 0; index<temperature.size();index+=50){
 			builder.append("\t"+String.format("%.5f", relativeTime.get(index))+"\t"
 						+String.format("%.2f",temperature.get(index))
@@ -156,5 +157,11 @@ public class ExperimentalData implements CrystallizationData, ModelOutput {
 	}
 	public String getModelName() {
 		return MODEL_NAME;
+	}
+	public String basicHeader() {
+		return BASIC_HEADER;
+	}
+	public String extendedHeader() {
+		return EXTENDED_HEADER;
 	}
 }

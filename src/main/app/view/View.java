@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,19 +8,15 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import model.DataModel;
-import wrappers.CrystallizationData;
 
 public class View extends JFrame implements ActionListener, ListDataListener {
 	private static final long serialVersionUID = 1L;
@@ -267,12 +262,19 @@ public class View extends JFrame implements ActionListener, ListDataListener {
 			    "ERROR",
 			    JOptionPane.ERROR_MESSAGE);
 	}
+	public void showNucleaDataError(){
+		JOptionPane.showMessageDialog(this,
+			    "Your DSC data to nucleation is invalid!",
+			    "ERROR",
+			    JOptionPane.ERROR_MESSAGE);
+	}
 	public void showOpenComplete(){
 		JOptionPane.showMessageDialog(this,
 			    "Loading complete!",
 			    "OPEN",
 			    JOptionPane.INFORMATION_MESSAGE);
 	}
+	
 	public int showAlreadyLoadedMessage(){
 		return JOptionPane.showConfirmDialog(this,
 			    "DSC data with this identity is already loaded! "

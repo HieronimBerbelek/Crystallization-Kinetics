@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,6 +27,17 @@ public class DataListPanel extends JPanel {
 		dataList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		dataList.setVisibleRowCount(-1);
 		dataList.setVisibleRowCount(10);
+		dataList.setSelectionModel(new DefaultListSelectionModel() {
+		    @Override
+		    public void setSelectionInterval(int index0, int index1) {
+		        if(super.isSelectedIndex(index0)) {
+		            super.removeSelectionInterval(index0, index1);
+		        }
+		        else {
+		            super.addSelectionInterval(index0, index1);
+		        }
+		    }
+		});
 		
 		scrollPane = new JScrollPane(dataList);
 		scrollPane.setPreferredSize(new Dimension(200, 200));
@@ -36,5 +48,8 @@ public class DataListPanel extends JPanel {
 	}
 	public void clearSelection() {
 		dataList.clearSelection();		
+	}
+	public ListSelectionModel getSelectionModel(){
+		return dataList.getSelectionModel();
 	}
 }

@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import crystallization_model.MoModel;
-import crystallization_model.results.MoResults;
+import crystallization.MoModel;
+import crystallization.results.MoResults;
 import exceptions.DataSizeException;
 import exceptions.DscDataException;
 import input.ProteusFileOpener;

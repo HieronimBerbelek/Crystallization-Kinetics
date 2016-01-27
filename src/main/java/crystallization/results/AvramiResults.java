@@ -1,4 +1,4 @@
-package crystallization_model.results;
+package crystallization.results;
 //TO DO: extended output!
 import java.util.ArrayList;
 

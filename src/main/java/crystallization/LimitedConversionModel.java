@@ -1,4 +1,4 @@
-package crystallization_model;
+package crystallization;
 
 import exceptions.ConversionLimitException;
 

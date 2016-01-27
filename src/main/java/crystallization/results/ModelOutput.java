@@ -1,4 +1,4 @@
-package crystallization_model.results;
+package crystallization.results;
 
 public interface ModelOutput {
 	public String basicHeader();

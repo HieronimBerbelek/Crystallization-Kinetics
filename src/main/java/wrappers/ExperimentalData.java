@@ -2,7 +2,7 @@ package wrappers;
 
 import java.util.ArrayList;
 
-import crystallization_model.results.ModelOutput;
+import crystallization.results.ModelOutput;
 
 public class ExperimentalData implements CrystallizationData, ModelOutput {
 	/**

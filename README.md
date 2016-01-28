@@ -20,7 +20,3 @@ I recommend to get some basic knowledge about each crystallization model, before
 ## Tests
 
 I used only basic JUnit 4 tests, with input from "resources" and mock data structure i wrote;
-
-## License
-
-A short snippet describing the license (MIT, Apache, etc.)

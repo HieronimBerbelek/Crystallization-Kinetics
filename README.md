@@ -4,7 +4,7 @@ This is little java SE program, which does nonisothermal crystallization kinetic
 
 IMPORTANT: I am well aware that this project has some object oriented paradigms violated, especially, there's too many hard coupling. Besides, I should comment and test more. In my defence I can say that i had too short deadline to worry about abstraction, and well, program works pretty ok.
 
-I hope eventually I will refractor and improve this program.
+I hope eventually I will refractor and improve it.
 
 
 ## Instruction

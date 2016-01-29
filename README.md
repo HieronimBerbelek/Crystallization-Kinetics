@@ -2,7 +2,7 @@
 
 This is little java SE program, which does nonisothermal crystallization kinetics calculations of Avrami, Ozawa, Mo etc. models/methods for experimental DSC data. Me and other students used this for our Chemistry Engineering dissertations. 
 
-IMPORTANT: I am well aware that this project has some object oriented paradigms violated, especially, there's hard coupling. Besides, I should comment and test more. In my defence I can say that i had too short deadline to worry about abstraction, and well, program works pretty ok.
+IMPORTANT: I am well aware that this project has some object oriented paradigms violated, like tight coupling etc. Besides, I should comment and test more. In my defence I can say that i had too short deadline to worry about abstraction, and well, program works pretty ok.
 
 I hope eventually I will refractor and improve it.
 

@@ -119,7 +119,7 @@ public class Controller implements GuiListener, IoListener {
 		view.iOExceptionMessage();
 		save = null;
 	}
-	public void saveCompleted() {
+	public void processCompleted() {
 		view.saveComplete();		
 	}
 	//mono data

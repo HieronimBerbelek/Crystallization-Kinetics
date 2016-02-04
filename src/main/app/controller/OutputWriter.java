@@ -36,7 +36,7 @@ public class OutputWriter implements Runnable {
 						writer.flush();
 						writer.close();
 					}
-					listener.saveCompleted();
+					listener.processCompleted();
 				} catch (IOException e) {
 					listener.catchFileExc();
 					e.printStackTrace();

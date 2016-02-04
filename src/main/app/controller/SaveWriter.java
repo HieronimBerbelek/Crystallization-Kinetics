@@ -26,7 +26,7 @@ public class SaveWriter implements Runnable {
 		try {
 			stream = new ObjectOutputStream(new FileOutputStream(toSave));
 			stream.writeObject(model);
-			listener.saveCompleted();
+			listener.processCompleted();
 		} catch (FileNotFoundException e) {
 			listener.catchFileExc();
 			e.printStackTrace();

@@ -88,38 +88,28 @@ public class Controller implements GuiListener, IoListener {
 	public void savePerformed() {
 		if(save==null) saveAsPerformed();
 		else{
-			save.run();
+			save.save();
 		}
 	}
 	public void saveAsPerformed() {
 		File file = view.saveFileChooser();
 		if (file == null) return;
 		save = new SaveWriter(model, file, this);
-		save.run();
+		save.save();
 	}
 	public void openPerformed() {
 		if(save!=null&&view.areUSureMessage()==JOptionPane.NO_OPTION) return;
 		File file = view.openFileChooser();
 		if (file == null) return;
-		ObjectInputStream open = null;
-		try {
-			open = new ObjectInputStream(new FileInputStream(file));
+		try(ObjectInputStream open = new ObjectInputStream(new FileInputStream(file))) {
 			model.setData((DataModel)open.readObject());
 			view.openComplete();
 			save = new SaveWriter(model, file, this);
-		} catch (FileNotFoundException e) {
-			view.iOExceptionMessage();
 		} catch (IOException e) {
 			view.iOExceptionMessage();
 		} catch (ClassNotFoundException e) {
 			view.iOExceptionMessage();
 			e.printStackTrace();
-		} finally{
-			try {
-				if(open != null) open.close();
-			} catch (IOException e) {
-				view.iOExceptionMessage();
-			}
 		}
 	}
 	public void exitPerformed() {

@@ -17,6 +17,10 @@ public class SaveWriter implements Runnable {
 		this.listener=listener;
 		this.model = model;
 	}
+	public void save(){
+		Thread t = new Thread(this);
+		t.start();
+	}
 	public void run() {
 		ObjectOutputStream stream = null;
 		try {
